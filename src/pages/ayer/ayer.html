@@ -1,0 +1,107 @@
+<ion-header>
+
+  <ion-navbar color="primaryDarkColor">
+    <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Ayer</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="page-ayer">
+  <div class="diaAyer">
+    <ion-item>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="myDate"></ion-datetime>
+    </ion-item>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Salud</ion-label>
+          <!--               <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime> -->
+          <!-- <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="myDate"></ion-datetime> -->
+          <!-- <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="myDate"></ion-datetime> -->
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Sueño Descanso</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Sueño R.E.M.</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Alimento</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Yo Cuerpo</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Yo Mente</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Otros</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Trabajo</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Humanidad</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Pareja</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="myDate" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

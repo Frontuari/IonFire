@@ -1,0 +1,30 @@
+<ion-menu [content]="content">
+  <!--   <ion-header>
+        <ion-toolbar>
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header> -->
+
+    <ion-content>
+        <img src="assets/images/ANDDANDOMK600.png"/>
+        
+        <ion-list>
+            <button color="secondaryLightColor" ion-item menuClose ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" menu-close>
+            <ion-icon item-left name="{{p.icon}}"></ion-icon>
+          {{p.title}}
+        </button>
+            <!-- <button ion-item (click)="openPageHome()">
+                <ion-icon item-left name="home"></ion-icon>
+                 Home
+                </button>
+            <button ion-item (click)="openPage(friendsPage)">Friends</button>
+            <button ion-item (click)="openPage(eventsPage)">Events</button>
+            <button ion-item (click)="closeMenu()">Close Menu</button> -->
+        </ion-list>
+    </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+<!-- <ion-nav id="nav" #content [root]="rootPage"></ion-nav> -->
