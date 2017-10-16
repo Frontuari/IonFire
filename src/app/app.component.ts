@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AuthService } from '../providers/auth-service';
+import { UserModel } from '../models/user-model';
 
 import { SignInPage } from '../pages/signin/signin';
 import { HomePage } from '../pages/home/home';
@@ -26,6 +27,8 @@ export class MyApp {
 
   public pages: Array<{title: string, component: any, icon: string}>;
 
+  public user = {} as UserModel;
+
   constructor(platform: Platform, 
     statusBar: StatusBar, 
     splashScreen: SplashScreen, 
@@ -44,6 +47,7 @@ export class MyApp {
     if (authService.authenticated) {
       this.rootPage = SignInPage;
     } else {
+      this.user = authService.userModel;
       this.rootPage = HomePage;
     }
 

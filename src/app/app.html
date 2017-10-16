@@ -6,8 +6,8 @@
     </ion-header> -->
 
     <ion-content>
-        <img src="assets/images/ANDDANDOMK600.png"/>
-        
+        <img src="{{user.photoURL}}"/>
+        <p>{{user.name}}</p>
         <ion-list>
             <button color="secondaryLightColor" ion-item menuClose ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" menu-close>
             <ion-icon item-left name="{{p.icon}}"></ion-icon>

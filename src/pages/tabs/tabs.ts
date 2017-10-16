@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
-/**
- * Generated class for the TabsPage tabs.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+//	Import Pages
+import { AyerPage } from '../ayer/ayer';
+import { HoyPage } from '../hoy/hoy';
+import { MananaPage } from '../manana/manana';
 
-@IonicPage()
 @Component({
   selector: 'page-tabs',
   templateUrl: 'tabs.html'

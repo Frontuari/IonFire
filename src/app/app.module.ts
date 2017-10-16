@@ -23,18 +23,15 @@ import { AgregarPage } from "../pages/agregar/agregar";
 import { TabsPage } from '../pages/tabs/tabs';
 import { GuiaPage } from "../pages/guia/guia";
 
+//  Import AddUserActivityPage and EditUserActivityPage
+import { AddUserActivityPage } from '../pages/add-user-activity/add-user-activity';
+import { EditUserActivityPage } from '../pages/edit-user-activity/edit-user-activity';
+
 import { ChartModule } from 'angular2-highcharts';
 import * as highcharts from 'highcharts';
+//  Import FireBase Credentials
+import { firebaseConfig } from './app.firebase.config';
 
-
-export const firebaseConfig = {
-  apiKey: "AIzaSyCgsekLCr-0R9eyJMVqU4sjd2XDZvj0Nr8",
-  authDomain: "loka-741a9.firebaseapp.com",
-  databaseURL: "https://loka-741a9.firebaseio.com",
-  projectId: "loka-741a9",
-  storageBucket: "",
-  messagingSenderId: "392671275384"
-};
 
 @NgModule({
   declarations: [
@@ -47,9 +44,9 @@ export const firebaseConfig = {
     ConsultarPage,
     AgregarPage,
     TabsPage,
-    GuiaPage
-    
-
+    GuiaPage,
+    AddUserActivityPage,
+    EditUserActivityPage
   ],
   imports: [
     BrowserModule,
@@ -71,9 +68,9 @@ export const firebaseConfig = {
     ConsultarPage,
     AgregarPage,
     TabsPage,
-    GuiaPage
-    
-    
+    GuiaPage,
+    AddUserActivityPage,
+    EditUserActivityPage
   ],
   providers: [
     StatusBar,
