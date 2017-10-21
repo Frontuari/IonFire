@@ -12,4 +12,5 @@ export interface UserActivity {
   d_humanidad: string;
   d_pareja: string;
   d_fecha: string;
+  uid_fecha: string;
 }

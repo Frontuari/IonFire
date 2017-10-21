@@ -1,15 +1,25 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primaryDarkColor">
     <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-    <ion-title>Agregar Datos</ion-title>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Actividades</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="AddUserActivity()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+  </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
+<ion-content class="page-agregar">
 
-<ion-content padding>
-Estoy agregando
+  <ion-list>
+    <ion-item *ngFor="let useractivity of userActivityList$ | async" (click)="selectUserActivity(useractivity)">
+      <h2>{{ useractivity.d_fecha | date : format : shortDate}}</h2>
+    </ion-item>
+  </ion-list>
+  
 </ion-content>

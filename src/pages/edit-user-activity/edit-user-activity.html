@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Actividad {{user.displayName}}</ion-title>
+    <ion-title>Actividad</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,7 +19,7 @@
 <ion-content class="page-ayer">
   <div class="diaAyer">
     <ion-item>
-      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="userActivity.d_fecha"></ion-datetime>
+      <ion-datetime disabled displayFormat="DD/MM/YYYY" [(ngModel)]="userActivity.d_fecha"></ion-datetime>
     </ion-item>
   </div>
 
@@ -106,7 +106,7 @@
         </ion-item>
       </ion-col>
       <ion-col>
-        <button ion-button block (click)="UserActivity(userActivity)">Guardar</button>
+        <button ion-button block (click)="EditUserActivity(userActivity)">Guardar</button>
       </ion-col>
     </ion-row>
   </ion-grid>

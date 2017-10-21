@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Actividad {{user.displayName}}</ion-title>
+    <ion-title>Actividad</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,7 +19,7 @@
 <ion-content class="page-ayer">
   <div class="diaAyer">
     <ion-item>
-      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="myDate"></ion-datetime>
+      <ion-datetime min="{{minDate}}" max="{{maxDate}}" displayFormat="DD/MM/YYYY" [(ngModel)]="myDate"></ion-datetime>
     </ion-item>
   </div>
 

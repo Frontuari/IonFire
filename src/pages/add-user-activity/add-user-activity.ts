@@ -19,6 +19,7 @@ export class AddUserActivityPage {
   user = {} as UserModel;
   //	Create a new FirebaseListObservable Object
   userActivityRef$: FirebaseListObservable<UserActivity[]>
+  userActivityList$: FirebaseListObservable<UserActivity[]>
 
   constructor(
   	public navCtrl: NavController, 
@@ -43,28 +44,31 @@ export class AddUserActivityPage {
     });
   }
 
-  myDate: String = getCurDate(new Date(),0,'+').toISOString();
+  myDate: String = getCurDate(new Date(),0,'+').toISOString().slice(0, 10);
+  minDate: String = getCurDate(new Date(),2,'-').toISOString().slice(0, 10);
+  maxDate: String = getCurDate(new Date(),1,'+').toISOString().slice(0, 10);
 
   UserActivity(userActivity: UserActivity){
-  	//	Push this to our Firebase database under the 'user-activity' node.
-  	this.userActivityRef$.push({
-  		uid: this.user.uid,
-  		d_suenho_descanso: this.userActivity.d_suenho_descanso,
-  		d_suenho_rem: this.userActivity.d_suenho_rem,
-  		d_salud: this.userActivity.d_salud,
-  		d_alimento: this.userActivity.d_alimento,
-  		d_yo_cuerpo: this.userActivity.d_yo_cuerpo,
-  		d_yo_mente: this.userActivity.d_yo_mente,
-  		d_otros: this.userActivity.d_otros,
-  		d_trabajo: this.userActivity.d_trabajo,
-  		d_humanidad: this.userActivity.d_humanidad,
-  		d_pareja: this.userActivity.d_pareja,
-  		d_fecha: this.myDate
-  	});
-  	//	Reset our userActivity
-  	this.userActivity = {} as UserActivity;
-  	//	Navigate the user back to the AyerPage
-  	this.navCtrl.pop();
+    //  Push this to our Firebase database under the 'user-activity' node.
+    this.userActivityRef$.push({
+      uid: this.user.uid,
+      d_suenho_descanso: this.userActivity.d_suenho_descanso,
+      d_suenho_rem: this.userActivity.d_suenho_rem,
+      d_salud: this.userActivity.d_salud,
+      d_alimento: this.userActivity.d_alimento,
+      d_yo_cuerpo: this.userActivity.d_yo_cuerpo,
+      d_yo_mente: this.userActivity.d_yo_mente,
+      d_otros: this.userActivity.d_otros,
+      d_trabajo: this.userActivity.d_trabajo,
+      d_humanidad: this.userActivity.d_humanidad,
+      d_pareja: this.userActivity.d_pareja,
+      d_fecha: this.myDate,
+      uid_fecha: this.user.uid+'_'+this.myDate
+    });
+    //  Reset our userActivity
+    this.userActivity = {} as UserActivity;
+    //  Navigate the user back to the AyerPage
+    this.navCtrl.pop();
   }
 
 }

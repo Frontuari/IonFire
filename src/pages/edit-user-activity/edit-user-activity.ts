@@ -25,9 +25,16 @@ export class EditUserActivityPage {
   	public navParams: NavParams,
   	private database: AngularFireDatabase) {
   	const userActivityId = this.navParams.get('userActivityId');
-  	console.log(userActivityId);
   	this.userActivityRef$ = this.database.object(`user-activity/${userActivityId}`);
   	this.userActivityRef$.subscribe(userActivity => this.userActivity = userActivity);
+  }
+
+  //  Update our Firebase node with new item data
+  EditUserActivity(userActivity: UserActivity){
+    userActivity.uid_fecha = userActivity.uid+'_'+userActivity.d_fecha;
+    this.userActivityRef$.update(userActivity);
+    //  Send the user back to ShoppingListPage
+    this.navCtrl.pop();
   }
 
 }
