@@ -86,6 +86,7 @@ export class SignInPage {
         //this.alert('Error', 'esta plataforma es web voy a emergente.');
       }).catch(error =>{
         /* var errorCode = error.id; */
+        console.log(error);
         var errorMessage = error.message;
         this.alert('Error', 'Ha ocurrido un error inesperado. Por favor intente nuevamente.');
       })     
@@ -122,11 +123,11 @@ export class SignInPage {
 
 
 
-  signInWithPopupGoogle() {
+  /* signInWithPopupGoogle() {
     return this.authService.signInWithPopup().then(resul => {
       this.navCtrl.setRoot(HomePage);
     });
-  }
+  } */
 
   /* signInWithFacebook(){
     let provider = new firebase.auth.FacebookAuthProvider();

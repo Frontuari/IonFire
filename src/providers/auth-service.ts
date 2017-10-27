@@ -10,18 +10,24 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthService {
   user: firebase.User;
-  userModel =  {} as UserModel;
+  userModel = {} as UserModel;
 
   constructor(public angularFireAuth: AngularFireAuth) {
     angularFireAuth.authState.subscribe((user: firebase.User) => {
       this.user = user;
-      this.userModel.uid = user.uid;
+      if(user.uid != null)
+        this.userModel.uid = user.uid;
+      else
+        this.userModel.uid = "0";
       this.userModel.email = user.email;
-      this.userModel.name = user.displayName;
+      if(user.displayName != null)
+        this.userModel.name = user.displayName;
+      else
+        this.userModel.name = "Bienvenido";
       if(user.photoURL != null)
         this.userModel.photoURL = user.photoURL;
       else
-        this.userModel.photoURL = "assets/images/ANDDANDOMK600.png";
+        this.userModel.photoURL = "../assets/images/ANDDANDOMK600.png";
     });
   }
 
@@ -66,8 +72,8 @@ export class AuthService {
   }
 
   /* CON google+ */
-  signInWithPopupGoogle(): firebase.Promise<any> {
+/*   signInWithPopupGoogle(): firebase.Promise<any> {
     return this.angularFireAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  }
+  } */
   /* CON google+ */
 }

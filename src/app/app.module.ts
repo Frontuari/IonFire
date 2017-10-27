@@ -7,8 +7,9 @@ import { Facebook } from '@ionic-native/facebook';
 import { TwitterConnect } from '@ionic-native/twitter-connect';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+/* Base de datos */
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AuthService } from '../providers/auth-service';
 
 import { MyApp } from './app.component';

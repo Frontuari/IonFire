@@ -34,12 +34,9 @@ export class AgregarPage {
   	private database: AngularFireDatabase) {
     this.afAuth.authState.subscribe(data => {
       //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
-      this.userActivityList$ = this.database.list('/user-activity/',{
-        query: {
-          equalsTo: {'uid':data.uid},
-          orderByChild: 'd_fecha'
-        }
-      }).map((array) => array.reverse()) as FirebaseListObservable<UserActivity[]>;
+      this.userActivityList$ = this.database.list('user-activity')
+        .map(_userActivities => 
+          _userActivities.filter(userActivity => userActivity.uid == data.uid)) as FirebaseListObservable<UserActivity[]>;
     });
   }
 
@@ -96,11 +93,6 @@ export class AgregarPage {
   	}
   }
 
-}
-
-function Ctrl($scope)
-{
-    $scope.date = new Date();
 }
 
 function getCurDate(fecha,dias,operando){

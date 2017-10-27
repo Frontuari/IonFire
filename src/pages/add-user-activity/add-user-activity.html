@@ -27,16 +27,8 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label>Salud</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_salud" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
-            minuteValues="0,15,30,45,60,...">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
           <ion-label>Sueño Descanso</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_suenho_descanso" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_suenho_descanso" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
             minuteValues="0,15,30,45,60,...">
           </ion-datetime>
         </ion-item>
@@ -44,7 +36,15 @@
       <ion-col>
         <ion-item>
           <ion-label>Sueño R.E.M.</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_suenho_rem" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_suenho_rem" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+            minuteValues="0,15,30,45,60,...">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Salud</ion-label>
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_salud" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
             minuteValues="0,15,30,45,60,...">
           </ion-datetime>
         </ion-item>
@@ -52,7 +52,7 @@
       <ion-col>
         <ion-item>
           <ion-label>Alimento</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_alimento" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_alimento" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
             minuteValues="0,15,30,45,60,...">
           </ion-datetime>
         </ion-item>
@@ -60,7 +60,7 @@
       <ion-col>
         <ion-item>
           <ion-label>Yo Cuerpo</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_yo_cuerpo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_yo_cuerpo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
             minuteValues="0,15,30,45,60,...">
           </ion-datetime>
         </ion-item>
@@ -68,7 +68,7 @@
       <ion-col>
         <ion-item>
           <ion-label>Yo Mente</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_yo_mente" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_yo_mente" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
             minuteValues="0,15,30,45,60,...">
           </ion-datetime>
         </ion-item>
@@ -76,7 +76,7 @@
       <ion-col>
         <ion-item>
           <ion-label>Otros</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_otros" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_otros" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
             minuteValues="0,15,30,45,60,...">
           </ion-datetime>
         </ion-item>
@@ -84,7 +84,7 @@
       <ion-col>
         <ion-item>
           <ion-label>Trabajo</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_trabajo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_trabajo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
             minuteValues="0,15,30,45,60,...">
           </ion-datetime>
         </ion-item>
@@ -92,7 +92,7 @@
       <ion-col>
         <ion-item>
           <ion-label>Humanidad</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_humanidad" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_humanidad" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
             minuteValues="0,15,30,45,60,...">
           </ion-datetime>
         </ion-item>
@@ -100,7 +100,7 @@
       <ion-col>
         <ion-item>
           <ion-label>Pareja</ion-label>
-          <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="userActivity.d_pareja" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+          <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_pareja" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
             minuteValues="0,15,30,45,60,...">
           </ion-datetime>
         </ion-item>

@@ -21,7 +21,7 @@ export class HomePage {
     private toast: ToastController,
     public authService: AuthService) {
     this.afAuth.authState.subscribe(data => {
-      if(data && data.email && data.displayName){
+      if(data && data.uid && data.displayName){
         this.user.email = data.email;
         this.user.name = data.displayName;
         this.user.photoURL = data.photoURL;
