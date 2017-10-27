@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 //  Import AngularFireDatabase and FirebaseListObservable
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 //	Imports UserActivity Interface
@@ -19,7 +19,6 @@ export class AddUserActivityPage {
   //	Create a new UserActivity Object
   userActivity = {
     d_suenho_descanso: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
-    d_suenho_rem: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
     d_salud: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
     d_alimento: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
     d_yo_cuerpo: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
@@ -64,13 +63,7 @@ export class AddUserActivityPage {
   UserActivity(userActivity: UserActivity){
     let totalHours = sumarHoras(userActivity);
 
-    if(!validarHorasSueno(userActivity)){
-      this.toast.create({
-        message:'El Sueño REM no puede ser mayor al sueño de descanso',
-        duration:3000
-      }).present();
-    }
-    else if(totalHours > 24){
+    if(totalHours > 24){
       this.toast.create({
         message:'El total de horas distribuidas ('+totalHours+') no puede ser mayor a 24',
         duration:3000
@@ -85,7 +78,6 @@ export class AddUserActivityPage {
       this.userActivityRef$.push({
         uid: this.user.uid,
         d_suenho_descanso: this.userActivity.d_suenho_descanso,
-        d_suenho_rem: this.userActivity.d_suenho_rem,
         d_salud: this.userActivity.d_salud,
         d_alimento: this.userActivity.d_alimento,
         d_yo_cuerpo: this.userActivity.d_yo_cuerpo,
@@ -112,25 +104,6 @@ function getCurDate(fecha,dias,operando){
   else
     fecha.setDate(fecha.getDate() - dias);
     return fecha;
-}
-
-function validarHorasSueno(userActivity: UserActivity){
-  let hourSuenoDescanso = Number(userActivity.d_suenho_descanso.slice(11,13));
-  let hourSuenoREM = Number(userActivity.d_suenho_rem.slice(11,13));
-  let minSuenoDescanso = Number(userActivity.d_suenho_descanso.slice(14,16));
-  let minSuenoREM = Number(userActivity.d_suenho_rem.slice(14,16));
-  minSuenoDescanso = minSuenoDescanso / 60;
-  minSuenoREM = minSuenoREM / 60;
-
-  let totalSuenoDescanso = hourSuenoDescanso + minSuenoDescanso;
-  let totalSuenoREM = hourSuenoREM + minSuenoREM;
-
-  if(totalSuenoDescanso < totalSuenoREM){
-    return false;
-  }
-  else{
-    return true;
-  }
 }
 
 function sumarMinutos(userActivity: UserActivity){

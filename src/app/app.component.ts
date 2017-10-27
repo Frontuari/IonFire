@@ -12,7 +12,7 @@ import { AcercaPage } from "../pages/acerca/acerca";
 import { ConsultarPage } from "../pages/consultar/consultar";
 import { AgregarPage } from "../pages/agregar/agregar";
 
-import { TabsPage } from '../pages/tabs/tabs';
+//import { TabsPage } from '../pages/tabs/tabs';
 import { GuiaPage } from "../pages/guia/guia";
 
 

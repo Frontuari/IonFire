@@ -5,7 +5,6 @@ import { AuthService } from '../../providers/auth-service';
 
 import { SignInPage } from '../signin/signin';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { User } from 'firebase/app';
 
 import { UserModel } from '../../models/user-model';
 

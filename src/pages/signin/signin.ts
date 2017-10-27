@@ -87,7 +87,6 @@ export class SignInPage {
       }).catch(error =>{
         /* var errorCode = error.id; */
         console.log(error);
-        var errorMessage = error.message;
         this.alert('Error', 'Ha ocurrido un error inesperado. Por favor intente nuevamente.');
       })     
     }

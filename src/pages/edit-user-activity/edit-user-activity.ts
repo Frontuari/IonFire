@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 //  Import AngularFireDatabase and FirebaseObjectObservable
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 //	Imports UserActivity Interface

@@ -51,11 +51,11 @@ export class ConsultarPage {
         text: 'Vibra '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
       },
       xAxis: {
-        categories: ['Descanso', 'REM', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
+        categories: ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
       },
       yAxis: {
         title: {
-          text: 'Salud Promedio'
+          text: 'Promedio'
         }
       },
       series: [{
