@@ -4,12 +4,14 @@
       <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-    <ion-title>Consultar</ion-title>
+    <ion-title>Consultar Distribución</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content >
-  <chart [options]="chartOptions" style="display: block" type="chart"></chart>
+	<ion-card>
+  		<chart [options]="chartOptions" style="display: block" type="chart"></chart>
+  	</ion-card>
 </ion-content>

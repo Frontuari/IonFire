@@ -62,7 +62,7 @@ export class AddUserActivityPage {
 
   UserActivity(userActivity: UserActivity){
     let totalHours = sumarHoras(userActivity);
-
+    let i = 0;
     if(totalHours > 24){
       this.toast.create({
         message:'El total de horas distribuidas ('+totalHours+') no puede ser mayor a 24',
@@ -72,27 +72,42 @@ export class AddUserActivityPage {
     else{
       this.userActivityList$ = this.database.list('user-activity')
       .map(_userActivities => 
-          _userActivities.filter(userActivity => userActivity.uid_fecha == this.user.uid+'_'+this.myDate)) as FirebaseListObservable<UserActivity[]>;;
-      console.log(this.userActivityList$);
-      //  Push this to our Firebase database under the 'user-activity' node.
-      this.userActivityRef$.push({
-        uid: this.user.uid,
-        d_suenho_descanso: this.userActivity.d_suenho_descanso,
-        d_salud: this.userActivity.d_salud,
-        d_alimento: this.userActivity.d_alimento,
-        d_yo_cuerpo: this.userActivity.d_yo_cuerpo,
-        d_yo_mente: this.userActivity.d_yo_mente,
-        d_otros: this.userActivity.d_otros,
-        d_trabajo: this.userActivity.d_trabajo,
-        d_humanidad: this.userActivity.d_humanidad,
-        d_pareja: this.userActivity.d_pareja,
-        d_fecha: this.myDate,
-        uid_fecha: this.user.uid+'_'+this.myDate
-      });
-      //  Reset our userActivity
-      this.userActivity = {} as UserActivity;
-      //  Navigate the user back to the AyerPage
-      this.navCtrl.pop();
+          _userActivities.filter(userActivity => userActivity.uid_fecha == this.user.uid+'_'+this.myDate)) as FirebaseListObservable<UserActivity[]>;
+      //  Check if data exists
+      this.userActivityList$.subscribe(
+        userActivities => {
+          if(userActivities.length > 0){
+            if(i==0){
+              this.toast.create({
+                message:'No es posible registrar la actividad porque ya existe una actividad para el día seleccionado',
+                duration:3000
+              }).present(); 
+            }
+            i++;
+          }else{
+            //  Push this to our Firebase database under the 'user-activity' node.
+            this.userActivityRef$.push({
+              uid: this.user.uid,
+              d_suenho_descanso: this.userActivity.d_suenho_descanso,
+              d_salud: this.userActivity.d_salud,
+              d_alimento: this.userActivity.d_alimento,
+              d_yo_cuerpo: this.userActivity.d_yo_cuerpo,
+              d_yo_mente: this.userActivity.d_yo_mente,
+              d_otros: this.userActivity.d_otros,
+              d_trabajo: this.userActivity.d_trabajo,
+              d_humanidad: this.userActivity.d_humanidad,
+              d_pareja: this.userActivity.d_pareja,
+              d_fecha: this.myDate,
+              uid_fecha: this.user.uid+'_'+this.myDate
+            });
+            i++;
+            //  Reset our userActivity
+            this.userActivity = {} as UserActivity;
+            //  Navigate the user back to the AyerPage
+            this.navCtrl.pop();
+          }
+        }
+      );
     }
   }
 

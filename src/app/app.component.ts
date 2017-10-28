@@ -9,10 +9,9 @@ import { UserModel } from '../models/user-model';
 import { SignInPage } from '../pages/signin/signin';
 import { HomePage } from '../pages/home/home';
 import { AcercaPage } from "../pages/acerca/acerca";
-import { ConsultarPage } from "../pages/consultar/consultar";
 import { AgregarPage } from "../pages/agregar/agregar";
 
-//import { TabsPage } from '../pages/tabs/tabs';
+import { TabsPage } from '../pages/tabs/tabs';
 import { GuiaPage } from "../pages/guia/guia";
 
 
@@ -39,7 +38,7 @@ export class MyApp {
     this.pages = [
       { title: 'Inicio',        component: HomePage, icon: 'home' },
       { title: 'Agregar Datos', component: AgregarPage, icon: 'add-circle' },
-      { title: 'Consultar ',    component: ConsultarPage, icon: 'filing' },/* paper, podium */
+      { title: 'Consultar ',    component: TabsPage, icon: 'filing' },/* paper, podium */
       { title: 'Guía rápida',     component: GuiaPage, icon: 'help' },
       { title: 'Acerca de',     component: AcercaPage, icon: 'information-circle' }      
     ];
@@ -47,7 +46,6 @@ export class MyApp {
     if (authService.authenticated) {
       this.rootPage = SignInPage;
     } else {
-      console.log(authService.userModel);
       this.user = authService.userModel;
       this.rootPage = HomePage;
     }

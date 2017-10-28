@@ -24,6 +24,8 @@ export class AgregarPage {
 
   userActivityList$: FirebaseListObservable<UserActivity[]>;
   user = {} as UserModel;
+  order = "d_fecha";
+  ascending = false;
 
   constructor(
   	public navCtrl: NavController, 

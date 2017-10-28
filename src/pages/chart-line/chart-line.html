@@ -1,0 +1,17 @@
+<ion-header>
+
+  <ion-navbar color="primaryDarkColor">
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Consultar Vibra</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+	<ion-card>
+  		<chart [options]="chartOptions" style="display: block" type="chart"></chart>
+  	</ion-card>
+</ion-content>

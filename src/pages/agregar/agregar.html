@@ -17,7 +17,7 @@
 <ion-content class="page-agregar">
 
   <ion-list>
-    <ion-item *ngFor="let useractivity of userActivityList$ | async" (click)="selectUserActivity(useractivity)">
+    <ion-item *ngFor="let useractivity of userActivityList$ | async | orderBy:order:ascending" (click)="selectUserActivity(useractivity)">
       <h2>{{ useractivity.d_fecha | date : format : shortDate}}</h2>
     </ion-item>
   </ion-list>

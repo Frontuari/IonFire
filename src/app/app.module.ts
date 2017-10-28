@@ -18,11 +18,14 @@ import { SignInPage } from '../pages/signin/signin';
 import { SignUpPage } from '../pages/signup/signup';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { AcercaPage } from "../pages/acerca/acerca";
-import { ConsultarPage } from "../pages/consultar/consultar";
-import { AgregarPage } from "../pages/agregar/agregar";
+import { AgregarPage } from '../pages/agregar/agregar';
+// Import chart pages
+import { ChartLinePage } from '../pages/chart-line/chart-line';
+import { ChartPiePage } from '../pages/chart-pie/chart-pie';
+import { ChartBarPage } from '../pages/chart-bar/chart-bar';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { GuiaPage } from "../pages/guia/guia";
+import { GuiaPage } from '../pages/guia/guia';
 
 //  Import AddUserActivityPage and EditUserActivityPage
 import { AddUserActivityPage } from '../pages/add-user-activity/add-user-activity';
@@ -32,6 +35,8 @@ import { ChartModule } from 'angular2-highcharts';
 import * as highcharts from 'highcharts';
 //  Import FireBase Credentials
 import { firebaseConfig } from './app.firebase.config';
+//  Import OrderBy 
+import {OrderBy} from "./orderby.pipe"
 
 
 @NgModule({
@@ -42,12 +47,15 @@ import { firebaseConfig } from './app.firebase.config';
     SignUpPage,
     ResetPasswordPage,
     AcercaPage,
-    ConsultarPage,
     AgregarPage,
     TabsPage,
+    ChartLinePage,
+    ChartPiePage,
+    ChartBarPage,
     GuiaPage,
     AddUserActivityPage,
-    EditUserActivityPage
+    EditUserActivityPage,
+    OrderBy
   ],
   imports: [
     BrowserModule,
@@ -66,9 +74,11 @@ import { firebaseConfig } from './app.firebase.config';
     SignUpPage,
     ResetPasswordPage,
     AcercaPage,
-    ConsultarPage,
     AgregarPage,
     TabsPage,
+    ChartLinePage,
+    ChartPiePage,
+    ChartBarPage,
     GuiaPage,
     AddUserActivityPage,
     EditUserActivityPage

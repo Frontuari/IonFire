@@ -1,21 +1,20 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage,NavController } from 'ionic-angular';
+//	Import chart pages
+import { ChartLinePage } from '../chart-line/chart-line';
+import { ChartPiePage } from '../chart-pie/chart-pie';
+import { ChartBarPage } from '../chart-bar/chart-bar';
 
-//	Import Pages
-//import { AyerPage } from '../ayer/ayer';
-//import { HoyPage } from '../hoy/hoy';
-//import { MananaPage } from '../manana/manana';
-
+@IonicPage()
 @Component({
   selector: 'page-tabs',
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-//  ayerRoot = 'AyerPage'
-//  hoyRoot = 'HoyPage'
-//  mananaRoot = 'MananaPage'
-
+  ChartLineRoot = ChartLinePage;
+  ChartPieRoot = ChartPiePage;
+  ChartBarRoot = ChartBarPage;
 
   constructor(public navCtrl: NavController) {}
 
