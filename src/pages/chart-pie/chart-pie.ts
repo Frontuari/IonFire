@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 //  Import AngularFireDatabase and FirebaseListObservable
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 //  Imports UserActivity Interface
 import { UserActivity } from '../../models/user-activity/user-activity.interface';
-//  Imports UserModels and AuthService
-import { AuthService } from '../../providers/auth-service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../../models/user-model';
 //  Import for orderby data from Angular
@@ -28,7 +26,6 @@ export class ChartPiePage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public afAuth: AngularFireAuth,
-    private toast: ToastController,
     private database: AngularFireDatabase) {
 
     let charData = [];
@@ -42,12 +39,10 @@ export class ChartPiePage {
       //  Build data for chart Line for Current Month
       this.userActivityList$.subscribe(
         userActivities => {
-          let i = 0;
           userActivities.map(userActivity => {
             let d = new Date();
             let firstOfMonth = new Date(d.getFullYear(), d.getMonth(), 1);
             let lastOfMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0);
-            let weekNumber = 0;
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(firstOfMonth),dateFormat(lastOfMonth)) == 1){
               //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
               charData.push({
@@ -181,8 +176,4 @@ function getHour(concept){
   let totalMin = Number(concept.slice(14,16));
 
   return totalHour + (totalMin / 60);
-}
-
-function isEmptyObject(obj) {
-  return (obj && (Object.keys(obj).length === 0));
 }

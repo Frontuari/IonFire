@@ -74,11 +74,14 @@ export class SignInPage {
 
   signInWithFacebook() {
     if (this.platform.is('cordova')) {               
-      return this.facebook.login(['email']).then(result => {
-        // this.authService.signInWithFacebook(result.authResponse.accessToken).then(result => {
-        this.navCtrl.setRoot(HomePage);
-        //  });
+      return this.facebook.login(['email','public_profile']).then(result => {
+          this.authService.signInWithFacebook(result.authResponse.accessToken).then(result => {
+            this.navCtrl.setRoot(HomePage);
+          });
         //this.alert('Error', 'Esta plataforma es cordova.');
+      }).catch(error =>{
+        console.log(error);
+        this.alert('Error','Ha ocurrido un error inesperado. Por favor intente nuevamente.');
       });
     } else {
       return this.authService.signInWithPopup().then(result => {        
@@ -91,7 +94,7 @@ export class SignInPage {
       })     
     }
   }
-
+  
   signInWithTwitter() {
     if (this.platform.is('cordova')) {
       this.twitterConnect.login().then(this.onSuccess, this.onError);

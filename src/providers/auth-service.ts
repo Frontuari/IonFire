@@ -10,7 +10,12 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthService {
   user: firebase.User;
-  userModel = {} as UserModel;
+  userModel = {
+    uid: "0",
+    email: "",
+    name: "Bienvenido",
+    photoURL: "../assets/images/ANDDANDOMK600.png"
+  } as UserModel;
 
   constructor(public angularFireAuth: AngularFireAuth) {
     angularFireAuth.authState.subscribe((user: firebase.User) => {
