@@ -19,14 +19,16 @@
           <button ion-button color="primary">Skip</button>
         </ion-buttons> -->
       </ion-toolbar>
-      <img [src]="slide.image" class="slide-image" />
+      <!-- <img [src]="slide.image" class="slide-image" /> -->
+      <ion-img [width]="slide.width" [height]="slide.height" [src]="slide.image" class="slide-image"></ion-img>
       <h2 class="slide-title" [innerHTML]="slide.title"></h2>
       <p [innerHTML]="slide.description"></p>
     </ion-slide>
     <ion-slide>
       <ion-toolbar>
       </ion-toolbar>
-      <img src="assets/img/ica-slidebox-img-4.png" class="slide-image" />
+      <!-- <img src="../../assets/images/ANDDANDOmk750.png" class="slide-image" /> -->
+      <ion-img width="320" height="90"  src="../../assets/images/ANDDANDOmk300.png"></ion-img>
       <h2 class="slide-title">Listo Para Empezar?</h2>
       <button ion-button large clear icon-end color="primary" (click)=irHome()>
             Anddando

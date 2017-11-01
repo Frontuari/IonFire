@@ -29,9 +29,9 @@ export class HomePage {
     public authService: AuthService,
     private database: AngularFireDatabase) {
     this.afAuth.authState.subscribe(data => {
-      if(data && data.uid && data.displayName){
+      if(data && data.uid){
         this.user.email = data.email;
-        this.user.name = data.displayName;
+        this.user.name = data.displayName != null ? data.displayName : '';
         this.user.photoURL = data.photoURL;
         this.user.uid = data.uid;
         //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
@@ -46,7 +46,7 @@ export class HomePage {
         );
         //  Send messages to welcome          
         this.toast.create({
-          message:`Bienvenido ${data.displayName}`,
+          message:`Bienvenido ${this.user.name}`,
           duration:3000
         }).present();
       }else{

@@ -25,10 +25,12 @@ export class AuthService {
       else
         this.userModel.uid = "0";
       this.userModel.email = user.email;
+
       if(user.displayName != null)
         this.userModel.name = user.displayName;
       else
         this.userModel.name = "Bienvenido";
+
       if(user.photoURL != null)
         this.userModel.photoURL = user.photoURL;
       else

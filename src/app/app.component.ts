@@ -45,7 +45,8 @@ export class MyApp {
     
     if (authService.authenticated) {
       this.rootPage = SignInPage;
-    } else {
+    } 
+    else {
       this.user = authService.userModel;
       this.rootPage = HomePage;
     }

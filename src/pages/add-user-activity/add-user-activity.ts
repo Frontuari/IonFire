@@ -42,7 +42,7 @@ export class AddUserActivityPage {
   	private database: AngularFireDatabase) {
   	this.userActivityRef$ = this.database.list('user-activity');
     this.afAuth.authState.subscribe(data => {
-      if(data && data.uid && data.displayName){
+      if(data && data.uid){
         this.user.email = data.email;
         this.user.name = data.displayName;
         this.user.photoURL = data.photoURL;
