@@ -38,7 +38,7 @@ export class MyApp {
     this.pages = [
       { title: 'Inicio',        component: HomePage, icon: 'home', color: 'dark' },
       { title: 'Agregar Datos', component: AgregarPage, icon: 'add-circle', color: 'dark' },      
-      { title: 'Consultar ',    component: TabsPage, icon: 'filing', color: 'dark' },/* paper, podium */
+      { title: 'Como Estoy ',    component: TabsPage, icon: 'filing', color: 'dark' },/* paper, podium */
       { title: 'Guía rápida',     component: GuiaPage, icon: 'help', color: 'dark' },
       { title: 'Acerca de',     component: AcercaPage, icon: 'information-circle', color: 'dark' }      
     ];

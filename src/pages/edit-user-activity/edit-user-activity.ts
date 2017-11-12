@@ -19,7 +19,7 @@ export class EditUserActivityPage {
     //this.press++
     let alert = this.alertCtrl.create({
       title: 'Sueño',
-      subTitle: 'Cuanto tiempo ha dedicado a dormir, sueño profundo durante la noche o el día.',
+      subTitle: 'Actividades relacionadas con dormir: Soñar, conciliar el sueño, tomar una siesta, etc.',
       buttons: ['OK']
     });
     alert.present();
@@ -29,7 +29,7 @@ export class EditUserActivityPage {
     //this.press++
     let alert = this.alertCtrl.create({
       title: 'Alimento',
-      subTitle: 'Cuanto tiempo ha dedicado a preparar y comer tus alimentos.',
+      subTitle: 'Actividades relacionadas con la comida: Cocina, siembra, mercado, medicina, etc.',
       buttons: ['OK']
     });
     alert.present();
@@ -39,7 +39,7 @@ export class EditUserActivityPage {
     //this.press++
     let alert = this.alertCtrl.create({
       title: 'Otros',
-      subTitle: 'Cuanto tiempo ha dedicado a compartir, reir e incluso abrazar a otros.',
+      subTitle: 'Actividades dedicadas a las relaciones humanas: Hablar con otros, familia, amigos, conocer nuevas personas, etc.',
       buttons: ['OK']
     });
     alert.present();
@@ -49,7 +49,7 @@ export class EditUserActivityPage {
     //this.press++
     let alert = this.alertCtrl.create({
       title: 'Trabajo',
-      subTitle: 'Cuanto horas o minutos le estas dedicando al trabajo.',
+      subTitle: 'Actividades que impliquen un esfuerzo productivo: Tareas domésticas, empleo, estudio, etc.',
       buttons: ['OK']
     });
     alert.present();
@@ -59,7 +59,7 @@ export class EditUserActivityPage {
     //this.press++
     let alert = this.alertCtrl.create({
       title: 'Humanidad',
-      subTitle: 'Cuanto horas o minutos dedicas a la humanidad.',
+      subTitle: 'Actos que te recuerden que eres un ser humano: Observar la naturaleza, ayudar al otro, orar o meditar, caminar, viajar, etc.',
       buttons: ['OK']
     });
     alert.present();
@@ -69,7 +69,7 @@ export class EditUserActivityPage {
     //this.press++
     let alert = this.alertCtrl.create({
       title: 'Pareja',
-      subTitle: 'Cuanto horas o minutos dedicas a tu pareja.',
+      subTitle: 'Actividades que realizas con quien compartes todo en tu vida. Asimismo, escuchar, intimar, resolver problemas, etc.',
       buttons: ['OK']
     });
     alert.present();
@@ -79,7 +79,7 @@ export class EditUserActivityPage {
     //this.press++
     let alert = this.alertCtrl.create({
       title: ' Yo Cuerpo',
-      subTitle: 'Cuanto horas o minutos dedicas a ejercitarte, correr, Yoga.',
+      subTitle: 'Actividades relacionadas con el bienestar corporal: Ejercicio, salud, higiene, etc.',
       buttons: ['OK']
     });
     alert.present();
@@ -89,7 +89,7 @@ export class EditUserActivityPage {
     //this.press++
     let alert = this.alertCtrl.create({
       title: 'Yo Mente',
-      subTitle: 'Cuanto horas o minutos dedicas a la lectura aprender cosas nuevas durante el dia.',
+      subTitle: 'Actividades para ejercitar el cerebro y la memoria: Leer, aprender un idioma, música, ocio, etc.',
       buttons: ['OK']
     });
     alert.present();

@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Actividad</ion-title>
+    <ion-title>24/7</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -53,7 +53,34 @@
         minuteValues="0,15,30,45,60,...">
       </ion-datetime>
     </ion-item>
+  </ion-list>
 
+  <ion-list>
+    <!-- Cabecera  Yo   -->
+    <ion-list-header>
+      Yo
+    </ion-list-header>
+    <!-- Cabecera  Yo   -->
+
+    <ion-item (press)="pressCuerpo($event)">
+      <ion-icon name="body" item-start color="Verde"></ion-icon>
+      <ion-label>Cuerpo</ion-label>
+      <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_yo_cuerpo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+        minuteValues="0,15,30,45,60,...">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item (press)="pressMente($event)">
+      <ion-icon name="book" item-start color="Verde"></ion-icon>
+      <ion-label>Mente</ion-label>
+      <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_yo_mente" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+        minuteValues="0,15,30,45,60,...">
+      </ion-datetime>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
     <ion-item (press)="pressOtros($event)">
       <ion-icon name="people" item-start color="Amarillo"></ion-icon>
       <ion-label>Otros</ion-label>
@@ -86,31 +113,6 @@
         minuteValues="0,15,30,45,60,...">
       </ion-datetime>
     </ion-item>
-  </ion-list>
-
-  <ion-list>
-    <!-- Cabecera  Yo   -->
-    <ion-list-header>
-      Yo
-    </ion-list-header>
-    <!-- Cabecera  Yo   -->
-
-    <ion-item (press)="pressCuerpo($event)">
-      <ion-icon name="body" item-start color="Verde"></ion-icon>
-      <ion-label>Cuerpo</ion-label>
-      <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_yo_cuerpo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
-        minuteValues="0,15,30,45,60,...">
-      </ion-datetime>
-    </ion-item>
-
-    <ion-item (press)="pressMente($event)">
-      <ion-icon name="book" item-start color="Verde"></ion-icon>
-      <ion-label>Mente</ion-label>
-      <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_yo_mente" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
-        minuteValues="0,15,30,45,60,...">
-      </ion-datetime>
-    </ion-item>
-    
   </ion-list>
 
   <button ion-button block (click)="EditUserActivity(userActivity)">Guardar</button>
