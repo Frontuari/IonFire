@@ -15,16 +15,16 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-@font-face{
+/* @font-face{
     font-family: Audiowide;
-    src: url('../assets/fonts/Audiowide-Regular.ttf') format('opentype');
-    font-weight: normal;
+    src: url('../assets/fonts/Berlin-Sans-FB-Regular.ttf') format('opentype');
+    font-weight:normal;
     font-style: normal;
     }     
 
     *{
-    font-family: Audiowide;
-    }
+    font-family: Berlin Sans FB;
+    } */
 
     .circular {
         width: 100px;
@@ -33,10 +33,15 @@
         overflow:hidden;
     }
 
-    .fondoImagen{
-        background-color: #ffb744;
-        border-bottom: 1px solid;
+    /* .fondoImagen{      
+        background-image: url('https://s-media-cache-ak0.pinimg.com/736x/10/09/b4/1009b42523f25e2793cbf3b3f11ec081.jpg');
+        background-size: cover; 
+        top: 0;
+    } */
+    .toolbar-background-md{
+        background:transparent;
     }
+
     .cuadrada{
         align-items: center;
         background-color: #c55700;        
@@ -59,7 +64,7 @@
 
     .txtFacebook{    
         color: #4b4f56;
-        font-size: 18px;
+        font-size: 12px;
         line-height:22px;
         text-align: center;
         background-color: #fff;

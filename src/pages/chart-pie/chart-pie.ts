@@ -49,10 +49,10 @@ export class ChartPiePage {
                 "name" : 'Descanso',
                 "y" : getHour(userActivity.d_suenho_descanso)
               });
-              charData.push({
+             /*  charData.push({
                 "name" : 'Salud',
                 "y" : getHour(userActivity.d_salud)
-              });
+              }); */
               charData.push({
                 "name" : 'Alimento',
                 "y" : getHour(userActivity.d_alimento)

@@ -3,7 +3,7 @@ export interface UserActivity {
   uid: string;
   d_suenho_descanso: string;
   d_suenho_rem: string;
-  d_salud: string;
+  //d_salud: string;
   d_alimento: string;
   d_yo_cuerpo: string;
   d_yo_mente: string;

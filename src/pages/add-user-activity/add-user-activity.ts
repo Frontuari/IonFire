@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 //  Import AngularFireDatabase and FirebaseListObservable
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 //	Imports UserActivity Interface
@@ -16,10 +16,96 @@ import "rxjs/add/operator/map";
   templateUrl: 'add-user-activity.html',
 })
 export class AddUserActivityPage {
+
+
+      //Ayuda de cada item
+  //public press: number = 0;
+
+  pressSueno(e) {
+    //this.press++
+    let alert = this.alertCtrl.create({
+      title: 'Sueño',
+      subTitle: 'Cuanto tiempo ha dedicado a dormir, sueño profundo durante la noche o el día.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  pressAlimento(e) {
+    //this.press++
+    let alert = this.alertCtrl.create({
+      title: 'Alimento',
+      subTitle: 'Cuanto tiempo ha dedicado a preparar y comer tus alimentos.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  pressOtros(e) {
+    //this.press++
+    let alert = this.alertCtrl.create({
+      title: 'Otros',
+      subTitle: 'Cuanto tiempo ha dedicado a compartir, reir e incluso abrazar a otros.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  pressTrabajo(e) {
+    //this.press++
+    let alert = this.alertCtrl.create({
+      title: 'Trabajo',
+      subTitle: 'Cuanto horas o minutos le estas dedicando al trabajo.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  pressHumanidad(e) {
+    //this.press++
+    let alert = this.alertCtrl.create({
+      title: 'Humanidad',
+      subTitle: 'Cuanto horas o minutos dedicas a la humanidad.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  
+  pressPareja(e) {
+    //this.press++
+    let alert = this.alertCtrl.create({
+      title: 'Pareja',
+      subTitle: 'Cuanto horas o minutos dedicas a tu pareja.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  
+  pressCuerpo(e) {
+    //this.press++
+    let alert = this.alertCtrl.create({
+      title: ' Yo Cuerpo',
+      subTitle: 'Cuanto horas o minutos dedicas a ejercitarte, correr, Yoga.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  
+  pressMente(e) {
+    //this.press++
+    let alert = this.alertCtrl.create({
+      title: 'Yo Mente',
+      subTitle: 'Cuanto horas o minutos dedicas a la lectura aprender cosas nuevas durante el dia.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  
+
   //	Create a new UserActivity Object
   userActivity = {
     d_suenho_descanso: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
-    d_salud: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
+    //d_salud: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
     d_alimento: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
     d_yo_cuerpo: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
     d_yo_mente: getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
@@ -38,6 +124,7 @@ export class AddUserActivityPage {
   	public navParams: NavParams,
     public afAuth: AngularFireAuth,
     private toast: ToastController,
+    public alertCtrl: AlertController,
     private authService: AuthService,
   	private database: AngularFireDatabase) {
   	this.userActivityRef$ = this.database.list('user-activity');
@@ -89,7 +176,7 @@ export class AddUserActivityPage {
             this.userActivityRef$.push({
               uid: this.user.uid,
               d_suenho_descanso: this.userActivity.d_suenho_descanso,
-              d_salud: this.userActivity.d_salud,
+              //d_salud: this.userActivity.d_salud,
               d_alimento: this.userActivity.d_alimento,
               d_yo_cuerpo: this.userActivity.d_yo_cuerpo,
               d_yo_mente: this.userActivity.d_yo_mente,
@@ -124,7 +211,7 @@ function getCurDate(fecha,dias,operando){
 function sumarMinutos(userActivity: UserActivity){
   let totalMin = 0;
   totalMin = Number(userActivity.d_suenho_descanso.slice(14,16));
-  totalMin = totalMin + Number(userActivity.d_salud.slice(14,16));
+  //totalMin = totalMin + Number(userActivity.d_salud.slice(14,16));
   totalMin = totalMin + Number(userActivity.d_alimento.slice(14,16));
   totalMin = totalMin + Number(userActivity.d_yo_cuerpo.slice(14,16));
   totalMin = totalMin + Number(userActivity.d_yo_mente.slice(14,16));
@@ -141,7 +228,7 @@ function sumarHoras(userActivity: UserActivity){
   let totalMin = sumarMinutos(userActivity);
   let totalHoras = 0;
   totalHoras = Number(userActivity.d_suenho_descanso.slice(11,13));
-  totalHoras = totalHoras + Number(userActivity.d_salud.slice(11,13));
+  //totalHoras = totalHoras + Number(userActivity.d_salud.slice(11,13));
   totalHoras = totalHoras + Number(userActivity.d_alimento.slice(11,13));
   totalHoras = totalHoras + Number(userActivity.d_yo_cuerpo.slice(11,13));
   totalHoras = totalHoras + Number(userActivity.d_yo_mente.slice(11,13));

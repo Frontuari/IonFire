@@ -1,27 +1,28 @@
 <ion-menu [content]="content">
-    <!--   <ion-header>
+    <ion-header>
         <ion-toolbar>
-            <ion-title>Menu</ion-title>
+            <!--<ion-title>Menu</ion-title>-->
+            <ion-item style="background-color:transparent">
+                <ion-avatar item-start>
+                    <img src="{{user.photoURL}}">
+                </ion-avatar>
+                <h3>{{user.name}}</h3>
+                <p>{{user.email}}</p>
+            </ion-item>
         </ion-toolbar>
-    </ion-header> -->
-
-    <ion-content>
-        <div class="fondoImagen">
-            <div class="facebook">
-                <img class="cuadrada" src="{{user.photoURL}}" />
-            </div>
-        </div>
         <div class="txtFacebook">
-            {{user.name}}
+            <button ion-button clear item-end>Ver Perfil</button>
         </div>
+    </ion-header>
+
+    <ion-content padding="true" style="background-image: url('assets/images/shattered.png')">
         <ion-list>
-            <button color="secondaryLightColor" ion-item menuClose ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" menu-close>
-            <ion-icon item-left name="{{p.icon}}"></ion-icon>
-          {{p.title}}
-        </button>
+            <button ion-item menuClose ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" menu-close>
+                <ion-icon item-left name="{{p.icon}}" color="{{p.color}}"></ion-icon>
+                {{p.title}}
+            </button>
         </ion-list>
     </ion-content>
-
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

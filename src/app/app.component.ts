@@ -24,23 +24,23 @@ export class MyApp {
   @ViewChild('content') nav: Nav;
   public rootPage:any;
 
-  public pages: Array<{title: string, component: any, icon: string}>;
+  public pages: Array<{title: string, component: any, icon: string , color: string}>;
 
   public user = {} as UserModel;
 
   constructor(platform: Platform, 
     statusBar: StatusBar, 
-    splashScreen: SplashScreen, 
+    splashScreen: SplashScreen,
     authService: AuthService) {
     // used for an example of ngFor and navigation
     this.rootPage = SignInPage;
 
     this.pages = [
-      { title: 'Inicio',        component: HomePage, icon: 'home' },
-      { title: 'Agregar Datos', component: AgregarPage, icon: 'add-circle' },
-      { title: 'Consultar ',    component: TabsPage, icon: 'filing' },/* paper, podium */
-      { title: 'Guía rápida',     component: GuiaPage, icon: 'help' },
-      { title: 'Acerca de',     component: AcercaPage, icon: 'information-circle' }      
+      { title: 'Inicio',        component: HomePage, icon: 'home', color: 'dark' },
+      { title: 'Agregar Datos', component: AgregarPage, icon: 'add-circle', color: 'dark' },      
+      { title: 'Consultar ',    component: TabsPage, icon: 'filing', color: 'dark' },/* paper, podium */
+      { title: 'Guía rápida',     component: GuiaPage, icon: 'help', color: 'dark' },
+      { title: 'Acerca de',     component: AcercaPage, icon: 'information-circle', color: 'dark' }      
     ];
     
     if (authService.authenticated) {

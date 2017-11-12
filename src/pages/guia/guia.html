@@ -3,8 +3,8 @@
 
   <ion-navbar color="primaryDarkColor">
     <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Guía rápida</ion-title>
   </ion-navbar>
 
@@ -14,11 +14,11 @@
 <ion-content class="tutorial-page">
   <ion-slides pager>
     <ion-slide *ngFor="let slide of slides">
-      <ion-toolbar>
-        <!-- <ion-buttons end>
+      <!--<ion-toolbar>
+         <ion-buttons end>
           <button ion-button color="primary">Skip</button>
-        </ion-buttons> -->
-      </ion-toolbar>
+        </ion-buttons> 
+      </ion-toolbar>-->
       <!-- <img [src]="slide.image" class="slide-image" /> -->
       <ion-img [width]="slide.width" [height]="slide.height" [src]="slide.image" class="slide-image"></ion-img>
       <h2 class="slide-title" [innerHTML]="slide.title"></h2>
@@ -28,12 +28,12 @@
       <ion-toolbar>
       </ion-toolbar>
       <!-- <img src="../../assets/images/ANDDANDOmk750.png" class="slide-image" /> -->
-      <ion-img width="320" height="90"  src="../../assets/images/ANDDANDOmk300.png"></ion-img>
+      <ion-img width="220" height="62" src="assets/images/ANDDANDOmk300.png"></ion-img>
       <h2 class="slide-title">Listo Para Empezar?</h2>
       <button ion-button large clear icon-end color="primary" (click)=irHome()>
-            Anddando
-            <ion-icon name="arrow-forward"></ion-icon>
-          </button>
+        Anddando
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
     </ion-slide>
   </ion-slides>
 </ion-content>

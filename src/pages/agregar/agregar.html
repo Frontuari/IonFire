@@ -9,17 +9,18 @@
       <button ion-button icon-only (click)="AddUserActivity()">
         <ion-icon name="add"></ion-icon>
       </button>
-  </ion-buttons>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content class="page-agregar">
-
-  <ion-list>
-    <ion-item *ngFor="let useractivity of userActivityList$ | async | orderBy:order:ascending" (click)="selectUserActivity(useractivity)">
-      <h2>{{ useractivity.d_fecha | date : format : shortDate}}</h2>
-    </ion-item>
-  </ion-list>
+<ion-content padding="true" style="background-image: url('../../assets/images/shattered.png')">
+    <ion-list>
+      <ion-item *ngFor="let useractivity of userActivityList$ | async | orderBy:order:ascending" (click)="selectUserActivity(useractivity)">
+        <ion-icon name="calendar" item-start></ion-icon>
+        <ion-label>Actividad de {{ useractivity.d_fecha | date : format : shortDate}}</ion-label>
+        <!-- <h2>{{ useractivity.d_fecha | date : format : shortDate}}</h2> -->
+      </ion-item>
+    </ion-list>
   
 </ion-content>

@@ -50,7 +50,7 @@ export class ChartBarPage {
                 //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
                 "activities" : [
                   getHour(userActivity.d_suenho_descanso),
-                  getHour(userActivity.d_salud),
+                  //getHour(userActivity.d_salud),
                   getHour(userActivity.d_alimento),
                   getHour(userActivity.d_yo_cuerpo),
                   getHour(userActivity.d_yo_mente),
@@ -61,8 +61,8 @@ export class ChartBarPage {
               });
             }
           })
-
-          let res = alasql('SELECT name, sum(activities -> 0) AS descanso, sum(activities -> 1) AS salud, sum(activities -> 2) AS alimento, \
+          //sum(activities -> 1) AS salud,
+          let res = alasql('SELECT name, sum(activities -> 0) AS descanso,  sum(activities -> 2) AS alimento, \
           sum(activities -> 3) AS yo_cuerpo, sum(activities -> 4) AS yo_mente, sum(activities -> 5) AS otros, sum(activities -> 6) AS trabajo, \
           sum(activities -> 7) AS humanidad \
           FROM ? \
@@ -70,12 +70,13 @@ export class ChartBarPage {
           ORDER BY name ASC',[charData]);
 
           //  Build array of object for chart
+          //res[i].salud,
           let chartdata = [];
           for(let i = 0; i < res.length; i++){
             chartdata.push({
               name: res[i].name,
               data: [
-                res[i].descanso,res[i].salud,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
+                res[i].descanso,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
                 res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja,
               ]
             })
@@ -89,7 +90,8 @@ export class ChartBarPage {
               text: 'Con/Sin Pareja '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
             },
             xAxis: {
-              categories: ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad']
+              //, 'Salud'
+              categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad']
             },
             yAxis: {
                min: 0,

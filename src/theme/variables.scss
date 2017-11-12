@@ -42,6 +42,15 @@ $colors: (
   secondaryDarkColor: #000000,
   primaryTextColor: #000000,
   secondaryTextColor: #ffffff,
+
+  Morado:#442662,
+  Azul:#0CB7F2,
+  Verde: #009D71,
+  Amarillo: #FFD700,
+  Rojo: #CB1D11,
+  Plateado: #C0C0C0, 
+  Anaranjado:#E87B31,
+
   
   primary:    #488aff,
   secondary:  #32db64,
@@ -66,7 +75,7 @@ $colors: (
 }
 
 .fondoHome{  
-  background-color: #cccccc !important;
+  /*background-color: #cccccc !important;*/
   width:auto;      
 }
 
@@ -126,6 +135,7 @@ $colors: (
 .l-signup-header .spotify-logo {
   width: 126px;
   height: 38px;  
+  padding-left:25px;
 }
 
 .l-signup-body {
@@ -136,6 +146,11 @@ $colors: (
 .l-box-content {
   margin: 0 auto;
   max-width: 26.875em;
+}
+
+.l-box-content > img{  
+  margin: 0 auto;
+  padding-left: 50px;  
 }
 
 .l-signup-header > .spotify-logo {
