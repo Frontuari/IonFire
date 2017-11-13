@@ -17,19 +17,57 @@
 
 <ion-content padding="true" style="background-image: url('assets/images/shattered.png')">
   <div class="fondoHome">
+    <div class="perfil">
+      <ion-item style="background-color:transparent">
+        <ion-avatar item-start>
+          <img src="{{user.photoURL}}">
+        </ion-avatar>
+        <h3 style="color:white; font-size:18px;">{{user.name}}</h3>
+        <p style="color:white;">{{user.email}}</p>
+      </ion-item>
+      <div class="conteo">
+        <ion-item>
+          <ion-label>Registro 24/7</ion-label>
+        </ion-item>
+        <!-- <div class="circulo">
+          {{userActivitySize}}
+        </div> -->
+        <!-- <p>Dias</p> -->
+
+<h1><span class="grey">{{userActivitySize}}</span>Dias</h1>
+
+<h1><span class="red">2</span>Semana</h1>
+
+<h1><span class="blue">3</span>Mes</h1>
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+
+    <!-- <div class="txtFacebook">
+      <button ion-button clear item-end>Ver Perfil</button>
+    </div> -->
+
+
     <!--<img src="assets/images/ANDDANDOmk750.png" />-->
     <div class="video">
       <div class="card">
         <ion-item>
-          <div class="video-container">                                                                  
+          <div class="video-container">
             <iframe src="https://www.youtube.com/embed/2be2ZLdcml8" frameborder="0" width="100%" height="300"></iframe>
           </div>
         </ion-item>
       </div>
     </div>
-    
-      <!--<p>{{user.name}}</p>
+
+    <!--<p>{{user.name}}</p>
       <p>{{user.email}}</p>-->
-      <p>Es tu día de actividades # {{userActivitySize}}</p>
+
   </div>
 </ion-content>
