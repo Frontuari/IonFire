@@ -19,6 +19,7 @@ import { SignUpPage } from '../pages/signup/signup';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { AcercaPage } from "../pages/acerca/acerca";
 import { AgregarPage } from '../pages/agregar/agregar';
+import { WhatDoIWantPage } from '../pages/que-quiero/que-quiero';
 // Import chart pages
 import { ChartLinePage } from '../pages/chart-line/chart-line';
 import { ChartPiePage } from '../pages/chart-pie/chart-pie';
@@ -47,6 +48,7 @@ import {OrderBy} from "./orderby.pipe"
     SignUpPage,
     ResetPasswordPage,
     AcercaPage,
+    WhatDoIWantPage,
     AgregarPage,
     TabsPage,
     ChartLinePage,
@@ -74,6 +76,7 @@ import {OrderBy} from "./orderby.pipe"
     SignUpPage,
     ResetPasswordPage,
     AcercaPage,
+    WhatDoIWantPage,
     AgregarPage,
     TabsPage,
     ChartLinePage,

@@ -4,11 +4,12 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { User, Promise } from 'firebase/app';
 
 import { UserModel } from '../models/user-model';
-
+import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
+  authState: Observable<firebase.User>; //  Check if user change state: login / logout
   user: firebase.User;
   userModel = {
     uid: "0",
@@ -18,6 +19,7 @@ export class AuthService {
   } as UserModel;
 
   constructor(public angularFireAuth: AngularFireAuth) {
+    this.authState = angularFireAuth.authState;
     angularFireAuth.authState.subscribe((user: firebase.User) => {
       this.user = user;
       if(user.uid != null)
@@ -38,9 +40,6 @@ export class AuthService {
     });
   }
 
-  get authenticated(): boolean {
-    return this.user != null;
-  }
 /*AUTENTICACION FIREBASE  */
   signInWithEmailAndPassword(userModel: UserModel): firebase.Promise<any> {
     return this.angularFireAuth.auth.signInWithEmailAndPassword(userModel.email, userModel.password);
