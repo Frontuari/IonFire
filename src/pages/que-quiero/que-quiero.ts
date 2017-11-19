@@ -4,8 +4,6 @@ import { NavController, NavParams, ToastController, AlertController } from 'ioni
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 //	Imports WhatDoIWant Interface
 import { WhatDoIWant } from '../../models/what-do-i-want/what-do-i-want.interface';
-//  Imports UserModels and AuthService
-import { AuthService } from '../../providers/auth-service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../../models/user-model';
 //  Import for orderby data from Angular
@@ -16,84 +14,80 @@ import "rxjs/add/operator/map";
   templateUrl: 'que-quiero.html',
 })
 export class WhatDoIWantPage {
-  //Ayuda de cada item
-  //public press: number = 0;
 
-  pressSueno(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Sueño',
-      subTitle: 'Actividades relacionadas con dormir: Soñar, conciliar el sueño, tomar una siesta, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
+  sumarMinutos(whatDoIWant: WhatDoIWant){
+    let totalMin = 0;
+    totalMin = Number(whatDoIWant.d_suenho_descanso.slice(14,16));
+    totalMin = totalMin + Number(whatDoIWant.d_alimento.slice(14,16));
+    totalMin = totalMin + Number(whatDoIWant.d_yo_cuerpo.slice(14,16));
+    totalMin = totalMin + Number(whatDoIWant.d_yo_mente.slice(14,16));
+    totalMin = totalMin + Number(whatDoIWant.d_otros.slice(14,16));
+    totalMin = totalMin + Number(whatDoIWant.d_trabajo.slice(14,16));
+    totalMin = totalMin + Number(whatDoIWant.d_humanidad.slice(14,16));
+    totalMin = totalMin + Number(whatDoIWant.d_pareja.slice(14,16));
+
+    totalMin = totalMin / 60;
+    return totalMin;
   }
 
-  pressAlimento(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Alimento',
-      subTitle: 'Actividades relacionadas con la comida: Cocina, siembra, mercado, medicina, etc',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
+  sumarHoras(whatDoIWant: WhatDoIWant){ 
+    let totalMin = this.sumarMinutos(whatDoIWant);
+    let totalHoras = 0;
+    totalHoras = Number(whatDoIWant.d_suenho_descanso.slice(11,13));
+    totalHoras = totalHoras + Number(whatDoIWant.d_alimento.slice(11,13));
+    totalHoras = totalHoras + Number(whatDoIWant.d_yo_cuerpo.slice(11,13));
+    totalHoras = totalHoras + Number(whatDoIWant.d_yo_mente.slice(11,13));
+    totalHoras = totalHoras + Number(whatDoIWant.d_otros.slice(11,13));
+    totalHoras = totalHoras + Number(whatDoIWant.d_trabajo.slice(11,13));
+    totalHoras = totalHoras + Number(whatDoIWant.d_humanidad.slice(11,13));
+    totalHoras = totalHoras + Number(whatDoIWant.d_pareja.slice(11,13));
 
-  pressOtros(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Otros',
-      subTitle: 'Actividades dedicadas a las relaciones humanas: Hablar con otros, familia, amigos, conocer nuevas personas, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
-  pressTrabajo(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Trabajo',
-      subTitle: 'Actividades que impliquen un esfuerzo productivo: Tareas domésticas, empleo, estudio, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
-  pressHumanidad(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Humanidad',
-      subTitle: 'Actos que te recuerden que eres un ser humano: Observar la naturaleza, ayudar al otro, orar o meditar, caminar, viajar, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
+    return totalHoras + totalMin;
   }
   
-  pressPareja(e) {
-    //this.press++
+  tooltips(e,type) {
+
+    let title ="";
+    let subtitle ="";
+
+    switch(type){
+      case 's': 
+        title ="Sueño";
+        subtitle ="Actividades relacionadas con dormir: Soñar, conciliar el sueño, tomar una siesta, etc.";
+        break;
+      case 'a': 
+        title ="Alimento";
+        subtitle ="Actividades relacionadas con la comida: Cocina, siembra, mercado, medicina, etc.";
+        break;
+      case 'c': 
+        title ="Yo Cuerpo";
+        subtitle ="Actividades relacionadas con el bienestar corporal: Ejercicio, salud, higiene, etc.";
+        break;
+      case 'm': 
+        title ="Yo Mente";
+        subtitle ="Actividades para ejercitar el cerebro y la memoria: Leer, aprender un idioma, música, ocio, etc.";
+        break;
+      case 'o': 
+        title ="Otros";
+        subtitle ="Actividades dedicadas a las relaciones humanas: Hablar con otros, familia, amigos, conocer nuevas personas, etc.";
+        break;
+      case 't': 
+        title ="Trabajo";
+        subtitle ="Actividades que impliquen un esfuerzo productivo: Tareas domésticas, empleo, estudio, etc.";
+        break;
+      case 'h': 
+        title ="Humanidad";
+        subtitle ="Actos que te recuerden que eres un ser humano: Observar la naturaleza, ayudar al otro, orar o meditar, caminar, viajar, etc.";
+        break;
+      case 'p': 
+        title ="Pareja";
+        subtitle ="Actividades que realizas con quien compartes todo en tu vida. Asimismo, escuchar, intimar, resolver problemas, etc.";
+        break;
+    }
+
     let alert = this.alertCtrl.create({
-      title: 'Pareja',
-      subTitle: 'Actividades que realizas con quien compartes todo en tu vida. Asimismo, escuchar, intimar, resolver problemas, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-  
-  pressCuerpo(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: ' Yo Cuerpo',
-      subTitle: 'Actividades relacionadas con el bienestar corporal: Ejercicio, salud, higiene, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-  
-  pressMente(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Yo Mente',
-      subTitle: 'Actividades para ejercitar el cerebro y la memoria: Leer, aprender un idioma, música, ocio, etc.',
+      title: title,
+      subTitle: subtitle,
       buttons: ['OK']
     });
     alert.present();
@@ -121,7 +115,6 @@ export class WhatDoIWantPage {
     public afAuth: AngularFireAuth,
     private toast: ToastController,
     public alertCtrl: AlertController,
-    private authService: AuthService,
   	private database: AngularFireDatabase) {
   	this.whatDoIWantRef$ = this.database.list('what-do-i-want');
     this.afAuth.authState.subscribe(data => {
@@ -134,6 +127,24 @@ export class WhatDoIWantPage {
         this.whatDoIWantList$ = this.database.list('what-do-i-want')
           .map(_whatDoIWants => 
             _whatDoIWants.filter(whatDoIWant => whatDoIWant.uid == data.uid)) as FirebaseListObservable<WhatDoIWant[]>;
+
+        this.whatDoIWantList$.subscribe(
+          whatDoIWants => {
+            whatDoIWants.map(whatDoIWant => {
+              this.whatDoIWant = {
+                uid: whatDoIWant.uid,
+                d_suenho_descanso: whatDoIWant.d_suenho_descanso,
+                d_alimento: whatDoIWant.d_alimento,
+                d_yo_cuerpo: whatDoIWant.d_yo_cuerpo,
+                d_yo_mente: whatDoIWant.d_yo_mente,
+                d_otros: whatDoIWant.d_otros,
+                d_trabajo: whatDoIWant.d_trabajo,
+                d_humanidad: whatDoIWant.d_humanidad,
+                d_pareja: whatDoIWant.d_pareja
+              }
+            })
+          }
+        )
       }else{
         this.toast.create({
           message:'No se pudo encontrar detalles de autenticación',
@@ -162,7 +173,7 @@ export class WhatDoIWantPage {
           if(whatDoIWants.length > 0){
             if(i==0){
               this.toast.create({
-                message:'No es posible registrar las actividades porque ya existe',
+                message:'No es posible registrar las actividades porque ya existen',
                 duration:3000
               }).present(); 
             }

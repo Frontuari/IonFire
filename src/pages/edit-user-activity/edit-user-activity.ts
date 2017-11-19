@@ -4,9 +4,6 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 //	Imports UserActivity Interface
 import { UserActivity } from '../../models/user-activity/user-activity.interface';
-//  Imports UserModels and AuthService
-import { AuthService } from '../../providers/auth-service';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../../models/user-model';
 
 @Component({
@@ -15,87 +12,84 @@ import { UserModel } from '../../models/user-model';
 })
 export class EditUserActivityPage {
 
-  pressSueno(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Sueño',
-      subTitle: 'Actividades relacionadas con dormir: Soñar, conciliar el sueño, tomar una siesta, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
+  sumarMinutos(userActivity: UserActivity){
+    let totalMin = 0;
+    totalMin = Number(userActivity.d_suenho_descanso.slice(14,16));
+    totalMin = totalMin + Number(userActivity.d_alimento.slice(14,16));
+    totalMin = totalMin + Number(userActivity.d_yo_cuerpo.slice(14,16));
+    totalMin = totalMin + Number(userActivity.d_yo_mente.slice(14,16));
+    totalMin = totalMin + Number(userActivity.d_otros.slice(14,16));
+    totalMin = totalMin + Number(userActivity.d_trabajo.slice(14,16));
+    totalMin = totalMin + Number(userActivity.d_humanidad.slice(14,16));
+    totalMin = totalMin + Number(userActivity.d_pareja.slice(14,16));
+
+    totalMin = totalMin / 60;
+    return totalMin;
   }
 
-  pressAlimento(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Alimento',
-      subTitle: 'Actividades relacionadas con la comida: Cocina, siembra, mercado, medicina, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
+  sumarHoras(userActivity: UserActivity){ 
+    let totalMin = this.sumarMinutos(userActivity);
+    let totalHoras = 0;
+    totalHoras = Number(userActivity.d_suenho_descanso.slice(11,13));
+    totalHoras = totalHoras + Number(userActivity.d_alimento.slice(11,13));
+    totalHoras = totalHoras + Number(userActivity.d_yo_cuerpo.slice(11,13));
+    totalHoras = totalHoras + Number(userActivity.d_yo_mente.slice(11,13));
+    totalHoras = totalHoras + Number(userActivity.d_otros.slice(11,13));
+    totalHoras = totalHoras + Number(userActivity.d_trabajo.slice(11,13));
+    totalHoras = totalHoras + Number(userActivity.d_humanidad.slice(11,13));
+    totalHoras = totalHoras + Number(userActivity.d_pareja.slice(11,13));
+
+    return totalHoras + totalMin;
   }
 
-  pressOtros(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Otros',
-      subTitle: 'Actividades dedicadas a las relaciones humanas: Hablar con otros, familia, amigos, conocer nuevas personas, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
+  tooltips(e,type) {
 
-  pressTrabajo(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Trabajo',
-      subTitle: 'Actividades que impliquen un esfuerzo productivo: Tareas domésticas, empleo, estudio, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
+    let title ="";
+    let subtitle ="";
 
-  pressHumanidad(e) {
-    //this.press++
+    switch(type){
+      case 's': 
+        title ="Sueño";
+        subtitle ="Actividades relacionadas con dormir: Soñar, conciliar el sueño, tomar una siesta, etc.";
+        break;
+      case 'a': 
+        title ="Alimento";
+        subtitle ="Actividades relacionadas con la comida: Cocina, siembra, mercado, medicina, etc.";
+        break;
+      case 'c': 
+        title ="Yo Cuerpo";
+        subtitle ="Actividades relacionadas con el bienestar corporal: Ejercicio, salud, higiene, etc.";
+        break;
+      case 'm': 
+        title ="Yo Mente";
+        subtitle ="Actividades para ejercitar el cerebro y la memoria: Leer, aprender un idioma, música, ocio, etc.";
+        break;
+      case 'o': 
+        title ="Otros";
+        subtitle ="Actividades dedicadas a las relaciones humanas: Hablar con otros, familia, amigos, conocer nuevas personas, etc.";
+        break;
+      case 't': 
+        title ="Trabajo";
+        subtitle ="Actividades que impliquen un esfuerzo productivo: Tareas domésticas, empleo, estudio, etc.";
+        break;
+      case 'h': 
+        title ="Humanidad";
+        subtitle ="Actos que te recuerden que eres un ser humano: Observar la naturaleza, ayudar al otro, orar o meditar, caminar, viajar, etc.";
+        break;
+      case 'p': 
+        title ="Pareja";
+        subtitle ="Actividades que realizas con quien compartes todo en tu vida. Asimismo, escuchar, intimar, resolver problemas, etc.";
+        break;
+    }
+
     let alert = this.alertCtrl.create({
-      title: 'Humanidad',
-      subTitle: 'Actos que te recuerden que eres un ser humano: Observar la naturaleza, ayudar al otro, orar o meditar, caminar, viajar, etc.',
+      title: title,
+      subTitle: subtitle,
       buttons: ['OK']
     });
     alert.present();
   }
   
-  pressPareja(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Pareja',
-      subTitle: 'Actividades que realizas con quien compartes todo en tu vida. Asimismo, escuchar, intimar, resolver problemas, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-  
-  pressCuerpo(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: ' Yo Cuerpo',
-      subTitle: 'Actividades relacionadas con el bienestar corporal: Ejercicio, salud, higiene, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-  
-  pressMente(e) {
-    //this.press++
-    let alert = this.alertCtrl.create({
-      title: 'Yo Mente',
-      subTitle: 'Actividades para ejercitar el cerebro y la memoria: Leer, aprender un idioma, música, ocio, etc.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
-
   //	Create a new UserActivity Object
   userActivity = {} as UserActivity;
   user = {} as UserModel;

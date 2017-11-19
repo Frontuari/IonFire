@@ -4,8 +4,6 @@ import { IonicPage, NavController, NavParams, ActionSheetController, ToastContro
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 //  Imports UserActivity Interface
 import { UserActivity } from '../../models/user-activity/user-activity.interface';
-//  Imports UserModels and AuthService
-import { AuthService } from '../../providers/auth-service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../../models/user-model';
 //  Import AddUserActivityPage and EditUserActivityPage

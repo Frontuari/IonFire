@@ -12,10 +12,8 @@
     <ion-title>¿Qué Quiero?</ion-title>
   </ion-navbar>
 </ion-header>
-
 <!-- First time to load data activities for What Do I Want -->
-<ion-content *ngFor="let whatDoIWant of whatDoIWantList$ | async | orderBy:order:ascending">
-
+<ion-content>
   <ion-list>
     <!-- Etiqueta cabecera -->
     <ion-list-header>
@@ -23,7 +21,7 @@
     </ion-list-header>
     <!-- Etiqueta cabecera -->
 
-    <ion-item (press)="pressSueno($event)">
+    <ion-item (press)="tooltips($event,'s')">
       <ion-icon name="cloudy-night" item-start color="Morado"></ion-icon>
       <ion-label>Sueño</ion-label>
       <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="whatDoIWant.d_suenho_descanso" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
@@ -31,7 +29,7 @@
       </ion-datetime>
     </ion-item>
 
-    <ion-item (press)="pressAlimento($event)">
+    <ion-item (press)="tooltips($event,'a')">
       <ion-icon name="nutrition" item-start color="Azul"></ion-icon>
       <ion-label>Alimento</ion-label>
       <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="whatDoIWant.d_alimento" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
@@ -47,7 +45,7 @@
     </ion-list-header>
     <!-- Cabecera  Yo   -->
 
-    <ion-item (press)="pressCuerpo($event)">
+    <ion-item (press)="tooltips($event,'c')">
       <ion-icon name="body" item-start color="Verde"></ion-icon>
       <ion-label>Cuerpo</ion-label>
       <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="whatDoIWant.d_yo_cuerpo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
@@ -55,7 +53,7 @@
       </ion-datetime>
     </ion-item>
 
-    <ion-item (press)="pressMente($event)">
+    <ion-item (press)="tooltips($event,'m')">
       <ion-icon name="book" item-start color="Verde"></ion-icon>
       <ion-label>Mente</ion-label>
       <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="whatDoIWant.d_yo_mente" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
@@ -65,7 +63,7 @@
 
   </ion-list>
   <ion-list>
-    <ion-item (press)="pressOtros($event)">
+    <ion-item (press)="tooltips($event,'o')">
       <ion-icon name="people" item-start color="Amarillo"></ion-icon>
       <ion-label>Otros</ion-label>
       <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="whatDoIWant.d_otros" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
@@ -74,7 +72,7 @@
     </ion-item>
 
 
-    <ion-item (press)="pressTrabajo($event)">
+    <ion-item (press)="tooltips($event,'t')">
       <ion-icon name="construct" item-start color="Rojo"></ion-icon>
       <ion-label>Trabajo</ion-label>
       <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="whatDoIWant.d_trabajo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
@@ -82,7 +80,7 @@
       </ion-datetime>
     </ion-item>
 
-    <ion-item (press)="pressHumanidad($event)">
+    <ion-item (press)="tooltips($event,'h')">
       <ion-icon name="ios-people-outline" item-start color="Plateado"></ion-icon>
       <ion-label>Humanidad</ion-label>
       <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="whatDoIWant.d_humanidad" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
@@ -90,7 +88,7 @@
       </ion-datetime>
     </ion-item>
 
-    <ion-item (press)="pressPareja($event)">
+    <ion-item (press)="tooltips($event,'p')">
       <ion-icon name="heart" item-start color="Anaranjado"></ion-icon>
       <ion-label>Pareja</ion-label>
       <ion-datetime displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="whatDoIWant.d_pareja" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
@@ -98,6 +96,11 @@
       </ion-datetime>
     </ion-item>
   </ion-list>
+
+  <ion-item>
+    <ion-icon name="time" item-start></ion-icon>
+    <ion-label>Total {{ sumarHoras(whatDoIWant) }} Horas</ion-label>
+  </ion-item>
   
   <button ion-button block (click)="WhatDoIWant(whatDoIWant)">Guardar</button>
 
