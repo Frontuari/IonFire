@@ -24,17 +24,11 @@
         </ion-avatar>
         <h3 style="color:white; font-size:18px;">{{user.name}}</h3>
         <p style="color:white;">{{user.email}}</p>
+        <button ion-button clear item-end>Ver</button>
       </ion-item>
-      <div class="conteo">
-        <ion-item>
-          <ion-label>Registro 24/7</ion-label>
-        </ion-item>
-        <h6>
-          <span class="pink">{{userActivities.totaldays}}</span>Días&nbsp;&nbsp;
-          <span class="red">{{userActivities.totalweeks}}</span>Semana<br>
-          <span class="blue">{{userActivities.totalmonths}}</span>Mes&nbsp;&nbsp;
-          <span class="green">{{userActivities.totalyears}}</span>Años
-        </h6>
+      <div class="conteo">        
+          <h3 style="color:white; font-size:18px; text-align: center;">Registro 24/7</h3>
+          <div>Hola, este es tu día numero {{userActivities.totaldays}}, semana {{userActivities.totalweeks}}, mes número {{userActivities.totalmonths}} y año número {{userActivities.totalyears}} continua registrando en anddando.</div>
       </div>
     </div>
     <div class="video">
@@ -46,6 +40,5 @@
         </ion-item>
       </div>
     </div>
-
   </div>
 </ion-content>
