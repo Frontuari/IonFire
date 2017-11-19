@@ -81,6 +81,8 @@ export class HomePage {
                 let dateB = +new Date(b.fecha);
                 return dateA - dateB;
               });
+              /**
+              * Commented for resolved bug with Bot
               let lastDate = moment(uaData[userActivities.length-1].fecha,'YYYY-MM-DD');
               let compareDate = moment(getCurDate(new Date(),2,'-').toISOString().slice(0, 10),'YYYY-MM-DD');
               let differenceDate = compareDate.diff(lastDate, 'days')
@@ -159,9 +161,8 @@ export class HomePage {
                     }
                   }
                 );
-                */
               }
-
+              */
               let userDays = alasql('SELECT uid, count(fecha) AS totaldays FROM ? GROUP BY uid',[uaData]);
               let userWMYs = alasql('SELECT uid,fecha, ROUND(DATEDIFF(Week,DATE(fecha), DATE(Date()))) AS totalweeks \
               , ROUND(DATEDIFF(Month,DATE(fecha), DATE(Date()))) AS totalmonths \
