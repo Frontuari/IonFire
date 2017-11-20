@@ -26,7 +26,7 @@ export class HomePage {
   userActivityList$: FirebaseListObservable<UserActivity[]>;
   user = {} as UserModel;
   userActivities = {
-    uid : "0",
+    uid: "0",
     totaldays: 0,
     totalweeks: 0,
     totalmonths: 0,
@@ -43,19 +43,20 @@ export class HomePage {
     let uaAllData = [];
 
     this.afAuth.authState.subscribe(data => {
-      if(data && data.uid){
+      if (data && data.uid) {
         this.user.email = data.email;
         this.user.name = data.displayName != null ? data.displayName : '';
         this.user.photoURL = data.photoURL;
         this.user.uid = data.uid;
+        
         //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
         this.userActivityList$ = this.database.list('user-activity')
-          .map(_userActivities => 
+          .map(_userActivities =>
             _userActivities.filter(userActivity => userActivity.uid == data.uid)) as FirebaseListObservable<UserActivity[]>;
-        
+
         this.userActivityList$.subscribe(
-          userActivities => { 
-            if(userActivities.length > 0){
+          userActivities => {
+            if (userActivities.length > 0) {
               userActivities.map(userActivity => {
                 uaData.push({
                   "uid": userActivity.uid,
@@ -72,7 +73,7 @@ export class HomePage {
                   "d_humanidad": userActivity.d_humanidad,
                   "d_pareja": userActivity.d_pareja,
                   "d_fecha": userActivity.d_fecha,
-                  "uid_fecha": userActivity.uid+'_'+userActivity.d_fecha 
+                  "uid_fecha": userActivity.uid + '_' + userActivity.d_fecha
                 })
               })
               //  Sort data by fecha
@@ -131,7 +132,6 @@ export class HomePage {
                 this.userActivityList$ = this.database.list('user-activity')
                   .map(_userActivities => 
                     _userActivities.filter(userActivity => userActivity.uid == data.uid)) as FirebaseListObservable<UserActivity[]>;
-
                 this.userActivityList$.subscribe(
                   userActivities => {
                     userActivities.map(userActivity => {
@@ -146,7 +146,6 @@ export class HomePage {
                       let dateB = +new Date(b.fecha);
                       return dateA - dateB;
                     });
-
                     let userDays = alasql('SELECT uid, count(fecha) AS totaldays FROM ? GROUP BY uid',[uaData]);
                     let userWMYs = alasql('SELECT uid,fecha, ROUND(DATEDIFF(Week,DATE(fecha), DATE(Date()))) AS totalweeks \
                     , ROUND(DATEDIFF(Month,DATE(fecha), DATE(Date()))) AS totalmonths \
@@ -163,11 +162,11 @@ export class HomePage {
                 );
               }
               */
-              let userDays = alasql('SELECT uid, count(fecha) AS totaldays FROM ? GROUP BY uid',[uaData]);
+              let userDays = alasql('SELECT uid, count(fecha) AS totaldays FROM ? GROUP BY uid', [uaData]);
               let userWMYs = alasql('SELECT uid,fecha, ROUND(DATEDIFF(Week,DATE(fecha), DATE(Date()))) AS totalweeks \
               , ROUND(DATEDIFF(Month,DATE(fecha), DATE(Date()))) AS totalmonths \
               , ROUND(DATEDIFF(Year,DATE(fecha), DATE(Date()))) AS totalyears \
-              FROM ? ORDER BY fecha ASC LIMIT 1',[uaData]);
+              FROM ? ORDER BY fecha ASC LIMIT 1', [uaData]);
               this.userActivities = {
                 uid: userDays[0].uid,
                 totaldays: userDays[0].totaldays,
@@ -181,13 +180,13 @@ export class HomePage {
 
         //  Send messages to welcome          
         this.toast.create({
-          message:`Bienvenido ${this.user.name}`,
-          duration:3000
+          message: `Bienvenido ${this.user.name}`,
+          duration: 3000
         }).present();
-      }else{
+      } else {
         this.toast.create({
-          message:'No se pudo encontrar detalles de autenticación',
-          duration:3000
+          message: 'No se pudo encontrar detalles de autenticación',
+          duration: 3000
         }).present();
       }
     });
@@ -199,10 +198,10 @@ export class HomePage {
   }
 }
 
-function getCurDate(fecha,dias,operando){
-  if(operando == '+')
+function getCurDate(fecha, dias, operando) {
+  if (operando == '+')
     fecha.setDate(fecha.getDate() + dias);
   else
     fecha.setDate(fecha.getDate() - dias);
-    return fecha;
+  return fecha;
 }
