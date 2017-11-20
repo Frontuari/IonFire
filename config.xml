@@ -12,14 +12,12 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <!-- Cambios en el config -->
     <preference name="loadUrlTimeoutValue" value="100000" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="FadeSplashScreen" value="false" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="android-maxSdkVersion" value="16" />
     <preference name="android-targetSdkVersion" value="16" />
-    <!-- Cambios en el config -->
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
