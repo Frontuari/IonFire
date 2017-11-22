@@ -22,7 +22,7 @@ export class AddUserActivityPage {
       fecha.setDate(fecha.getDate() + dias);
     else
       fecha.setDate(fecha.getDate() - dias);
-      return fecha;
+    return fecha;
   }
 
   sumarMinutos(userActivity: UserActivity){
@@ -40,7 +40,7 @@ export class AddUserActivityPage {
     return totalMin;
   }
 
-  sumarHoras(userActivity: UserActivity){ 
+  sumarHoras(userActivity: UserActivity){
     let totalMin = this.sumarMinutos(userActivity);
     let totalHoras = 0;
     totalHoras = Number(userActivity.d_suenho_descanso.slice(11,13));
@@ -116,8 +116,8 @@ export class AddUserActivityPage {
   } as UserActivity;
   user = {} as UserModel;
   //	Create a new FirebaseListObservable Object
-  userActivityRef$: FirebaseListObservable<UserActivity[]>
-  userActivityList$: FirebaseListObservable<UserActivity[]>
+  userActivityAddRef$: FirebaseListObservable<UserActivity[]>
+  userActivityAddList$: FirebaseListObservable<UserActivity[]>
   whatDoIWantList$: FirebaseListObservable<WhatDoIWant[]>
 
   constructor(
@@ -127,7 +127,7 @@ export class AddUserActivityPage {
     private toast: ToastController,
     public alertCtrl: AlertController,
   	private database: AngularFireDatabase) {
-  	this.userActivityRef$ = this.database.list('user-activity');
+  	this.userActivityAddRef$ = this.database.list('user-activity');
     this.afAuth.authState.subscribe(data => {
       if(data && data.uid){
         this.user.email = data.email;
@@ -176,11 +176,11 @@ export class AddUserActivityPage {
       }).present();
     }
     else{
-      this.userActivityList$ = this.database.list('user-activity')
+      this.userActivityAddList$ = this.database.list('user-activity')
       .map(_userActivities => 
           _userActivities.filter(userActivity => userActivity.uid_fecha == this.user.uid+'_'+this.myDate)) as FirebaseListObservable<UserActivity[]>;
       //  Check if data exists
-      this.userActivityList$.subscribe(
+      this.userActivityAddList$.subscribe(
         userActivities => {
           if(userActivities.length > 0){
             if(i==0){
@@ -192,7 +192,7 @@ export class AddUserActivityPage {
             i++;
           }else{
             //  Push this to our Firebase database under the 'user-activity' node.
-            this.userActivityRef$.push({
+            this.userActivityAddRef$.push({
               uid: this.user.uid,
               d_suenho_descanso: this.userActivity.d_suenho_descanso,
               d_alimento: this.userActivity.d_alimento,
@@ -207,7 +207,16 @@ export class AddUserActivityPage {
             });
             i++;
             //  Reset our userActivity
-            this.userActivity = {} as UserActivity;
+            this.userActivity = {
+              d_suenho_descanso: this.getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
+              d_alimento: this.getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
+              d_yo_cuerpo: this.getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
+              d_yo_mente: this.getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
+              d_otros: this.getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
+              d_trabajo: this.getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
+              d_humanidad: this.getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00",
+              d_pareja: this.getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00"
+            } as UserActivity;
             //  Navigate the user back to the AyerPage
             this.navCtrl.pop();
           }

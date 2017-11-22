@@ -55,35 +55,35 @@ export class AgregarPage {
   		|| (userActivity.d_fecha == getCurDate(new Date(),1,'+').toISOString().slice(0, 10))
   		){
 	    this.actionSheetCtrl.create({
-	      title: `Editar ${userActivity.d_fecha}`,
-	      buttons: [
-	        {
-	          text: 'Editar',
-	          handler: () => {
-	            //  Send the user to the EditShoppingPage and pass the key as parameter
-	            this.navCtrl.push(EditUserActivityPage, { userActivityId: userActivity.$key });
-	          }
-	        },
-	        {
-	          text: 'Borrar',
-	          role: 'destrictive',
-	          handler: () => {
-	            //  Delete the current UserActivity passed in via of parameter
-	            this.userActivityList$.remove(userActivity.$key);
-	            this.toast.create({
-		          message: 'Actividad borrada correctamente',
-		          duration:3000
-		        }).present();
-	          }
-	        },
-	        {
-	          text: 'Cancelar',
-	          role: 'cancel',
-	          handler: () => {
-	            console.log("The user has selected the cancel button");
-	          }
-	        }]
-	    }).present();
+        title: `Editar ${userActivity.d_fecha}`,
+        buttons: [
+          {
+            text: 'Editar',
+            handler: () => {
+              //  Send the user to the EditShoppingPage and pass the key as parameter
+              this.navCtrl.push(EditUserActivityPage, { userActivityId: userActivity.$key });
+            }
+          },
+          {
+            text: 'Borrar',
+            role: 'destrictive',
+            handler: () => {
+              //  Delete the current UserActivity passed in via of parameter
+              this.userActivityList$.remove(userActivity.$key);
+              this.toast.create({
+              message: 'Actividad borrada correctamente',
+              duration:3000
+            }).present();
+            }
+          },
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {
+              console.log("The user has selected the cancel button");
+            }
+          }]
+      }).present();
   	}
   	else{
   		this.toast.create({

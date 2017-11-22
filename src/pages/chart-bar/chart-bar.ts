@@ -17,7 +17,7 @@ import * as alasql from 'alasql';
 })
 export class ChartBarPage {
   chartOptions: any;
-  userActivityList$: FirebaseListObservable<UserActivity[]>;
+  userActivityCharBarList$: FirebaseListObservable<UserActivity[]>;
   user = {} as UserModel;
 
   f_actual = new Date();
@@ -32,12 +32,12 @@ export class ChartBarPage {
 
     this.afAuth.authState.subscribe(data => {
       //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
-      this.userActivityList$ = this.database.list('user-activity')
+      this.userActivityCharBarList$ = this.database.list('user-activity')
         .map(_userActivities => 
           _userActivities.filter(userActivity => userActivity.uid == data.uid)) as FirebaseListObservable<UserActivity[]>;
 
       //  Build data for chart Line for Current Month
-      this.userActivityList$.subscribe(
+      this.userActivityCharBarList$.subscribe(
         userActivities => {
           userActivities.map(userActivity => {
             let d = new Date();

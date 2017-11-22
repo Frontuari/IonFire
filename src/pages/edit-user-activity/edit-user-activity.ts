@@ -94,7 +94,7 @@ export class EditUserActivityPage {
   userActivity = {} as UserActivity;
   user = {} as UserModel;
   //	Create a new FirebaseObjectObservable Object
-  userActivityRef$: FirebaseObjectObservable<UserActivity>
+  userActivityEditRef$: FirebaseObjectObservable<UserActivity>
 
   constructor(
   	public navCtrl: NavController, 
@@ -102,14 +102,14 @@ export class EditUserActivityPage {
     public alertCtrl: AlertController,    
   	private database: AngularFireDatabase) {
   	const userActivityId = this.navParams.get('userActivityId');
-  	this.userActivityRef$ = this.database.object(`user-activity/${userActivityId}`);
-  	this.userActivityRef$.subscribe(userActivity => this.userActivity = userActivity);
+  	this.userActivityEditRef$ = this.database.object(`user-activity/${userActivityId}`);
+  	this.userActivityEditRef$.subscribe(userActivity => this.userActivity = userActivity);
   }
 
   //  Update our Firebase node with new item data
   EditUserActivity(userActivity: UserActivity){
     userActivity.uid_fecha = userActivity.uid+'_'+userActivity.d_fecha;
-    this.userActivityRef$.update(userActivity);
+    this.userActivityEditRef$.update(userActivity);
     //  Send the user back to ShoppingListPage
     this.navCtrl.pop();
   }
