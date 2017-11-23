@@ -169,7 +169,13 @@ export class AddUserActivityPage {
   UserActivity(userActivity: UserActivity){
     let totalHours = this.sumarHoras(userActivity);
     let i = 0;
-    if(totalHours > 24){
+    if(totalHours == 0){
+      this.toast.create({
+        message:'El total de horas distribuidas ('+totalHours+') debe ser mayor a 0',
+        duration:3000
+      }).present();
+    }
+    else if(totalHours > 24){
       this.toast.create({
         message:'El total de horas distribuidas ('+totalHours+') no puede ser mayor a 24',
         duration:3000

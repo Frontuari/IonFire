@@ -8,6 +8,7 @@ import { UserActivity } from '../../models/user-activity/user-activity.interface
 import { AuthService } from '../../providers/auth-service';
 
 import { SignInPage } from '../signin/signin';
+import { ProfilePage } from '../profile/profile';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { UserModel } from '../../models/user-model';
@@ -115,5 +116,9 @@ export class HomePage {
   signOut() {
     this.authService.signOut();
     this.navCtrl.setRoot(SignInPage);
+  }
+
+  profile(){
+    this.navCtrl.push(ProfilePage, { uid: this.user.uid });
   }
 }

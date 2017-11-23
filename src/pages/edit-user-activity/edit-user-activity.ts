@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 //  Import AngularFireDatabase and FirebaseObjectObservable
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 //	Imports UserActivity Interface
@@ -99,7 +99,8 @@ export class EditUserActivityPage {
   constructor(
   	public navCtrl: NavController, 
     public navParams: NavParams,
-    public alertCtrl: AlertController,    
+    public alertCtrl: AlertController,  
+    private toast: ToastController,  
   	private database: AngularFireDatabase) {
   	const userActivityId = this.navParams.get('userActivityId');
   	this.userActivityEditRef$ = this.database.object(`user-activity/${userActivityId}`);
@@ -108,10 +109,18 @@ export class EditUserActivityPage {
 
   //  Update our Firebase node with new item data
   EditUserActivity(userActivity: UserActivity){
-    userActivity.uid_fecha = userActivity.uid+'_'+userActivity.d_fecha;
-    this.userActivityEditRef$.update(userActivity);
-    //  Send the user back to ShoppingListPage
-    this.navCtrl.pop();
+    let totalHours = this.sumarHoras(userActivity);
+    if(totalHours > 24){
+      this.toast.create({
+        message:'El total de horas distribuidas ('+totalHours+') no puede ser mayor a 24',
+        duration:3000
+      }).present();
+    }else{
+      userActivity.uid_fecha = userActivity.uid+'_'+userActivity.d_fecha;
+      this.userActivityEditRef$.update(userActivity);
+      //  Send the user back to ShoppingListPage
+      this.navCtrl.pop(); 
+    }
   }
 
 }

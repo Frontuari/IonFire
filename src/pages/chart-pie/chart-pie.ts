@@ -95,10 +95,20 @@ export class ChartPiePage {
               plotBackgroundColor: null,
               plotBorderWidth: null,
               plotShadow: false,
-              type: 'pie'
+              type: 'pie',
+              events: {
+                load: function () {
+                  var theSeries = this.series;
+                  for(let serie of theSeries){
+                    if (serie.index > 0) {
+                      serie.setVisible(false);
+                    }
+                  }
+                }
+              }
             },
             title: {
-              text: 'Distribución '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
+              text: 'Equilibrio '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
             },
             tooltip: {
               pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -107,10 +117,7 @@ export class ChartPiePage {
               pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
-                dataLabels: {
-                  enabled: false
-                },
-                showInLegend: true
+                showInLegend: false
               }
             },
             credits: {

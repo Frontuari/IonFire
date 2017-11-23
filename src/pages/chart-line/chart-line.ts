@@ -86,6 +86,16 @@ export class ChartLinePage {
             })
           }
 
+          //  Set Number Magic
+          chartdata.push({
+            name: 'Vibra Natural',
+            data: [6,6,6,6,6,6,6,6]
+          },
+          {
+            name: 'Vibra Natural',
+            data: [0,0,0,0,0,0,0,0]
+          });
+
           //  Build Chart
           this.chartOptions = {
             chart: {

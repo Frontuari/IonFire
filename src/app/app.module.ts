@@ -13,6 +13,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AuthService } from '../providers/auth-service';
 
 import { MyApp } from './app.component';
+import { ProfilePage } from '../pages/profile/profile';
 import { HomePage } from '../pages/home/home';
 import { SignInPage } from '../pages/signin/signin';
 import { SignUpPage } from '../pages/signup/signup';
@@ -43,6 +44,7 @@ import {OrderBy} from "./orderby.pipe"
 @NgModule({
   declarations: [
     MyApp,
+    ProfilePage,
     HomePage,
     SignInPage,
     SignUpPage,
@@ -71,6 +73,7 @@ import {OrderBy} from "./orderby.pipe"
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    ProfilePage,
     HomePage,
     SignInPage,
     SignUpPage,
