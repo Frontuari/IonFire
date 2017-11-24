@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 //  Imports UserActivity Interface
 import { UserActivity } from '../../models/user-activity/user-activity.interface';
+import { WhatDoIWant } from '../../models/what-do-i-want/what-do-i-want.interface';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../../models/user-model';
 //  Import for orderby data from Angular
@@ -18,6 +19,7 @@ import * as alasql from 'alasql';
 export class ChartBarPage {
   chartOptions: any;
   userActivityCharBarList$: FirebaseListObservable<UserActivity[]>;
+  whatDoIWantList$: FirebaseListObservable<WhatDoIWant[]>;
   user = {} as UserModel;
 
   f_actual = new Date();
@@ -29,8 +31,126 @@ export class ChartBarPage {
     private database: AngularFireDatabase) {
 
     let charData = [];
+    let charLineData = [];
+    let chartdata = [];
 
     this.afAuth.authState.subscribe(data => {
+      //  Pointing shoppingListRef$ at Firebase -> 'what-do-i-want' node
+      this.whatDoIWantList$ = this.database.list('what-do-i-want')
+          .map(_whatDoIWants => 
+            _whatDoIWants.filter(whatDoIWant => whatDoIWant.uid == data.uid)) as FirebaseListObservable<WhatDoIWant[]>;
+
+      this.whatDoIWantList$.subscribe(
+        whatDoIWants => {
+          if(whatDoIWants.length == 0){
+            charLineData.push({
+              "name" : '¿Qué Quiero?',
+              //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
+              "activities" : [0,0,0,0,0,0,0,0]
+            })
+          }
+          else{
+            whatDoIWants.map(whatDoIWant => {
+              charLineData.push({
+                "name" : '¿Qué Quiero?',
+                //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
+                "activities" : [
+                  getHour(whatDoIWant.d_suenho_descanso),
+                  getHour(whatDoIWant.d_alimento),
+                  getHour(whatDoIWant.d_yo_cuerpo),
+                  getHour(whatDoIWant.d_yo_mente),
+                  getHour(whatDoIWant.d_otros),
+                  getHour(whatDoIWant.d_trabajo),
+                  getHour(whatDoIWant.d_humanidad),
+                  getHour(whatDoIWant.d_pareja)
+                ]
+              })
+            })
+          }
+          let rs = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso, ROUND(avg(activities -> 1),2) AS alimento, \
+          ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
+          ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
+          FROM ? \
+          GROUP BY name \
+          ORDER BY name ASC',[charLineData]);
+          for(let i = 0; i < rs.length; i++){
+            chartdata.push({
+              name: rs[i].name,
+              type: 'line',
+              color: '#000000',
+              data: [
+                rs[i].descanso,rs[i].alimento,rs[i].yo_cuerpo,rs[i].yo_mente,
+                rs[i].otros,rs[i].trabajo,rs[i].humanidad,rs[i].pareja
+              ]
+            })
+          }
+
+          //  Build Chart
+          this.chartOptions = {
+            chart: {
+                zoomType: 'xy'
+            },
+            title: {
+              text: '¿Qué Quiero? / ¿Cómo Estoy? '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
+            },
+            xAxis: [{
+              //, 'Salud'
+              categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+              labels: {
+                formatter: function () {
+                  switch(this.value){
+                    case 'Descanso': 
+                      return '<span style="fill: #442662;">' + this.value + '</span>';
+                    case 'Alimento': 
+                      return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
+                    case 'Cuerpo': 
+                      return '<span style="fill: #009D71;">' + this.value + '</span>';
+                    case 'Mente': 
+                      return '<span style="fill: #009D71;">' + this.value + '</span>';
+                    case 'Otros': 
+                      return '<span style="fill: #FFD700;">' + this.value + '</span>';
+                    case 'Trabajo': 
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                    case 'Humanidad': 
+                      return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
+                    case 'Pareja': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                  }
+                }
+              },
+              crosshair: true
+            }],
+            yAxis: [{
+              min: 0,
+              title: {
+                text: 'Promedio',
+                align: 'high'
+              },
+              labels: {
+                overflow: 'justify'
+              }
+            }],
+            tooltip: {
+              shared: true,
+              valueSuffix: ' horas'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                x: 80,
+                verticalAlign: 'top',
+                y: 50,
+                floating: true
+            },
+            credits: {
+               enabled: false
+            },
+            series: chartdata
+          }
+
+        }
+      )
+
       //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
       this.userActivityCharBarList$ = this.database.list('user-activity')
         .map(_userActivities => 
@@ -44,74 +164,96 @@ export class ChartBarPage {
             let firstOfMonth = new Date(d.getFullYear(), d.getMonth(), 1);
             let lastOfMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0);
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(firstOfMonth),dateFormat(lastOfMonth)) == 1){
-              let nameSerie = getHour(userActivity.d_pareja)==0 ? 'Sin Pareja' : 'Con Pareja';
               charData.push({
-                "name" : nameSerie,
+                "name" : '¿Cómo Estoy?',
                 //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
                 "activities" : [
                   getHour(userActivity.d_suenho_descanso),
-                  //getHour(userActivity.d_salud),
                   getHour(userActivity.d_alimento),
                   getHour(userActivity.d_yo_cuerpo),
                   getHour(userActivity.d_yo_mente),
                   getHour(userActivity.d_otros),
                   getHour(userActivity.d_trabajo),
-                  getHour(userActivity.d_humanidad)
+                  getHour(userActivity.d_humanidad),
+                  getHour(userActivity.d_pareja)
                 ]
               });
             }
           })
-          //sum(activities -> 1) AS salud,
-          let res = alasql('SELECT name, sum(activities -> 0) AS descanso,  sum(activities -> 2) AS alimento, \
-          sum(activities -> 3) AS yo_cuerpo, sum(activities -> 4) AS yo_mente, sum(activities -> 5) AS otros, sum(activities -> 6) AS trabajo, \
-          sum(activities -> 7) AS humanidad \
+
+          let res = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso, ROUND(avg(activities -> 1),2) AS alimento, \
+          ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
+          ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
           FROM ? \
           GROUP BY name \
           ORDER BY name ASC',[charData]);
-
           //  Build array of object for chart
-          //res[i].salud,
-          let chartdata = [];
           for(let i = 0; i < res.length; i++){
             chartdata.push({
               name: res[i].name,
+              type: 'column',
               data: [
                 res[i].descanso,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
-                res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja,
+                res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja
               ]
             })
           }
           //  Build Chart
           this.chartOptions = {
             chart: {
-              type: 'bar'
+                zoomType: 'xy'
             },
             title: {
-              text: 'Con/Sin Pareja '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
+              text: '¿Que Quiero? / ¿Como Estoy? '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
             },
-            xAxis: {
+            xAxis: [{
               //, 'Salud'
-              categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad']
-            },
-            yAxis: {
-               min: 0,
-               title: {
-                  text: 'Total Horas',
-                  align: 'high'
-               },
-               labels: {
-                  overflow: 'justify'
-               }
-            },
-            tooltip: {
-               valueSuffix: ' horas'
-            },
-            plotOptions: {
-               bar: {
-                  dataLabels: {
-                     enabled: true
+              categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+              labels: {
+                formatter: function () {
+                  switch(this.value){
+                    case 'Descanso': 
+                      return '<span style="fill: #442662;">' + this.value + '</span>';
+                    case 'Alimento': 
+                      return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
+                    case 'Cuerpo': 
+                      return '<span style="fill: #009D71;">' + this.value + '</span>';
+                    case 'Mente': 
+                      return '<span style="fill: #009D71;">' + this.value + '</span>';
+                    case 'Otros': 
+                      return '<span style="fill: #FFD700;">' + this.value + '</span>';
+                    case 'Trabajo': 
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                    case 'Humanidad': 
+                      return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
+                    case 'Pareja': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                   }
-               }
+                }
+              },
+              crosshair: true
+            }],
+            yAxis: [{
+              min: 0,
+              title: {
+                text: 'Promedio',
+                align: 'high'
+              },
+              labels: {
+                overflow: 'justify'
+              }
+            }],
+            tooltip: {
+              shared: true,
+              valueSuffix: ' horas'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                x: 80,
+                verticalAlign: 'top',
+                y: 50,
+                floating: true
             },
             credits: {
                enabled: false

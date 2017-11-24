@@ -49,10 +49,6 @@ export class ChartPiePage {
                 "name" : 'Descanso',
                 "y" : getHour(userActivity.d_suenho_descanso)
               });
-             /*  charData.push({
-                "name" : 'Salud',
-                "y" : getHour(userActivity.d_salud)
-              }); */
               charData.push({
                 "name" : 'Alimento',
                 "y" : getHour(userActivity.d_alimento)
@@ -117,6 +113,8 @@ export class ChartPiePage {
               pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
+                //  Colors Order Alimento,Humanidad,Yo,Otros,Yo,Pareja,Descanso,Trabajo
+                colors: ['#0CB7F2','#C0C0C0','#009D71','#FFD700','#009D71','#E87B31','#442662','#CB1D11'],
                 showInLegend: false
               }
             },

@@ -53,7 +53,6 @@ export class ChartLinePage {
                 //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
                 "activities" : [
                   getHour(userActivity.d_suenho_descanso),
-                  //getHour(userActivity.d_salud),
                   getHour(userActivity.d_alimento),
                   getHour(userActivity.d_yo_cuerpo),
                   getHour(userActivity.d_yo_mente),
@@ -66,35 +65,39 @@ export class ChartLinePage {
             }
           })
 //avg(activities -> 1) AS salud,
-          let res = alasql('SELECT name, avg(activities -> 0) AS descanso,  avg(activities -> 2) AS alimento, \
-          avg(activities -> 3) AS yo_cuerpo, avg(activities -> 4) AS yo_mente, avg(activities -> 5) AS otros, avg(activities -> 6) AS trabajo, \
-          avg(activities -> 7) AS humanidad, avg(activities -> 8) AS pareja \
+          let res = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
+          ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
+          ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
           FROM ? \
           GROUP BY name \
           ORDER BY name ASC',[charData]);
 
           //  Build array of object for chart
-          //res[i].salud,
           let chartdata = [];
-          for(let i = 0; i < res.length; i++){
-            chartdata.push({
-              name: res[i].name,
-              data: [
-                res[i].descanso,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
-                res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja,
-              ]
-            })
-          }
 
           //  Set Number Magic
           chartdata.push({
+            type: 'area',
             name: 'Vibra Natural',
             data: [6,6,6,6,6,6,6,6]
           },
           {
+            type: 'area',
             name: 'Vibra Natural',
             data: [0,0,0,0,0,0,0,0]
           });
+
+          for(let i = 0; i < res.length; i++){
+            chartdata.push({
+              type: 'line',
+              name: res[i].name,
+              data: [
+                res[i].descanso,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
+                res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja,
+              ],
+              
+            })
+          }
 
           //  Build Chart
           this.chartOptions = {
@@ -106,7 +109,29 @@ export class ChartLinePage {
             },
             xAxis: {
               //'Salud',
-              categories: ['Descanso',  'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
+              categories: ['Descanso',  'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja'],
+              labels: {
+                formatter: function () {
+                  switch(this.value){
+                    case 'Descanso': 
+                      return '<span style="fill: #442662;">' + this.value + '</span>';
+                    case 'Alimento': 
+                      return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
+                    case 'Cuerpo': 
+                      return '<span style="fill: #009D71;">' + this.value + '</span>';
+                    case 'Mente': 
+                      return '<span style="fill: #009D71;">' + this.value + '</span>';
+                    case 'Otros': 
+                      return '<span style="fill: #FFD700;">' + this.value + '</span>';
+                    case 'Trabajo': 
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                    case 'Humanidad': 
+                      return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
+                    case 'Pareja': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                  }
+                }
+              }
             },
             yAxis: {
               title: {
