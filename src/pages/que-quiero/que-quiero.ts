@@ -8,6 +8,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../../models/user-model';
 //  Import for orderby data from Angular
 import "rxjs/add/operator/map";
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'page-que-quiero',
@@ -171,13 +172,21 @@ export class WhatDoIWantPage {
       this.whatDoIWantList$.subscribe(
         whatDoIWants => {
           if(whatDoIWants.length > 0){
-            if(i==0){
-              this.toast.create({
-                message:'No es posible registrar las actividades porque ya existen',
-                duration:3000
-              }).present(); 
-            }
-            i++;
+            this.database.list('/what-do-i-want',{
+              preserveSnapshot: true,
+              query: {
+                orderByChild: 'uid',
+                equalTo: this.user.uid,
+              }
+            }).take(1).subscribe(snaphots=> {
+              snaphots.forEach((snapshot) => {
+                this.database.object('/what-do-i-want/' + snapshot.key).update(this.whatDoIWant);
+              }) 
+            })
+            this.toast.create({
+              message:'Actividades actualizadas con exito',
+              duration:3000
+            }).present(); 
           }else{
             //  Push this to our Firebase database under the 'user-activity' node.
             this.whatDoIWantRef$.push({

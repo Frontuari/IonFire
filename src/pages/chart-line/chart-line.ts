@@ -24,6 +24,9 @@ export class ChartLinePage {
 
   f_actual = new Date();
 
+  filter = 'W';
+  filtertoApply = 'W';
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -43,10 +46,22 @@ export class ChartLinePage {
         userActivities => {
           userActivities.map(userActivity => {
             let d = new Date();
-            let firstOfMonth = new Date(d.getFullYear(), d.getMonth(), 1);
-            let lastOfMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+            let startDate = null;
+            let endDate = null;
+            if(this.filtertoApply == "W"){
+              startDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()-7);
+              endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()); 
+            }
+            else if(this.filtertoApply == "M"){
+              startDate = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+              endDate = new Date(d.getFullYear(), d.getMonth() + 2, 0); 
+            }
+            else{
+              startDate = new Date(d.getFullYear()-3, d.getMonth()+1, d.getDate());
+              endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate());
+            }
             let weekNumber = 0;
-            if(validate_fechaBetween(userActivity.d_fecha,dateFormat(firstOfMonth),dateFormat(lastOfMonth)) == 1){
+            if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
               weekNumber = moment(userActivity.d_fecha,'YYYY-MM-DD').week();
               charData.push({
                 "name" : 'Semana '+weekNumber,
@@ -64,7 +79,6 @@ export class ChartLinePage {
               });
             }
           })
-//avg(activities -> 1) AS salud,
           let res = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
           ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
           ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
@@ -149,6 +163,10 @@ export class ChartLinePage {
     });
   }
 
+  onSelectChange(selectedValue: any) {
+    this.filtertoApply = selectedValue;
+  }
+
 }
 
 function getMonthName(month_number){
@@ -174,12 +192,12 @@ function validate_fechaBetween(fecha,fechaInicial,fechaFinal)
   let valuesStart=fechaInicial.split("-");
   let valuesEnd=fechaFinal.split("-");
   // Verificamos que la fecha no sea posterior a la actual
-  var dateCompare=new Date(valuesCompare[2],(valuesCompare[1]-1),valuesCompare[0]);
-  var dateStart=new Date(valuesStart[2],(valuesStart[1]-1),valuesStart[0]);
-  var dateEnd=new Date(valuesEnd[2],(valuesEnd[1]-1),valuesEnd[0]);
+  var dateCompare=Number(valuesCompare[0]+valuesCompare[1]+valuesCompare[2]);
+  var dateStart=Number(valuesStart[0]+valuesStart[1]+valuesStart[2]);
+  var dateEnd=Number(valuesEnd[0]+valuesEnd[1]+valuesEnd[2]);
   if(dateCompare>=dateStart && dateCompare <=dateEnd)
   {
-      return 1;
+    return 1;
   }
   return 0;
 }

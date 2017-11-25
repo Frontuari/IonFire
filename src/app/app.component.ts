@@ -33,6 +33,7 @@ export class MyApp {
   public user = {} as UserModel;
   //  Reference User Activity
   uaList: FirebaseListObservable<UserActivity[]>;
+  uaFilterList: FirebaseListObservable<UserActivity[]>;
 
   constructor(platform: Platform, 
     statusBar: StatusBar, 
@@ -119,18 +120,29 @@ export class MyApp {
                   let d_humanidad = curDate+'T'+(Math.trunc(newUAData[0].h_humanidad) < 10 ? '0'+Math.trunc(newUAData[0].h_humanidad): Math.trunc(newUAData[0].h_humanidad))+':'+(convertHourtoMin(newUAData[0].h_humanidad) < 10 ? '0'+convertHourtoMin(newUAData[0].h_humanidad) : convertHourtoMin(newUAData[0].h_humanidad))+':00Z';
                   let d_pareja = curDate+'T'+(Math.trunc(newUAData[0].h_pareja) < 10 ? '0'+Math.trunc(newUAData[0].h_pareja): Math.trunc(newUAData[0].h_pareja))+':'+(convertHourtoMin(newUAData[0].h_pareja) < 10 ? '0'+convertHourtoMin(newUAData[0].h_pareja) : convertHourtoMin(newUAData[0].h_pareja))+':00Z';
                   //  Set Data
-                  this.uaList.push({
-                    uid: newUAData[0].uid,
-                    d_suenho_descanso: d_suenho_descanso,
-                    d_alimento: d_alimento,
-                    d_yo_cuerpo: d_yo_cuerpo,
-                    d_yo_mente: d_yo_mente,
-                    d_otros: d_otros,
-                    d_trabajo: d_trabajo,
-                    d_humanidad: d_humanidad,
-                    d_pareja: d_pareja,
-                    d_fecha: curDate,
-                    uid_fecha: newUAData[0].uid+'_'+curDate
+                  this.uaList = database.list('user-activity')
+                    .map(_userActivities => 
+                      _userActivities.filter(userActivity => userActivity.uid_fecha == this.user.uid+"_"+curDate)) as FirebaseListObservable<UserActivity[]>;
+                  //  Search if have data
+                  this.uaList.subscribe(userActivities => {
+                    if (userActivities.length > 0) {
+                      console.log("Record exists: "+this.user.uid+"_"+curDate);
+                    }
+                    else{
+                      this.uaList.push({
+                        uid: newUAData[0].uid,
+                        d_suenho_descanso: d_suenho_descanso,
+                        d_alimento: d_alimento,
+                        d_yo_cuerpo: d_yo_cuerpo,
+                        d_yo_mente: d_yo_mente,
+                        d_otros: d_otros,
+                        d_trabajo: d_trabajo,
+                        d_humanidad: d_humanidad,
+                        d_pareja: d_pareja,
+                        d_fecha: curDate,
+                        uid_fecha: newUAData[0].uid+'_'+curDate
+                      });
+                    }
                   });
                 }
               }

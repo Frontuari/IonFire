@@ -24,6 +24,9 @@ export class ChartBarPage {
 
   f_actual = new Date();
 
+  filter = 'W';
+  filtertoApply = 'Y';
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -161,9 +164,21 @@ export class ChartBarPage {
         userActivities => {
           userActivities.map(userActivity => {
             let d = new Date();
-            let firstOfMonth = new Date(d.getFullYear(), d.getMonth(), 1);
-            let lastOfMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0);
-            if(validate_fechaBetween(userActivity.d_fecha,dateFormat(firstOfMonth),dateFormat(lastOfMonth)) == 1){
+            let startDate = null;
+            let endDate = null;
+            if(this.filtertoApply == "W"){
+              startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-7);
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()); 
+            }
+            else if(this.filtertoApply == "M"){
+              startDate = new Date(d.getFullYear(), d.getMonth(), 1);
+              endDate = new Date(d.getFullYear(), d.getMonth() + 1, 0); 
+            }
+            else{
+              startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            }
+            if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
               charData.push({
                 "name" : '¿Cómo Estoy?',
                 //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
@@ -264,6 +279,10 @@ export class ChartBarPage {
       );
       //  End chart Line for Current Month
     });
+  }
+
+  onSelectChange(selectedValue: any) {
+    this.filtertoApply = selectedValue;
   }
 
 }
