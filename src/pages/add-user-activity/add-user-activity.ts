@@ -52,7 +52,7 @@ export class AddUserActivityPage {
     totalHoras = totalHoras + Number(userActivity.d_humanidad.slice(11,13));
     totalHoras = totalHoras + Number(userActivity.d_pareja.slice(11,13));
 
-    return totalHoras + totalMin;
+    return Math.round((totalHoras + totalMin) * 100) / 100;
   }
 
   tooltips(e,type) {
