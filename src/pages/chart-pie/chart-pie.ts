@@ -85,6 +85,36 @@ export class ChartPiePage {
           GROUP BY name \
           ORDER BY sum(y) ASC',[charData]);
 
+          for(let i=0;i<res.length;i++){
+              res[i].data = res[i].y;
+              switch(res[i].name){
+                case "Descanso":
+                  res[i].color = '#442662';
+                  break;
+                case "Alimento":
+                  res[i].color = '#0CB7F2';
+                  break;
+                case "Cuerpo":
+                  res[i].color = '#009D71';
+                  break;
+                case "Mente":
+                  res[i].color = '#009D71';
+                  break;
+                case "Otros":
+                  res[i].color = '#FFD700';
+                  break;
+                case "Trabajo":
+                  res[i].color = '#CB1D11';
+                  break;
+                case "Humanidad":
+                  res[i].color = '#C0C0C0';
+                  break;
+                case "Pareja":
+                  res[i].color = '#E87B31';
+                  break;
+              }
+            }
+
           //  Build Chart
           this.chartOptions = {
             chart: {
@@ -113,8 +143,6 @@ export class ChartPiePage {
               pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
-                //  Colors Order Alimento,Humanidad,Yo,Otros,Yo,Pareja,Descanso,Trabajo
-                colors: ['#0CB7F2','#C0C0C0','#009D71','#FFD700','#009D71','#E87B31','#442662','#CB1D11'],
                 showInLegend: false
               }
             },
