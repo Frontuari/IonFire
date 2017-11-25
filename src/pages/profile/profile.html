@@ -1,6 +1,8 @@
 <ion-header>
-
-    <ion-navbar hideBackButton="true" color="primaryDarkColor">
+    <ion-navbar  color="primaryDarkColor">
+        <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
         <ion-title>Tú Perfil</ion-title>
     </ion-navbar>
 </ion-header>
@@ -29,21 +31,21 @@
                 <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="profile.birthday"></ion-datetime>
             </ion-item>
             <ion-list radio-group [(ngModel)]="profile.gender">
-              <ion-list-header>
-                Género
-              </ion-list-header>
+                <ion-list-header>
+                    Género
+                </ion-list-header>
 
-              <ion-item>
-                <ion-icon name="female" item-start></ion-icon>
-                <ion-label>Femenino</ion-label>
-                <ion-radio [checked]="profile.gender=='F'" value="F" (click)="setFemaleIcon(profile)"></ion-radio>
-              </ion-item>
+                <ion-item>
+                    <ion-icon name="female" item-start></ion-icon>
+                    <ion-label>Femenino</ion-label>
+                    <ion-radio [checked]="profile.gender=='F'" value="F" (click)="setFemaleIcon(profile)"></ion-radio>
+                </ion-item>
 
-              <ion-item>
-                <ion-icon name="male" item-start></ion-icon>
-                <ion-label>Masculino</ion-label>
-                <ion-radio [checked]="profile.gender=='M'" value="M" (click)="setMaleIcon(profile)"></ion-radio>
-              </ion-item>
+                <ion-item>
+                    <ion-icon name="male" item-start></ion-icon>
+                    <ion-label>Masculino</ion-label>
+                    <ion-radio [checked]="profile.gender=='M'" value="M" (click)="setMaleIcon(profile)"></ion-radio>
+                </ion-item>
             </ion-list>
 
             <button ion-button block (click)="UpdateProfile(profile)">Guardar</button>
