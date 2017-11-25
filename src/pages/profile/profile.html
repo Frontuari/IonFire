@@ -10,7 +10,7 @@
         <div class="perfil">
             <ion-item style="background-color:transparent">
                 <ion-avatar item-start>
-                    <img src="{{profile.photoURL}}">
+                    <img src="{{profile.photoURL}}" style="background-color:white">
                 </ion-avatar>
             </ion-item>
             <ion-item>
@@ -36,13 +36,13 @@
               <ion-item>
                 <ion-icon name="female" item-start></ion-icon>
                 <ion-label>Femenino</ion-label>
-                <ion-radio [checked]="profile.gender=='F'" value="F"></ion-radio>
+                <ion-radio [checked]="profile.gender=='F'" value="F" (click)="setFemaleIcon(profile)"></ion-radio>
               </ion-item>
 
               <ion-item>
                 <ion-icon name="male" item-start></ion-icon>
                 <ion-label>Masculino</ion-label>
-                <ion-radio [checked]="profile.gender=='M'" value="M"></ion-radio>
+                <ion-radio [checked]="profile.gender=='M'" value="M" (click)="setMaleIcon(profile)"></ion-radio>
               </ion-item>
             </ion-list>
 

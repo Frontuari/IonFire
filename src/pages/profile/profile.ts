@@ -17,9 +17,9 @@ export class ProfilePage {
     uid: "0",
     email: "",
     name: "",
-    birthday: new Date(),
-    gender: "",
-    photoURL: ""
+    birthday: getCurDate(new Date(),(18*365),'-').toISOString().slice(0, 10),
+    gender: "M",
+    photoURL: "assets/images/male.png"
   } as UserProfile;
 
   userProfileRef$: FirebaseListObservable<UserProfile[]>;
@@ -42,16 +42,28 @@ export class ProfilePage {
             _userProfiles.filter(userProfile => userProfile.uid == this.uidProfile)) as FirebaseListObservable<UserProfile[]>;
         this.userProfileList$.subscribe(
           userProfiles => {
-            userProfiles.map(profile => {
+            if(userProfiles.length > 0){
+              userProfiles.map(profile => {
+                this.profile = {
+                  uid: (profile.uid !="" ? profile.uid : data.uid),
+                  email: (profile.email != "" ? profile.email : data.email),
+                  name: (profile.name !="" ? profile.name : data.displayName),
+                  birthday: (profile.birthday != null ? profile.birthday : getCurDate(new Date(),(18*365),'-').toISOString().slice(0, 10)),
+                  gender: (profile.gender !="" ? profile.gender : "F"),
+                  photoURL: (profile.photoURL != "" ? profile.photoURL : data.photoURL)
+                }
+              })
+            }
+            else{
               this.profile = {
-                uid: (profile.uid !="" ? profile.uid : data.uid),
-                email: (profile.email != "" ? profile.email : data.email),
-                name: (profile.name !="" ? profile.name : data.displayName),
-                birthday: (profile.birthday != null ? profile.birthday : getCurDate(new Date(),(18*365),'-')),
-                gender: (profile.gender !="" ? profile.gender : "F"),
-                photoURL: (profile.photoURL != "" ? profile.photoURL : data.photoURL)
+                uid: data.uid,
+                email: data.email,
+                name: data.displayName,
+                birthday: getCurDate(new Date(),(18*365),'-').toISOString().slice(0, 10),
+                gender: "M",
+                photoURL: (data.photoURL != null ? data.photoURL : "assets/images/male.png")
               }
-            })
+            }
           })
       }else{
         this.toast.create({
@@ -60,6 +72,24 @@ export class ProfilePage {
         }).present();
       }
     });
+  }
+
+  setFemaleIcon(profile: UserProfile){
+    if(profile.photoURL != "assets/images/female.png" && profile.photoURL != "assets/images/male.png"){
+      console.log("Not update image");
+    }
+    else{
+      profile.photoURL = "assets/images/female.png";
+    }
+  }
+
+  setMaleIcon(profile: UserProfile){
+    if(profile.photoURL != "assets/images/female.png" && profile.photoURL != "assets/images/male.png"){
+      console.log("Not update image");
+    }
+    else{
+      profile.photoURL = "assets/images/male.png";
+    }
   }
 
   UpdateProfile(profile: UserProfile){

@@ -14,7 +14,7 @@ export class AuthService {
     uid: "0",
     email: "",
     name: "Bienvenido",
-    photoURL: "../assets/images/ANDDANDOMK600.png"      
+    photoURL: "assets/images/male.png"
   } as UserModel;
 
   constructor(public angularFireAuth: AngularFireAuth) {
@@ -35,7 +35,7 @@ export class AuthService {
       if(user.photoURL != null)
         this.userModel.photoURL = user.photoURL;
       else
-        this.userModel.photoURL = "../assets/images/ANDDANDOMK600.png";
+        this.userModel.photoURL = "assets/images/male.png";
     });
   }
 

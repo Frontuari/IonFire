@@ -3,6 +3,7 @@ import { NavController, ToastController } from 'ionic-angular';
 //  Import AngularFireDatabase and FirebaseListObservable
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 //  Imports UserActivity Interface
+import { UserProfile } from '../../models/user-profile/user-profile.interface';
 import { UserActivity } from '../../models/user-activity/user-activity.interface';
 
 import { AuthService } from '../../providers/auth-service';
@@ -24,7 +25,14 @@ import * as alasql from 'alasql';
 })
 export class HomePage {
   userActivityHomeList$: FirebaseListObservable<UserActivity[]>;
-  user = {} as UserModel;
+  userProfileHomeList$: FirebaseListObservable<UserProfile[]>;
+  user = {
+    name: "",
+    email: "",
+    uid: "0",
+    gender: "M",
+    photoURL: "assets/images/male.png"
+  } as UserModel;
   userActivities = {
     uid: "0",
     totaldays: 0,
@@ -43,22 +51,41 @@ export class HomePage {
 
     this.afAuth.authState.subscribe(data => {
       if (data && data.uid) {
-        this.user.email = data.email;
-        this.user.name = data.displayName != null ? data.displayName : '';
-        this.user.photoURL = data.photoURL;
-        this.user.uid = data.uid;
+        this.userProfileHomeList$ = this.database.list('user-profile')
+          .map(_userProfiles =>
+            _userProfiles.filter(userProfile => userProfile.uid == data.uid)) as FirebaseListObservable<UserProfile[]>;
+
+        this.userProfileHomeList$.subscribe(
+          userProfiles => {
+            if(userProfiles.length > 0){
+              userProfiles.map(profile => {
+                this.user.email = profile.email;
+                this.user.name = profile.name;
+                this.user.photoURL = profile.photoURL;
+                this.user.uid = profile.uid;
+                this.user.gender = profile.gender;
+              })
+            }
+            else{
+              this.user.email = data.email;
+              this.user.name = data.displayName != null ? data.displayName : '';
+              this.user.photoURL = (data.photoURL!=null ? data.photoURL : "assets/images/male.png");
+              this.user.uid = data.uid;
+              this.user.gender = "M";
+            }
+          })
 
         /*
         //  Delete all data by user
-        this.database.list('/user-activity',{
+        this.database.list('/user-profile',{
           preserveSnapshot: true,
           query: {
             orderByChild: 'uid',
-            equalTo: this.user.uid,
+            equalTo: "0",
           }
         }).take(1).subscribe(snaphots=> {
           snaphots.forEach((snapshot) => {
-            this.database.object('/user-activity/' + snapshot.key).remove();
+            this.database.object('/user-profile/' + snapshot.key).remove();
           }) 
         })*/
 
@@ -98,12 +125,14 @@ export class HomePage {
             }
           }
         );
-
-        //  Send messages to welcome          
-        this.toast.create({
-          message: `Bienvenido ${this.user.name}`,
-          duration: 3000
-        }).present();
+        setTimeout(()=>{
+          let msg = (this.user.gender == "M" ? "Bienvenido " : "Bienvenida ")+this.user.name;
+          //  Send messages to welcome          
+          this.toast.create({
+            message: msg,
+            duration: 3000
+          }).present();
+         },2000);
       } else {
         this.toast.create({
           message: 'No se pudo encontrar detalles de autenticación',
