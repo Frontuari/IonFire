@@ -25,7 +25,6 @@ export class ChartLinePage {
   f_actual = new Date();
 
   filter = 'W';
-  filtertoApply = 'W';
 
   constructor(
     public navCtrl: NavController, 
@@ -36,6 +35,7 @@ export class ChartLinePage {
     let charData = [];
 
     this.afAuth.authState.subscribe(data => {
+      this.user.uid = data.uid;
       //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
       this.userActivityCharLineList$ = this.database.list('user-activity')
         .map(_userActivities => 
@@ -48,11 +48,11 @@ export class ChartLinePage {
             let d = new Date();
             let startDate = null;
             let endDate = null;
-            if(this.filtertoApply == "W"){
+            if(this.filter == "W"){
               startDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()-7);
               endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()); 
             }
-            else if(this.filtertoApply == "M"){
+            else if(this.filter == "M"){
               startDate = new Date(d.getFullYear(), d.getMonth() + 1, 1);
               endDate = new Date(d.getFullYear(), d.getMonth() + 2, 0); 
             }
@@ -164,7 +164,133 @@ export class ChartLinePage {
   }
 
   onSelectChange(selectedValue: any) {
-    this.filtertoApply = selectedValue;
+    this.filter = selectedValue;
+
+    let charData = [];
+    //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
+    this.userActivityCharLineList$ = this.database.list('user-activity')
+      .map(_userActivities => 
+        _userActivities.filter(userActivity => userActivity.uid == this.user.uid)) as FirebaseListObservable<UserActivity[]>;
+
+    //  Build data for chart Line for Current Month
+    this.userActivityCharLineList$.subscribe(
+      userActivities => {
+        userActivities.map(userActivity => {
+          let d = new Date();
+          let startDate = null;
+          let endDate = null;
+          if(this.filter == "W"){
+            startDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()-7);
+            endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()); 
+          }
+          else if(this.filter == "M"){
+            startDate = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+            endDate = new Date(d.getFullYear(), d.getMonth() + 2, 0); 
+          }
+          else{
+            startDate = new Date(d.getFullYear()-3, d.getMonth()+1, d.getDate());
+            endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate());
+          }
+          let weekNumber = 0;
+          if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
+            weekNumber = moment(userActivity.d_fecha,'YYYY-MM-DD').week();
+            charData.push({
+              "name" : 'Semana '+weekNumber,
+              //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
+              "activities" : [
+                getHour(userActivity.d_suenho_descanso),
+                getHour(userActivity.d_alimento),
+                getHour(userActivity.d_yo_cuerpo),
+                getHour(userActivity.d_yo_mente),
+                getHour(userActivity.d_otros),
+                getHour(userActivity.d_trabajo),
+                getHour(userActivity.d_humanidad),
+                getHour(userActivity.d_pareja)
+              ]
+            });
+          }
+        })
+        let res = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
+        ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
+        ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
+        FROM ? \
+        GROUP BY name \
+        ORDER BY name ASC',[charData]);
+
+        //  Build array of object for chart
+        let chartdata = [];
+
+        //  Set Number Magic
+        chartdata.push({
+          type: 'area',
+          name: 'Vibra Natural',
+          data: [6,6,6,6,6,6,6,6]
+        },
+        {
+          type: 'area',
+          name: 'Vibra Natural',
+          data: [0,0,0,0,0,0,0,0]
+        });
+
+        for(let i = 0; i < res.length; i++){
+          chartdata.push({
+            type: 'line',
+            name: res[i].name,
+            data: [
+              res[i].descanso,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
+              res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja,
+            ],
+            
+          })
+        }
+
+        //  Build Chart
+        this.chartOptions = {
+          chart: {
+            type: 'line'
+          },
+          title: {
+            text: 'Vibra '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
+          },
+          xAxis: {
+            //'Salud',
+            categories: ['Descanso',  'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja'],
+            labels: {
+              formatter: function () {
+                switch(this.value){
+                  case 'Descanso': 
+                    return '<span style="fill: #442662;">' + this.value + '</span>';
+                  case 'Alimento': 
+                    return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
+                  case 'Cuerpo': 
+                    return '<span style="fill: #009D71;">' + this.value + '</span>';
+                  case 'Mente': 
+                    return '<span style="fill: #009D71;">' + this.value + '</span>';
+                  case 'Otros': 
+                    return '<span style="fill: #FFD700;">' + this.value + '</span>';
+                  case 'Trabajo': 
+                    return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                  case 'Humanidad': 
+                    return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
+                  case 'Pareja': 
+                    return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                }
+              }
+            }
+          },
+          yAxis: {
+            title: {
+              text: 'Promedio'
+            }
+          },
+          credits: {
+             enabled: false
+          },
+          series: chartdata
+        }
+      }
+    );
+    //  End chart Line for Current Month
   }
 
 }

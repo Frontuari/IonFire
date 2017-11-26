@@ -23,7 +23,6 @@ export class ChartPiePage {
   f_actual = new Date();
 
   filter = 'W';
-  filtertoApply = 'Y';
 
   constructor(
     public navCtrl: NavController, 
@@ -34,6 +33,7 @@ export class ChartPiePage {
     let charData = [];
 
     this.afAuth.authState.subscribe(data => {
+      this.user.uid = data.uid;
       //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
       this.userActivityCharPieList$ = this.database.list('user-activity')
         .map(_userActivities => 
@@ -46,17 +46,17 @@ export class ChartPiePage {
             let d = new Date();
             let startDate = null;
             let endDate = null;
-            if(this.filtertoApply == "W"){
-              startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-7);
-              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()); 
+            if(this.filter == "W"){
+              startDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()-7);
+              endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()); 
             }
-            else if(this.filtertoApply == "M"){
-              startDate = new Date(d.getFullYear(), d.getMonth(), 1);
-              endDate = new Date(d.getFullYear(), d.getMonth() + 1, 0); 
+            else if(this.filter == "M"){
+              startDate = new Date(d.getFullYear(), d.getMonth()+1, 1);
+              endDate = new Date(d.getFullYear(), d.getMonth()+2, 0); 
             }
             else{
-              startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
-              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = new Date(d.getFullYear()-3, d.getMonth()+1, d.getDate());
+              endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate());
             }
             let weekNumber = 0;
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
@@ -178,7 +178,149 @@ export class ChartPiePage {
   }
 
   onSelectChange(selectedValue: any) {
-    this.filtertoApply = selectedValue;
+    this.filter = selectedValue;
+
+    let charData = [];
+    //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
+    this.userActivityCharPieList$ = this.database.list('user-activity')
+      .map(_userActivities => 
+        _userActivities.filter(userActivity => userActivity.uid == this.user.uid)) as FirebaseListObservable<UserActivity[]>;
+
+    //  Build data for chart Line for Current Month
+    this.userActivityCharPieList$.subscribe(
+      userActivities => {
+        userActivities.map(userActivity => {
+          let d = new Date();
+          let startDate = null;
+          let endDate = null;
+          if(this.filter == "W"){
+            startDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()-7);
+            endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()); 
+          }
+          else if(this.filter == "M"){
+            startDate = new Date(d.getFullYear(), d.getMonth()+1, 1);
+            endDate = new Date(d.getFullYear(), d.getMonth()+2, 0); 
+          }
+          else{
+            startDate = new Date(d.getFullYear()-3, d.getMonth()+1, d.getDate());
+            endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate());
+          }
+          let weekNumber = 0;
+          if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
+            //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
+            charData.push({
+              "name" : 'Descanso',
+              "y" : getHour(userActivity.d_suenho_descanso)
+            });
+            charData.push({
+              "name" : 'Alimento',
+              "y" : getHour(userActivity.d_alimento)
+            });
+            charData.push({
+              "name" : 'Cuerpo',
+              "y" : getHour(userActivity.d_yo_cuerpo)
+            });
+            charData.push({
+              "name" : 'Mente',
+              "y" : getHour(userActivity.d_yo_mente)
+            });
+            charData.push({
+              "name" : 'Otros',
+              "y" : getHour(userActivity.d_otros)
+            });
+            charData.push({
+              "name" : 'Trabajo',
+              "y" : getHour(userActivity.d_trabajo)
+            });
+            charData.push({
+              "name" : 'Humanidad',
+              "y" : getHour(userActivity.d_humanidad)
+            });
+            charData.push({
+              "name" : 'Pareja',
+              "y" : getHour(userActivity.d_pareja)
+            });
+          }
+        })
+
+        let res = alasql('SELECT name, sum(y) AS y \
+        FROM ? \
+        GROUP BY name \
+        ORDER BY sum(y) ASC',[charData]);
+
+        for(let i=0;i<res.length;i++){
+            res[i].data = res[i].y;
+            switch(res[i].name){
+              case "Descanso":
+                res[i].color = '#442662';
+                break;
+              case "Alimento":
+                res[i].color = '#0CB7F2';
+                break;
+              case "Cuerpo":
+                res[i].color = '#009D71';
+                break;
+              case "Mente":
+                res[i].color = '#009D71';
+                break;
+              case "Otros":
+                res[i].color = '#FFD700';
+                break;
+              case "Trabajo":
+                res[i].color = '#CB1D11';
+                break;
+              case "Humanidad":
+                res[i].color = '#C0C0C0';
+                break;
+              case "Pareja":
+                res[i].color = '#E87B31';
+                break;
+            }
+          }
+
+        //  Build Chart
+        this.chartOptions = {
+          chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+            events: {
+              load: function () {
+                var theSeries = this.series;
+                for(let serie of theSeries){
+                  if (serie.index > 0) {
+                    serie.setVisible(false);
+                  }
+                }
+              }
+            }
+          },
+          title: {
+            text: 'Equilibrio '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
+          },
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              showInLegend: false
+            }
+          },
+          credits: {
+             enabled: false
+          },
+          series: [{
+            name: '% Total',
+            colorByPoint: true,
+            data: res
+          }]
+        }
+      }
+    );
+    //  End chart Line for Current Month
   }
 
 }
@@ -206,9 +348,9 @@ function validate_fechaBetween(fecha,fechaInicial,fechaFinal)
   let valuesStart=fechaInicial.split("-");
   let valuesEnd=fechaFinal.split("-");
   // Verificamos que la fecha no sea posterior a la actual
-  var dateCompare=new Date(valuesCompare[2],(valuesCompare[1]-1),valuesCompare[0]);
-  var dateStart=new Date(valuesStart[2],(valuesStart[1]-1),valuesStart[0]);
-  var dateEnd=new Date(valuesEnd[2],(valuesEnd[1]-1),valuesEnd[0]);
+  var dateCompare=Number(valuesCompare[0]+valuesCompare[1]+valuesCompare[2]);
+  var dateStart=Number(valuesStart[0]+valuesStart[1]+valuesStart[2]);
+  var dateEnd=Number(valuesEnd[0]+valuesEnd[1]+valuesEnd[2]);
   if(dateCompare>=dateStart && dateCompare <=dateEnd)
   {
       return 1;
