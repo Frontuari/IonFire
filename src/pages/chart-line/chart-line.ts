@@ -8,8 +8,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../../models/user-model';
 //  Import for orderby data from Angular
 import "rxjs/add/operator/map";
-//  Import momentJS
-import * as moment from 'moment';
 //  Import AlaSQL
 import * as alasql from 'alasql';
 
@@ -24,7 +22,7 @@ export class ChartLinePage {
 
   f_actual = new Date();
 
-  filter = 'W';
+  filter = 'M';
 
   constructor(
     public navCtrl: NavController, 
@@ -48,23 +46,31 @@ export class ChartLinePage {
             let d = new Date();
             let startDate = null;
             let endDate = null;
-            if(this.filter == "W"){
-              startDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()-7);
-              endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()); 
+            if(this.filter == "M"){
+              startDate = new Date(d.getFullYear(), d.getMonth(),1);
+              endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
             }
-            else if(this.filter == "M"){
-              startDate = new Date(d.getFullYear(), d.getMonth() + 1, 1);
-              endDate = new Date(d.getFullYear(), d.getMonth() + 2, 0); 
+            else if(this.filter == "Y"){
+              startDate = new Date(d.getFullYear(), 0,1);
+              endDate = new Date(d.getFullYear(), 11, 31); 
             }
             else{
-              startDate = new Date(d.getFullYear()-3, d.getMonth()+1, d.getDate());
-              endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate());
+              startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
             }
-            let weekNumber = 0;
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
-              weekNumber = moment(userActivity.d_fecha,'YYYY-MM-DD').week();
+              let name = "";
+              if(this.filter =="M"){
+                name = 'Semana '+userActivity.week;
+              }
+              else if(this.filter == "Y"){
+                name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
+              }
+              else{
+                name = userActivity.d_fecha.slice(0,4);
+              }
               charData.push({
-                "name" : 'Semana '+weekNumber,
+                "name" : 'Semana '+userActivity.week,
                 //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
                 "activities" : [
                   getHour(userActivity.d_suenho_descanso),
@@ -113,13 +119,30 @@ export class ChartLinePage {
             })
           }
 
+          let subtitle = "";
+
+          switch(this.filter){
+            case 'M':
+              subtitle = 'Semanas del Mes de '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+              break;
+            case 'Y':
+              subtitle = 'Meses del año '+this.f_actual.getFullYear();
+              break;
+            case 'T':
+              subtitle = 'Triada años desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+              break;
+          }
+
           //  Build Chart
           this.chartOptions = {
             chart: {
               type: 'line'
             },
             title: {
-              text: 'Vibra '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
+              text: 'Vibra Tierra'
+            },
+            subtitle: {
+              text: subtitle
             },
             xAxis: {
               //'Salud',
@@ -179,23 +202,31 @@ export class ChartLinePage {
           let d = new Date();
           let startDate = null;
           let endDate = null;
-          if(this.filter == "W"){
-            startDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()-7);
-            endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate()); 
+          if(this.filter == "M"){
+            startDate = new Date(d.getFullYear(), d.getMonth(), 1);
+            endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
           }
-          else if(this.filter == "M"){
-            startDate = new Date(d.getFullYear(), d.getMonth() + 1, 1);
-            endDate = new Date(d.getFullYear(), d.getMonth() + 2, 0); 
+          else if(this.filter == "Y"){
+            startDate = new Date(d.getFullYear(), 0, 1);
+            endDate = new Date(d.getFullYear(), 11, 31); 
           }
           else{
-            startDate = new Date(d.getFullYear()-3, d.getMonth()+1, d.getDate());
-            endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate());
+            startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+            endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
           }
-          let weekNumber = 0;
           if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
-            weekNumber = moment(userActivity.d_fecha,'YYYY-MM-DD').week();
+            let name = "";
+            if(this.filter =="M"){
+              name = 'Semana '+userActivity.week;
+            }
+            else if(this.filter == "Y"){
+              name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
+            }
+            else{
+              name = userActivity.d_fecha.slice(0,4);
+            }
             charData.push({
-              "name" : 'Semana '+weekNumber,
+              "name" : name,
               //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
               "activities" : [
                 getHour(userActivity.d_suenho_descanso),
@@ -244,13 +275,29 @@ export class ChartLinePage {
           })
         }
 
+        let subtitle = "";
+        switch(this.filter){
+          case 'M':
+            subtitle = 'Semanas del Mes de '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+            break;
+          case 'Y':
+            subtitle = 'Meses del año '+this.f_actual.getFullYear();
+            break;
+          case 'T':
+            subtitle = 'Triada años desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+            break;
+        }
+
         //  Build Chart
         this.chartOptions = {
           chart: {
             type: 'line'
           },
           title: {
-            text: 'Vibra '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear()
+            text: 'Vibra Tierra'
+          },
+          subtitle: {
+            text: subtitle
           },
           xAxis: {
             //'Salud',
@@ -318,9 +365,10 @@ function validate_fechaBetween(fecha,fechaInicial,fechaFinal)
   let valuesStart=fechaInicial.split("-");
   let valuesEnd=fechaFinal.split("-");
   // Verificamos que la fecha no sea posterior a la actual
-  var dateCompare=Number(valuesCompare[0]+valuesCompare[1]+valuesCompare[2]);
-  var dateStart=Number(valuesStart[0]+valuesStart[1]+valuesStart[2]);
-  var dateEnd=Number(valuesEnd[0]+valuesEnd[1]+valuesEnd[2]);
+  var dateCompare=Number(valuesCompare[0]+(valuesCompare[1]<10 ? '0'+valuesCompare[1] : valuesCompare[1])+(valuesCompare[2]<10 ? '0'+valuesCompare[2] : valuesCompare[2]));
+  var dateStart=Number(valuesStart[0]+(valuesStart[1]<10 ? '0'+valuesStart[1] : valuesStart[1])+(valuesStart[2]<10 ? '0'+valuesStart[2] : valuesStart[2]));
+  var dateEnd=Number(valuesEnd[0]+(valuesEnd[1]<10 ? '0'+valuesEnd[1] : valuesEnd[1])+(valuesEnd[2]<10 ? '0'+valuesEnd[2] : valuesEnd[2]));
+  //console.log('DC: '+dateCompare+' FI: '+dateStart+' FF: '+dateEnd);
   if(dateCompare>=dateStart && dateCompare <=dateEnd)
   {
     return 1;
@@ -330,7 +378,7 @@ function validate_fechaBetween(fecha,fechaInicial,fechaFinal)
 
 function dateFormat(fecha){
   var dia = fecha.getDate();
-  var mes = fecha.getMonth();
+  var mes = fecha.getMonth()+1;
   var yyyy = fecha.getFullYear();
   var fecha_formateada = yyyy + '-' + mes + '-' + dia;
   return fecha_formateada;

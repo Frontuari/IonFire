@@ -10,6 +10,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { UserModel } from '../../models/user-model';
 //  Import for orderby data from Angular
 import "rxjs/add/operator/map";
+import * as alasql from 'alasql';
 
 @Component({
   selector: 'page-add-user-activity',
@@ -115,6 +116,8 @@ export class AddUserActivityPage {
     d_pareja: this.getCurDate(new Date(),0,'+').toISOString().slice(0,11)+"00:00"
   } as UserActivity;
   user = {} as UserModel;
+  //  Current week Activities
+  curweek = 0;
   //	Create a new FirebaseListObservable Object
   userActivityAddRef$: FirebaseListObservable<UserActivity[]>
   userActivityAddList$: FirebaseListObservable<UserActivity[]>
@@ -127,6 +130,9 @@ export class AddUserActivityPage {
     private toast: ToastController,
     public alertCtrl: AlertController,
   	private database: AngularFireDatabase) {
+
+    let uaData = [];
+
   	this.userActivityAddRef$ = this.database.list('user-activity');
     this.afAuth.authState.subscribe(data => {
       if(data && data.uid){
@@ -152,6 +158,33 @@ export class AddUserActivityPage {
             }
           }
         )
+
+        //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
+        this.userActivityAddList$ = this.database.list('user-activity')
+          .map(_userActivities =>
+            _userActivities.filter(userActivity => userActivity.uid == data.uid)) as FirebaseListObservable<UserActivity[]>;
+
+        this.userActivityAddList$.subscribe(
+          userActivities => {
+            if (userActivities.length > 0) {
+              userActivities.map(userActivity => {
+                uaData.push({
+                  "uid": userActivity.uid,
+                  "fecha": userActivity.d_fecha
+                });
+              })
+              //  Sort data by fecha
+              uaData.sort(function compare(a, b) {
+                let dateA = +new Date(a.fecha);
+                let dateB = +new Date(b.fecha);
+                return dateA - dateB;
+              });
+
+              let userWMYs = alasql('SELECT uid,fecha, ROUND(DATEDIFF(Week,DATE(fecha), DATE(Date()))) AS totalweeks \
+              FROM ? ORDER BY fecha ASC LIMIT 1', [uaData]);
+              this.curweek = userWMYs[0].totalweeks;
+            }
+          });
 
       }else{
         this.toast.create({
@@ -197,6 +230,7 @@ export class AddUserActivityPage {
             }
             i++;
           }else{
+
             //  Push this to our Firebase database under the 'user-activity' node.
             this.userActivityAddRef$.push({
               uid: this.user.uid,
@@ -209,7 +243,8 @@ export class AddUserActivityPage {
               d_humanidad: this.userActivity.d_humanidad,
               d_pareja: this.userActivity.d_pareja,
               d_fecha: this.myDate,
-              uid_fecha: this.user.uid+'_'+this.myDate
+              uid_fecha: this.user.uid+'_'+this.myDate,
+              week: this.curweek
             });
             i++;
             //  Reset our userActivity

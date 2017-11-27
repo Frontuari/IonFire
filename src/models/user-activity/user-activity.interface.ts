@@ -13,4 +13,5 @@ export interface UserActivity {
   d_pareja: string;
   d_fecha: string;
   uid_fecha: string;
+  week: string;
 }
