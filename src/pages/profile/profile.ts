@@ -19,7 +19,8 @@ export class ProfilePage {
     name: "",
     birthday: getCurDate(new Date(),(18*365),'-').toISOString().slice(0, 10),
     gender: "M",
-    photoURL: "assets/images/male.png"
+    photoURL: "assets/images/male.png",
+    nacimiento: ""
   } as UserProfile;
 
   userProfileRef$: FirebaseListObservable<UserProfile[]>;
@@ -50,7 +51,8 @@ export class ProfilePage {
                   name: (profile.name !="" ? profile.name : data.displayName),
                   birthday: (profile.birthday != null ? profile.birthday : getCurDate(new Date(),(18*365),'-').toISOString().slice(0, 10)),
                   gender: (profile.gender !="" ? profile.gender : "F"),
-                  photoURL: (profile.photoURL != "" ? profile.photoURL : data.photoURL)
+                  photoURL: (profile.photoURL != "" ? profile.photoURL : data.photoURL),
+                  nacimiento: (profile.nacimiento != "" ? profile.nacimiento : data.displayName)
                 }
               })
             }
@@ -61,7 +63,8 @@ export class ProfilePage {
                 name: data.displayName,
                 birthday: getCurDate(new Date(),(18*365),'-').toISOString().slice(0, 10),
                 gender: "M",
-                photoURL: (data.photoURL != null ? data.photoURL : "assets/images/male.png")
+                photoURL: (data.photoURL != null ? data.photoURL : "assets/images/male.png"),
+                nacimiento: ""
               }
             }
           })
