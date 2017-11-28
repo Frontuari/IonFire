@@ -96,7 +96,7 @@ export class ChartLinePage {
           let chartdata = [];
 
           //  Set Number Magic
-          chartdata.push({
+          /*chartdata.push({
             type: 'area',
             name: 'Vibra Natural',
             data: [6,6,6,6,6,6,6,6]
@@ -105,7 +105,7 @@ export class ChartLinePage {
             type: 'area',
             name: 'Vibra Natural',
             data: [0,0,0,0,0,0,0,0]
-          });
+          });*/
 
           for(let i = 0; i < res.length; i++){
             chartdata.push({
