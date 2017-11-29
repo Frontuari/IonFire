@@ -124,11 +124,11 @@ export class ChartBarPage {
             },
             xAxis: [{
               //, 'Salud'
-              categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+              categories: ['Sueño', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
               labels: {
                 formatter: function () {
                   switch(this.value){
-                    case 'Descanso': 
+                    case 'Sueño': 
                       return '<span style="fill: #442662;">' + this.value + '</span>';
                     case 'Alimento': 
                       return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
@@ -255,11 +255,11 @@ export class ChartBarPage {
             },
             xAxis: [{
               //, 'Salud'
-              categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+              categories: ['Sueño', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
               labels: {
                 formatter: function () {
                   switch(this.value){
-                    case 'Descanso': 
+                    case 'Sueño': 
                       return '<span style="fill: #442662;">' + this.value + '</span>';
                     case 'Alimento': 
                       return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
@@ -406,11 +406,11 @@ export class ChartBarPage {
           },
           xAxis: [{
             //, 'Salud'
-            categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+            categories: ['Sueño', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
             labels: {
               formatter: function () {
                 switch(this.value){
-                  case 'Descanso': 
+                  case 'Sueño': 
                     return '<span style="fill: #442662;">' + this.value + '</span>';
                   case 'Alimento': 
                     return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
@@ -537,11 +537,11 @@ export class ChartBarPage {
           },
           xAxis: [{
             //, 'Salud'
-            categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+            categories: ['Sueño', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
             labels: {
               formatter: function () {
                 switch(this.value){
-                  case 'Descanso': 
+                  case 'Sueño': 
                     return '<span style="fill: #442662;">' + this.value + '</span>';
                   case 'Alimento': 
                     return '<span style="fill: #0CB7F2;">' + this.value + '</span>';

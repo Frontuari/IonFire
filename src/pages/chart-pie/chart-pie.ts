@@ -61,7 +61,7 @@ export class ChartPiePage {
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
               //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
               charData.push({
-                "name" : 'Descanso',
+                "name" : 'Sueño',
                 "y" : getHour(userActivity.d_suenho_descanso)
               });
               charData.push({
@@ -103,7 +103,7 @@ export class ChartPiePage {
           for(let i=0;i<res.length;i++){
               res[i].data = res[i].y;
               switch(res[i].name){
-                case "Descanso":
+                case "Sueño":
                   res[i].color = '#442662';
                   break;
                 case "Alimento":
@@ -223,7 +223,7 @@ export class ChartPiePage {
           if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
             //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
             charData.push({
-              "name" : 'Descanso',
+              "name" : 'Sueño',
               "y" : getHour(userActivity.d_suenho_descanso)
             });
             charData.push({
@@ -265,7 +265,7 @@ export class ChartPiePage {
         for(let i=0;i<res.length;i++){
             res[i].data = res[i].y;
             switch(res[i].name){
-              case "Descanso":
+              case "Sueño":
                 res[i].color = '#442662';
                 break;
               case "Alimento":
