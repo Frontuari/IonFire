@@ -47,8 +47,10 @@ export class ChartLinePage {
             let startDate = null;
             let endDate = null;
             if(this.filter == "M"){
-              startDate = new Date(d.getFullYear(), d.getMonth(),1);
-              endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
+               //startDate = new Date(d.getFullYear(), d.getMonth(),1);
+              //endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-2)
             }
             else if(this.filter == "Y"){
               startDate = new Date(d.getFullYear(), 0,1);
@@ -58,10 +60,10 @@ export class ChartLinePage {
               startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
             }
-            if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
+            if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) ==1){
               let name = "";
               if(this.filter =="M"){
-                name = 'Semana '+userActivity.week;
+                name = 'Semana ajajaja'+userActivity.week;
               }
               else if(this.filter == "Y"){
                 name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
@@ -70,7 +72,8 @@ export class ChartLinePage {
                 name = userActivity.d_fecha.slice(0,4);
               }
               charData.push({
-                "name" : 'Semana '+userActivity.week,
+                "name" : 'Semana'+userActivity.week,
+                "fecha" : userActivity.d_fecha,
                 //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
                 "activities" : [
                   getHour(userActivity.d_suenho_descanso),
@@ -90,7 +93,7 @@ export class ChartLinePage {
           ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
           FROM ? \
           GROUP BY name \
-          ORDER BY name ASC',[charData]);
+          ORDER BY name ASC, limit 4',[charData]);
 
           //  Build array of object for chart
           let chartdata = [];
@@ -203,8 +206,10 @@ export class ChartLinePage {
           let startDate = null;
           let endDate = null;
           if(this.filter == "M"){
-            startDate = new Date(d.getFullYear(), d.getMonth(), 1);
-            endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
+            //startDate = new Date(d.getFullYear(), d.getMonth(), 1);
+            //endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
+            endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            startDate = date_by_subtracting_days(endDate,28);
           }
           else if(this.filter == "Y"){
             startDate = new Date(d.getFullYear(), 0, 1);
@@ -227,6 +232,7 @@ export class ChartLinePage {
             }
             charData.push({
               "name" : name,
+              "week" : userActivity.week,
               //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
               "activities" : [
                 getHour(userActivity.d_suenho_descanso),
@@ -241,12 +247,12 @@ export class ChartLinePage {
             });
           }
         })
-        let res = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
+        let res = alasql('SELECT name,week, ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
         ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
         ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
         FROM ? \
-        GROUP BY name \
-        ORDER BY name ASC',[charData]);
+        GROUP BY name, week \
+        ORDER BY week desc, name ASC limit 4',[charData]);
 
         //  Build array of object for chart
         let chartdata = [];
@@ -267,6 +273,7 @@ export class ChartLinePage {
           chartdata.push({
             type: 'line',
             name: res[i].name,
+            week: res[i].week,
             data: [
               res[i].descanso,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
               res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja,
@@ -389,4 +396,12 @@ function getHour(concept){
   let totalMin = Number(concept.slice(14,16));
 
   return totalHour + (totalMin / 60);
+}
+
+function date_by_subtracting_days(date, days) {
+  return new Date(
+      date.getFullYear(), 
+      date.getMonth(), 
+      date.getDate() - days
+   );
 }

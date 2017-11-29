@@ -118,9 +118,9 @@ export class HomePage {
               , ROUND(DATEDIFF(Month,DATE(fecha), DATE(Date()))) AS totalmonths \
               , ROUND(DATEDIFF(Year,DATE(fecha), DATE(Date()))) AS totalyears \
               FROM ? ORDER BY fecha ASC LIMIT 1', [uaData]);*/
-              let userWMYs = alasql('SELECT uid,fecha,ROUND(DATEDIFF(day,DATE(fecha),DATE(Date()))/7) AS totalweeks\
-              , ROUND(DATEDIFF(day,DATE(fecha),DATE(Date()))/28) AS totalmonths \
-              , ROUND(DATEDIFF(day,DATE(fecha),DATE(Date()))/364) AS totalyears \
+              let userWMYs = alasql('SELECT uid,fecha,ROUND(DATEDIFF(day,DATE(fecha),DATE(Date()))/7)+1 AS totalweeks\
+              , ROUND(DATEDIFF(day,DATE(fecha),DATE(Date()))/28)+1 AS totalmonths \
+              , ROUND(DATEDIFF(day,DATE(fecha),DATE(Date()))/364)+1 AS totalyears \
               FROM ? ORDER BY fecha ASC LIMIT 1', [uaData]);
               this.userActivities = {
                 uid: userDays[0].uid,
