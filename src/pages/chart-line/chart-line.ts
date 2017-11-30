@@ -23,7 +23,7 @@ export class ChartLinePage {
   f_actual = new Date();
 
   filter = 'M';
-
+  div = 1;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -46,34 +46,44 @@ export class ChartLinePage {
             let d = new Date();
             let startDate = null;
             let endDate = null;
+           
             if(this.filter == "M"){
                //startDate = new Date(d.getFullYear(), d.getMonth(),1);
               //endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-              startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-2)
+              startDate = date_by_subtracting_days(endDate, 28);
+              this.div=1;
+              //startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-20)
             }
             else if(this.filter == "Y"){
               startDate = new Date(d.getFullYear(), 0,1);
               endDate = new Date(d.getFullYear(), 11, 31); 
+              this.div=4;
             }
             else{
               startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              this.div=52;
             }
-            if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) ==1){
+            if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) ==1){  
               let name = "";
               if(this.filter =="M"){
-                name = 'Semana ajajaja'+userActivity.week;
+                //name = userActivity.d_fecha
+                name = 'Semana ';
+                this.div=1;
               }
               else if(this.filter == "Y"){
                 name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
+                this.div=4;
               }
               else{
                 name = userActivity.d_fecha.slice(0,4);
+                this.div=52;
               }
               charData.push({
-                "name" : 'Semana'+userActivity.week,
-                "fecha" : userActivity.d_fecha,
+                "name" :  name,
+                "fecha": userActivity.d_fecha,
+                "div":this.div,
                 //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
                 "activities" : [
                   getHour(userActivity.d_suenho_descanso),
@@ -88,12 +98,13 @@ export class ChartLinePage {
               });
             }
           })
-          let res = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
+          let res = alasql('SELECT name,ROUND((DATEDIFF(Week,DATE(fecha), DATE(Date()))))/div,\
+          ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
           ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
           ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
           FROM ? \
-          GROUP BY name \
-          ORDER BY name ASC, limit 4',[charData]);
+          GROUP BY name, ROUND((DATEDIFF(Week,DATE(fecha), DATE(Date()))))/div \
+          ORDER BY name ASC ',[charData]);
 
           //  Build array of object for chart
           let chartdata = [];
@@ -113,7 +124,7 @@ export class ChartLinePage {
           for(let i = 0; i < res.length; i++){
             chartdata.push({
               type: 'line',
-              name: res[i].name,
+              name: res[i].name.concat(i+1),
               data: [
                 res[i].descanso,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
                 res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja,
@@ -126,10 +137,10 @@ export class ChartLinePage {
 
           switch(this.filter){
             case 'M':
-              subtitle = 'Semanas del Mes de '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+              subtitle = 'Ultimas 4 Semanas ';
               break;
             case 'Y':
-              subtitle = 'Meses del año '+this.f_actual.getFullYear();
+              subtitle = 'Meses';
               break;
             case 'T':
               subtitle = 'Triada años desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
@@ -142,7 +153,7 @@ export class ChartLinePage {
               type: 'line'
             },
             title: {
-              text: 'Vibra Tierra'
+              text: 'Grafica 1'
             },
             subtitle: {
               text: subtitle
@@ -205,35 +216,43 @@ export class ChartLinePage {
           let d = new Date();
           let startDate = null;
           let endDate = null;
+          
           if(this.filter == "M"){
             //startDate = new Date(d.getFullYear(), d.getMonth(), 1);
             //endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
             endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
             startDate = date_by_subtracting_days(endDate,28);
+            this.div=1;
           }
           else if(this.filter == "Y"){
             startDate = new Date(d.getFullYear(), 0, 1);
             endDate = new Date(d.getFullYear(), 11, 31); 
+            this.div=4;
           }
           else{
             startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
             endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            this.div=52;
           }
           if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
             let name = "";
             if(this.filter =="M"){
-              name = 'Semana '+userActivity.week;
+              name = 'Semana ';
+              this.div=1;
             }
             else if(this.filter == "Y"){
-              name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
+              name = 'Mes ';
+              this.div=4;
             }
             else{
               name = userActivity.d_fecha.slice(0,4);
+              this.div=52;
             }
             charData.push({
               "name" : name,
-              "week" : userActivity.week,
-              //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
+              "fecha":userActivity.d_fecha,
+              "div":this.div,
+               //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
               "activities" : [
                 getHour(userActivity.d_suenho_descanso),
                 getHour(userActivity.d_alimento),
@@ -247,12 +266,13 @@ export class ChartLinePage {
             });
           }
         })
-        let res = alasql('SELECT name,week, ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
+        let res = alasql('SELECT name,ROUND((DATEDIFF(Week,DATE(fecha), DATE(Date()))))/div,\
+        ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
         ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
         ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
         FROM ? \
-        GROUP BY name, week \
-        ORDER BY week desc, name ASC limit 4',[charData]);
+        GROUP BY name, ROUND((DATEDIFF(Week,DATE(fecha), DATE(Date()))))/div \
+        ORDER BY name ASC ',[charData]);
 
         //  Build array of object for chart
         let chartdata = [];
@@ -272,8 +292,7 @@ export class ChartLinePage {
         for(let i = 0; i < res.length; i++){
           chartdata.push({
             type: 'line',
-            name: res[i].name,
-            week: res[i].week,
+            name: res[i].name.concat(i+1),
             data: [
               res[i].descanso,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
               res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja,
@@ -285,14 +304,14 @@ export class ChartLinePage {
         let subtitle = "";
         switch(this.filter){
           case 'M':
-            subtitle = 'Semanas del Mes de '+getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-            break;
+          subtitle = 'Ultimas 4 Semanas ';
+          break;
           case 'Y':
-            subtitle = 'Meses del año '+this.f_actual.getFullYear();
-            break;
+          subtitle = 'Meses';
+          break;
           case 'T':
-            subtitle = 'Triada años desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
-            break;
+          subtitle = 'Triada años desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+          break;
         }
 
         //  Build Chart
@@ -301,7 +320,7 @@ export class ChartLinePage {
             type: 'line'
           },
           title: {
-            text: 'Vibra Tierra'
+            text: 'Grafica 1'
           },
           subtitle: {
             text: subtitle
