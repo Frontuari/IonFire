@@ -23,6 +23,7 @@ export class ChartPiePage {
   f_actual = new Date();
 
   filter = 'M';
+  
 
   constructor(
     public navCtrl: NavController, 
@@ -47,16 +48,19 @@ export class ChartPiePage {
             let startDate = null;
             let endDate = null;
             if(this.filter == "M"){
-              startDate = new Date(d.getFullYear(), d.getMonth(), 1);
-              endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = date_by_subtracting_days(endDate, 28);
+              
             }
             else if(this.filter == "Y"){
-              startDate = new Date(d.getFullYear(), 0, 1);
-              endDate = new Date(d.getFullYear(), 11, 31); 
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = date_by_subtracting_days(endDate, 364);
+        
             }
             else{
               startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+             
             }
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
               //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
@@ -133,10 +137,11 @@ export class ChartPiePage {
           let subtitle = "";
           switch(this.filter){
             case 'M':
-              subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+              //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+              subtitle ='Ultimos 28 dias';
               break;
             case 'Y':
-              subtitle = 'Año '+this.f_actual.getFullYear();
+              subtitle = 'Ultimo Año ';
               break;
             case 'T':
               subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
@@ -209,16 +214,19 @@ export class ChartPiePage {
           let startDate = null;
           let endDate = null;
           if(this.filter == "M"){
-            startDate = new Date(d.getFullYear(), d.getMonth(), 1);
-            endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
+            endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            startDate = date_by_subtracting_days(endDate, 28);
+            
           }
           else if(this.filter == "Y"){
-            startDate = new Date(d.getFullYear(), 0, 1);
-            endDate = new Date(d.getFullYear(), 11, 31); 
+            endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            startDate = date_by_subtracting_days(endDate, 364);
+            
           }
           else{
             startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
             endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            
           }
           if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
             //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
@@ -295,10 +303,11 @@ export class ChartPiePage {
         let subtitle = "";
         switch(this.filter){
           case 'M':
-            subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+            //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+            subtitle ='Ultimos 28 dias';
             break;
           case 'Y':
-            subtitle = 'Año '+this.f_actual.getFullYear();
+            subtitle = 'Ultimo año ';
             break;
           case 'T':
             subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
@@ -401,4 +410,12 @@ function getHour(concept){
   let totalMin = Number(concept.slice(14,16));
 
   return totalHour + (totalMin / 60);
+}
+
+function date_by_subtracting_days(date, days) {
+  return new Date(
+      date.getFullYear(), 
+      date.getMonth(), 
+      date.getDate() - days
+   );
 }

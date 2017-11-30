@@ -52,9 +52,11 @@ export class ChartBarPage {
             let startDate = null;
             let endDate = null;
             if(this.filter == "M"){
-              startDate = new Date(d.getFullYear(), d.getMonth(), 1);
-              endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
-            }
+              
+              //endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = date_by_subtracting_days(endDate, 28);
+            } 
             else if(this.filter == "Y"){
               startDate = new Date(d.getFullYear(), 0, 1);
               endDate = new Date(d.getFullYear(), 11, 31); 
@@ -643,4 +645,12 @@ function getHour(concept){
   let totalMin = Number(concept.slice(14,16));
 
   return totalHour + (totalMin / 60);
+}
+
+function date_by_subtracting_days(date, days) {
+  return new Date(
+      date.getFullYear(), 
+      date.getMonth(), 
+      date.getDate() - days
+   );
 }
