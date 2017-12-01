@@ -23,7 +23,7 @@ export class ChartLinePage {
   f_actual = new Date();
 
   filter = 'M';
-  div = '1';
+  div = '7';
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -52,33 +52,33 @@ export class ChartLinePage {
               //endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
               startDate = date_by_subtracting_days(endDate, 28);
-              this.div='1';
+              this.div='7';
               //startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-20)
             }
             else if(this.filter == "Y"){
               startDate = new Date(d.getFullYear(), 0,1);
               endDate = new Date(d.getFullYear(), 11, 31); 
-              this.div='4';
+              this.div='28';
             }
             else{
               startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-              this.div='52';
+              this.div='364';
             }
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) ==1){  
               let name = "";
               if(this.filter =="M"){
                 //name = userActivity.d_fecha
                 name = 'Semana ';
-                this.div='1';
+                this.div='7';
               }
               else if(this.filter == "Y"){
                 name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
-                this.div='4';
+                this.div='28';
               }
               else{
                 name = userActivity.d_fecha.slice(0,4);
-                this.div='52';
+                this.div='364';
               }
               charData.push({
                 "name" :  name,
@@ -98,13 +98,13 @@ export class ChartLinePage {
               });
             }
           })
-          let res = alasql('SELECT name,ROUND((DATEDIFF(Week,DATE(fecha), DATE(Date())))/div),\
+          let res = alasql('SELECT name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1,\
           ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
           ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
           ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
           FROM ? \
-          GROUP BY name, ROUND((DATEDIFF(Week,DATE(fecha), DATE(Date())))/div) \
-          ORDER BY name ASC limit 2 ',[charData]);
+          GROUP BY name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1 \
+          ORDER BY name ASC ',[charData]);
 
           //  Build array of object for chart
           let chartdata = [];
@@ -222,31 +222,31 @@ export class ChartLinePage {
             //endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
             endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
             startDate = date_by_subtracting_days(endDate,28);
-            this.div='1';
+            this.div='7';
           }
           else if(this.filter == "Y"){
             startDate = new Date(d.getFullYear(), 0, 1);
             endDate = new Date(d.getFullYear(), 11, 31); 
-            this.div='4';
+            this.div='28';
           }
           else{
             startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
             endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-            this.div='52';
+            this.div='364';
           }
           if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
             let name = "";
             if(this.filter =="M"){
               name = 'Semana ';
-              this.div='1';
+              this.div='7';
             }
             else if(this.filter == "Y"){
               name = 'Mes ';
-              this.div='4';
+              this.div='28';
             }
             else{
               name = 'Año ';
-              this.div='52';
+              this.div='364';
             }
             charData.push({
               "name" : name,
@@ -266,12 +266,12 @@ export class ChartLinePage {
             });
           }
         })
-        let res = alasql('SELECT name,ROUND((DATEDIFF(Week,DATE(fecha), DATE(Date())))/div),\
+        let res = alasql('SELECT name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1,\
         ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
         ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
         ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
         FROM ? \
-        GROUP BY name, ROUND((DATEDIFF(Week,DATE(fecha), DATE(Date())))/div) \
+        GROUP BY name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1 \
         ORDER BY name ASC ',[charData]);
 
         //  Build array of object for chart
