@@ -104,7 +104,7 @@ export class ChartLinePage {
           ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
           FROM ? \
           GROUP BY name, ROUND((DATEDIFF(Week,DATE(fecha), DATE(Date())))/div) \
-          ORDER BY name ASC ',[charData]);
+          ORDER BY name ASC limit 2 ',[charData]);
 
           //  Build array of object for chart
           let chartdata = [];
