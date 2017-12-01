@@ -72,7 +72,7 @@ export class ChartBarPage {
             }
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
               charData.push({
-                "name" : '¿Cómo Estoy?',
+                "name" : '¿Cómo estoy?',
                 //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
                 "activities" : [
                   getHour(userActivity.d_suenho_descanso),
@@ -106,83 +106,7 @@ export class ChartBarPage {
             })
           }
 
-          let subtitle = "";
-          switch(this.filter){
-            case 'M':
-              subtitle = 'Ultimas 4 semanas';
-              break;
-            case 'Y':
-              subtitle = 'Año ';
-              break;
-            case 'T':
-              subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
-              break;
-          }
-          //  Build Chart
-          this.chartOptions = {
-            chart: {
-                zoomType: 'xy'
-            },
-            title: {
-              text: '¿Como Estoy? vs mi Equilibrio'
-            },
-            subtitle: {
-              text: subtitle
-            },
-            xAxis: [{
-              //, 'Salud'
-              categories: ['Sueño', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
-              labels: {
-                formatter: function () {
-                  switch(this.value){
-                    case 'Sueño': 
-                      return '<span style="fill: #442662;">' + this.value + '</span>';
-                    case 'Alimento': 
-                      return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
-                    case 'Cuerpo': 
-                      return '<span style="fill: #009D71;">' + this.value + '</span>';
-                    case 'Mente': 
-                      return '<span style="fill: #009D71;">' + this.value + '</span>';
-                    case 'Otros': 
-                      return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                    case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
-                    case 'Humanidad': 
-                      return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
-                    case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
-                  }
-                }
-              },
-              crosshair: true
-            }],
-            yAxis: [{
-              min: 0,
-              title: {
-                text: 'Promedio',
-                align: 'high'
-              },
-              labels: {
-                overflow: 'justify'
-              }
-            }],
-            tooltip: {
-              shared: true,
-              valueSuffix: ' horas'
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'left',
-                x: 80,
-                verticalAlign: 'top',
-                y: 50,
-                floating: true
-            },
-            credits: {
-               enabled: false
-            },
-            series: chartdata
-          }
+          
         }
       );
       
@@ -215,8 +139,8 @@ export class ChartBarPage {
         });
       }
     })
-
-    let res1 = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso, \
+    // CON PAREJA
+    /*let res1 = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso, \
     (24-ROUND(avg(activities -> 0),2))/6 AS alimento, \
     ((24-ROUND(avg(activities -> 0),2))/6)/2 AS yo_cuerpo, \
     ((24-ROUND(avg(activities -> 0),2))/6)/2 AS yo_mente, \
@@ -224,6 +148,18 @@ export class ChartBarPage {
     (24-ROUND(avg(activities -> 0),2))/6 AS trabajo, \
     (24-ROUND(avg(activities -> 0),2))/6 AS humanidad, \
     (24-ROUND(avg(activities -> 0),2))/6 AS pareja \
+    FROM ? \
+    GROUP BY name \
+    ORDER BY name ASC',[charData]);*/
+    // SIN PAREJA
+    let res1 = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso, \
+    (24-ROUND(avg(activities -> 0),2))/6 AS alimento, \
+    ((24-ROUND(avg(activities -> 0),2))/6) AS yo_cuerpo, \
+    ((24-ROUND(avg(activities -> 0),2))/6) AS yo_mente, \
+    (24-ROUND(avg(activities -> 0),2))/6 AS otros, \
+    (24-ROUND(avg(activities -> 0),2))/6 AS trabajo, \
+    (24-ROUND(avg(activities -> 0),2))/6 AS humanidad, \
+    0 AS pareja \
     FROM ? \
     GROUP BY name \
     ORDER BY name ASC',[charData]);

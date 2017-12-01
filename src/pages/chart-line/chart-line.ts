@@ -24,6 +24,7 @@ export class ChartLinePage {
 
   filter = 'M';
   div = '7';
+  limit=4;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -53,17 +54,20 @@ export class ChartLinePage {
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
               startDate = date_by_subtracting_days(endDate, 28);
               this.div='7';
+              this.limit=4;
               //startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-20)
             }
             else if(this.filter == "Y"){
               startDate = new Date(d.getFullYear(), 0,1);
               endDate = new Date(d.getFullYear(), 11, 31); 
               this.div='28';
+              this.limit=13;
             }
             else{
               startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
               this.div='364';
+              this.limit=3;
             }
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) ==1){  
               let name = "";
@@ -71,19 +75,23 @@ export class ChartLinePage {
                 //name = userActivity.d_fecha
                 name = 'Semana ';
                 this.div='7';
+                this.limit=4;
               }
               else if(this.filter == "Y"){
                 name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
                 this.div='28';
+                this.limit=13;
               }
               else{
                 name = userActivity.d_fecha.slice(0,4);
                 this.div='364';
+                this.limit=3;
               }
               charData.push({
                 "name" :  name,
                 "fecha": userActivity.d_fecha,
                 "div":this.div,
+                "l":this.limit,
                 //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
                 "activities" : [
                   getHour(userActivity.d_suenho_descanso),
@@ -98,7 +106,7 @@ export class ChartLinePage {
               });
             }
           })
-          let res = alasql('SELECT name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1,\
+          let res = alasql('SELECT top 4 name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1,\
           ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
           ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
           ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
@@ -223,35 +231,43 @@ export class ChartLinePage {
             endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
             startDate = date_by_subtracting_days(endDate,28);
             this.div='7';
+            
           }
           else if(this.filter == "Y"){
             startDate = new Date(d.getFullYear(), 0, 1);
             endDate = new Date(d.getFullYear(), 11, 31); 
             this.div='28';
+            
           }
           else{
             startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
             endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
             this.div='364';
+            
+            
           }
           if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
             let name = "";
             if(this.filter =="M"){
               name = 'Semana ';
               this.div='7';
+            
             }
             else if(this.filter == "Y"){
               name = 'Mes ';
               this.div='28';
+            
             }
             else{
               name = 'Año ';
               this.div='364';
+            
             }
             charData.push({
               "name" : name,
               "fecha":userActivity.d_fecha,
               "div":this.div,
+            
                //  ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
               "activities" : [
                 getHour(userActivity.d_suenho_descanso),
