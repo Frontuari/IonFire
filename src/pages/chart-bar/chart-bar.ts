@@ -19,13 +19,14 @@ import * as alasql from 'alasql';
 export class ChartBarPage {
   chartOptions: any;
   userActivityCharBarList$: FirebaseListObservable<UserActivity[]>;
-  userActivityCharLineList$: FirebaseListObservable<UserActivity[]>;
+  userActivityCharline$: FirebaseListObservable<UserActivity[]>;
   whatDoIWantList$: FirebaseListObservable<WhatDoIWant[]>;
   user = {} as UserModel;
 
   f_actual = new Date();
 
   filter = 'M';
+  div='1';
 
   constructor(
     public navCtrl: NavController, 
@@ -41,7 +42,6 @@ export class ChartBarPage {
       this.user.uid = data.uid;
 
       //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
-      // BARRAS
       this.userActivityCharBarList$ = this.database.list('user-activity')
         .map(_userActivities => 
           _userActivities.filter(userActivity => userActivity.uid == data.uid)) as FirebaseListObservable<UserActivity[]>;
@@ -54,16 +54,21 @@ export class ChartBarPage {
             let startDate = null;
             let endDate = null;
             if(this.filter == "M"){
-              startDate = new Date(d.getFullYear(), d.getMonth(), 1);
-              endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
-            }
+              
+              //endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = date_by_subtracting_days(endDate, 28);
+              this.div='1';
+            } 
             else if(this.filter == "Y"){
               startDate = new Date(d.getFullYear(), 0, 1);
               endDate = new Date(d.getFullYear(), 11, 31); 
+              this.div='4';
             }
             else{
               startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              this.div='52';
             }
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
               charData.push({
@@ -104,10 +109,10 @@ export class ChartBarPage {
           let subtitle = "";
           switch(this.filter){
             case 'M':
-              subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+              subtitle = 'Ultimas 4 semanas';
               break;
             case 'Y':
-              subtitle = 'Año '+this.f_actual.getFullYear();
+              subtitle = 'Año ';
               break;
             case 'T':
               subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
@@ -119,18 +124,18 @@ export class ChartBarPage {
                 zoomType: 'xy'
             },
             title: {
-              text: '¿Que Quiero? / ¿Como Estoy?'
+              text: '¿Como Estoy? vs mi Equilibrio'
             },
             subtitle: {
               text: subtitle
             },
             xAxis: [{
               //, 'Salud'
-              categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+              categories: ['Sueño', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
               labels: {
                 formatter: function () {
                   switch(this.value){
-                    case 'Descanso': 
+                    case 'Sueño': 
                       return '<span style="fill: #442662;">' + this.value + '</span>';
                     case 'Alimento': 
                       return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
@@ -181,139 +186,61 @@ export class ChartBarPage {
         }
       );
       
-      this.userActivityCharLineList$ = this.database.list('user-activity')
+      this.userActivityCharline$ = this.database.list('user-activity')
       .map(_userActivities => 
-        _userActivities.filter(userActivity => userActivity.uid == data.uid)) as FirebaseListObservable<UserActivity[]>;
+        _userActivities.filter(userActivity => userActivity.uid == data.uid)) as FirebaseListObservable<UserActivity[]>;  
 
-        this.userActivityCharLineList$.subscribe(
-          userActivity => {
-            userActivity.map(userActivity => {  
-            charLineData.push({
-              "name" : 'Con pareja', 
-              "activities" : [
-                getHour(userActivity.d_suenho_descanso),
-                getHour(userActivity.d_alimento),
-                getHour(userActivity.d_yo_cuerpo),
-                getHour(userActivity.d_yo_mente),
-                getHour(userActivity.d_otros),
-                getHour(userActivity.d_trabajo),
-                getHour(userActivity.d_humanidad),
-                getHour(userActivity.d_pareja)
-                ]
-            }
-            );
-          }
-        )
-      
-
-      let res1 = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso, \
-      (24-ROUND(avg(activities -> 0),2))/6 AS alimento, \
-      ((24-ROUND(avg(activities -> 0),2))/6)/2 AS yo_cuerpo, \
-      ((24-ROUND(avg(activities -> 0),2))/6)/2 AS yo_mente, \
-      (24-ROUND(avg(activities -> 0),2))/6 AS otros, \
-      (24-ROUND(avg(activities -> 0),2))/6 AS trabajo, \
-      (24-ROUND(avg(activities -> 0),2))/6 AS humanidad, \
-      (24-ROUND(avg(activities -> 0),2))/6 AS pareja \
-      FROM ? \
-      GROUP BY name \
-      ORDER BY name ASC',[charLineData]);
-      for(let y = 0; y < res1.length; y++){
-        charLineData.push({
-          name: res1[y].name,
-          type: 'line',
-          data: [
-            res1[y].descanso,res1[y].alimento,res1[y].yo_cuerpo,res1[y].yo_mente,
-            res1[y].otros,res1[y].trabajo,res1[y].humanidad,res1[y].pareja
+      this.userActivityCharline$.subscribe(
+        userActivities => {
+          userActivities.map(userActivity => {
+            let d = new Date();
+            let startDate = null;
+            let endDate = null;
+            endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            startDate = new Date(d.getFullYear()-5, d.getMonth(), d.getDate());
+      if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
+        charData.push({
+          "name" : 'Mi equilibrio con pareja',
+          //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
+          "activities" : [
+            getHour(userActivity.d_suenho_descanso),
+            getHour(userActivity.d_alimento),
+            getHour(userActivity.d_yo_cuerpo),
+            getHour(userActivity.d_yo_mente),
+            getHour(userActivity.d_otros),
+            getHour(userActivity.d_trabajo),
+            getHour(userActivity.d_humanidad),
+            getHour(userActivity.d_pareja)
           ]
-        })
+        });
       }
+    })
 
-      let subtitle2 = "";
-      switch(this.filter){
-        case 'M':
-          subtitle2 = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-          break;
-        case 'Y':
-          subtitle2 = 'Año '+this.f_actual.getFullYear();
-          break;
-        case 'T':
-          subtitle2 = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
-          break;
-      }
-
-      this.chartOptions = {
-        chart: {
-            zoomType: 'xy'
-        },
-        title: {
-          text: '¿Qué Quiero? / ¿Cómo Estoy? '
-        },
-        subtitle: {
-          text: subtitle2
-        },
-        xAxis: [{
-          //, 'Salud'
-          categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
-          labels: {
-            formatter: function () {
-              switch(this.value){
-                case 'Descanso': 
-                  return '<span style="fill: #442662;">' + this.value + '</span>';
-                case 'Alimento': 
-                  return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
-                case 'Cuerpo': 
-                  return '<span style="fill: #009D71;">' + this.value + '</span>';
-                case 'Mente': 
-                  return '<span style="fill: #009D71;">' + this.value + '</span>';
-                case 'Otros': 
-                  return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                case 'Trabajo': 
-                  return '<span style="fill: #CB1D11;">' + this.value + '</span>';
-                case 'Humanidad': 
-                  return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
-                case 'Pareja': 
-                  return '<span style="fill: #E87B31;">' + this.value + '</span>';
-              }
-            }
-          },
-          crosshair: true
-        }],
-        yAxis: [{
-          min: 0,
-          title: {
-            text: 'Promedio',
-            align: 'high'
-          },
-          labels: {
-            overflow: 'justify'
-          }
-        }],
-        tooltip: {
-          shared: true,
-          valueSuffix: ' horas'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'left',
-            x: 80,
-            verticalAlign: 'top',
-            y: 50,
-            floating: true
-        },
-        credits: {
-           enabled: false
-        },
-        series: charLineData
-      }
-    }
-
-   
-
-    
-
-    //************************************************************************** */
-      //  Pointing shoppingListRef$ at Firebase -> 'what-do-i-want' node
-      /*this.whatDoIWantList$ = this.database.list('what-do-i-want')
+    let res1 = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso, \
+    (24-ROUND(avg(activities -> 0),2))/6 AS alimento, \
+    ((24-ROUND(avg(activities -> 0),2))/6)/2 AS yo_cuerpo, \
+    ((24-ROUND(avg(activities -> 0),2))/6)/2 AS yo_mente, \
+    (24-ROUND(avg(activities -> 0),2))/6 AS otros, \
+    (24-ROUND(avg(activities -> 0),2))/6 AS trabajo, \
+    (24-ROUND(avg(activities -> 0),2))/6 AS humanidad, \
+    (24-ROUND(avg(activities -> 0),2))/6 AS pareja \
+    FROM ? \
+    GROUP BY name \
+    ORDER BY name ASC',[charData]);
+    //  Build array of object for chart
+    for(let i = 0; i < res1.length; i++){
+      chartdata.push({
+        name: res1[i].name,
+        type: 'line',
+        color: '#008000',
+        data: [
+          res1[i].descanso,res1[i].alimento,res1[i].yo_cuerpo,res1[i].yo_mente,
+          res1[i].otros,res1[i].trabajo,res1[i].humanidad,res1[i].pareja
+        ]
+      })
+    };
+      /*//  Pointing shoppingListRef$ at Firebase -> 'what-do-i-want' node
+      this.whatDoIWantList$ = this.database.list('what-do-i-want')
           .map(_whatDoIWants => 
             _whatDoIWants.filter(whatDoIWant => whatDoIWant.uid == data.uid)) as FirebaseListObservable<WhatDoIWant[]>;
 
@@ -360,15 +287,15 @@ export class ChartBarPage {
                 rs[i].otros,rs[i].trabajo,rs[i].humanidad,rs[i].pareja
               ]
             })
-          }
+          }*/
 
           let subtitle2 = "";
           switch(this.filter){
             case 'M':
-              subtitle2 = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+              subtitle2 = 'Ultimos 4 meses';
               break;
             case 'Y':
-              subtitle2 = 'Año '+this.f_actual.getFullYear();
+              subtitle2 = 'Año ';
               break;
             case 'T':
               subtitle2 = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
@@ -381,18 +308,18 @@ export class ChartBarPage {
                 zoomType: 'xy'
             },
             title: {
-              text: '¿Qué Quiero? / ¿Cómo Estoy? '
+              text: 'Mi equilibrio / ¿Cómo Estoy? '
             },
             subtitle: {
               text: subtitle2
             },
             xAxis: [{
               //, 'Salud'
-              categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+              categories: ['Sueño', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
               labels: {
                 formatter: function () {
                   switch(this.value){
-                    case 'Descanso': 
+                    case 'Sueño': 
                       return '<span style="fill: #442662;">' + this.value + '</span>';
                     case 'Alimento': 
                       return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
@@ -441,7 +368,7 @@ export class ChartBarPage {
             series: chartdata
           }
 
-        }*/
+        }
       )
       //  End chart Line for Current Month
     });
@@ -539,11 +466,11 @@ export class ChartBarPage {
           },
           xAxis: [{
             //, 'Salud'
-            categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+            categories: ['Sueño', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
             labels: {
               formatter: function () {
                 switch(this.value){
-                  case 'Descanso': 
+                  case 'Sueño': 
                     return '<span style="fill: #442662;">' + this.value + '</span>';
                   case 'Alimento': 
                     return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
@@ -670,11 +597,11 @@ export class ChartBarPage {
           },
           xAxis: [{
             //, 'Salud'
-            categories: ['Descanso', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
+            categories: ['Sueño', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad','Pareja'],
             labels: {
               formatter: function () {
                 switch(this.value){
-                  case 'Descanso': 
+                  case 'Sueño': 
                     return '<span style="fill: #442662;">' + this.value + '</span>';
                   case 'Alimento': 
                     return '<span style="fill: #0CB7F2;">' + this.value + '</span>';
@@ -776,4 +703,12 @@ function getHour(concept){
   let totalMin = Number(concept.slice(14,16));
 
   return totalHour + (totalMin / 60);
+}
+
+function date_by_subtracting_days(date, days) {
+  return new Date(
+      date.getFullYear(), 
+      date.getMonth(), 
+      date.getDate() - days
+   );
 }
