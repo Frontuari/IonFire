@@ -92,7 +92,7 @@ export class AddUserActivityPage {
         break;
       case 'p': 
         title ="Pareja";
-        subtitle ="Actividades que realizas con quien compartes todo en tu vida. Asimismo, escuchar, intimar, resolver problemas, etc.";
+        subtitle ="Actividades que realizas con quien compartes todo en tu vida. Asimismo, escuchar, intimar, resolver problemas, si no tienes pareja dejarla en cero etc.";
         break;
     }
 
@@ -197,7 +197,7 @@ export class AddUserActivityPage {
 
   myDate: String = this.getCurDate(new Date(),0,'+').toISOString().slice(0, 10);
   minDate: String = this.getCurDate(new Date(),2,'-').toISOString().slice(0, 10);
-  maxDate: String = this.getCurDate(new Date(),1,'+').toISOString().slice(0, 10);
+  maxDate: String = this.getCurDate(new Date(),0,'+').toISOString().slice(0, 10);
 
   UserActivity(userActivity: UserActivity){
     let totalHours = this.sumarHoras(userActivity);
