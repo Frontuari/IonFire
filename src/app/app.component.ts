@@ -10,7 +10,7 @@ import { SignInPage } from '../pages/signin/signin';
 import { HomePage } from '../pages/home/home';
 import { AcercaPage } from "../pages/acerca/acerca";
 import { AgregarPage } from "../pages/agregar/agregar";
-import { WhatDoIWantPage } from "../pages/que-quiero/que-quiero";
+import { WhatDoIWant2Page } from "../pages/que-quiero2/que-quiero2";
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { GuiaPage } from "../pages/guia/guia";
@@ -49,7 +49,7 @@ export class MyApp {
 
     this.pages = [
       { title: 'Inicio',        component: HomePage, icon: 'home', color: 'dark' },
-      { title: '¿Qué Quiero?', component: WhatDoIWantPage, icon: 'md-switch', color: 'dark' },  
+      { title: '¿Qué Quiero?', component: WhatDoIWant2Page, icon: 'md-switch', color: 'dark' },  
       { title: '24/7', component: AgregarPage, icon: 'add-circle', color: 'dark' },      
       { title: '¿Cómo Estoy?',    component: TabsPage, icon: 'filing', color: 'dark' },/* paper, podium */
       { title: 'Guía rápida',     component: GuiaPage, icon: 'help', color: 'dark' },

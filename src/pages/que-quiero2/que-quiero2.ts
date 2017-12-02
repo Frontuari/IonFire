@@ -22,37 +22,7 @@ import 'rxjs/add/operator/take';
   selector: 'page-que-quiero2',
   templateUrl: 'que-quiero2.html',
 })
-export class WhatDoIWantPage {
-
-  sumarMinutos(whatDoIWant: WhatDoIWant2) {
-    let totalMin = 0;
-    totalMin = Number(whatDoIWant.d_suenho_descanso.slice(14, 16));
-    totalMin = totalMin + Number(whatDoIWant.d_alimento.slice(14, 16));
-    totalMin = totalMin + Number(whatDoIWant.d_yo_cuerpo.slice(14, 16));
-    totalMin = totalMin + Number(whatDoIWant.d_yo_mente.slice(14, 16));
-    totalMin = totalMin + Number(whatDoIWant.d_otros.slice(14, 16));
-    totalMin = totalMin + Number(whatDoIWant.d_trabajo.slice(14, 16));
-    totalMin = totalMin + Number(whatDoIWant.d_humanidad.slice(14, 16));
-    totalMin = totalMin + Number(whatDoIWant.d_pareja.slice(14, 16));
-
-    totalMin = totalMin / 60;
-    return totalMin;
-  }
-
-  sumarHoras(whatDoIWant: WhatDoIWant2) {
-    let totalMin = this.sumarMinutos(whatDoIWant);
-    let totalHoras = 0;
-    totalHoras = Number(whatDoIWant.d_suenho_descanso.slice(11, 13));
-    totalHoras = totalHoras + Number(whatDoIWant.d_alimento.slice(11, 13));
-    totalHoras = totalHoras + Number(whatDoIWant.d_yo_cuerpo.slice(11, 13));
-    totalHoras = totalHoras + Number(whatDoIWant.d_yo_mente.slice(11, 13));
-    totalHoras = totalHoras + Number(whatDoIWant.d_otros.slice(11, 13));
-    totalHoras = totalHoras + Number(whatDoIWant.d_trabajo.slice(11, 13));
-    totalHoras = totalHoras + Number(whatDoIWant.d_humanidad.slice(11, 13));
-    totalHoras = totalHoras + Number(whatDoIWant.d_pareja.slice(11, 13));
-
-    return totalHoras + totalMin;
-  }
+export class WhatDoIWant2Page {
 
   tooltips(e, type) {
 
@@ -104,14 +74,14 @@ export class WhatDoIWantPage {
 
   //	Create a new WhatDoIWant Object
   whatDoIWant = {
-    d_suenho_descanso: getCurDate(new Date(), 0, '+').toISOString().slice(0, 11) + "00:00",
-    d_alimento: getCurDate(new Date(), 0, '+').toISOString().slice(0, 11) + "00:00",
-    d_yo_cuerpo: getCurDate(new Date(), 0, '+').toISOString().slice(0, 11) + "00:00",
-    d_yo_mente: getCurDate(new Date(), 0, '+').toISOString().slice(0, 11) + "00:00",
-    d_otros: getCurDate(new Date(), 0, '+').toISOString().slice(0, 11) + "00:00",
-    d_trabajo: getCurDate(new Date(), 0, '+').toISOString().slice(0, 11) + "00:00",
-    d_humanidad: getCurDate(new Date(), 0, '+').toISOString().slice(0, 11) + "00:00",
-    d_pareja: getCurDate(new Date(), 0, '+').toISOString().slice(0, 11) + "00:00"
+    d_suenho_descanso: "",
+    d_alimento: "",
+    d_yo_cuerpo: "",
+    d_yo_mente: "",
+    d_otros: "",
+    d_trabajo: "",
+    d_humanidad: "",
+    d_pareja: ""
   } as WhatDoIWant2;
   user = {} as UserModel;
   //	Create a new FirebaseListObservable Object
@@ -164,99 +134,53 @@ export class WhatDoIWantPage {
   }
 
   WhatDoIWant(whatDoIWant2: WhatDoIWant2) {
-    let totalHours = sumarHoras(whatDoIWant2);
     let i = 0;
-    if (totalHours != 24) {
-      this.toast.create({
-        message: 'El total de horas distribuidas (' + totalHours + ') debe ser igual a 24',
-        duration: 3000
-      }).present();
-    }
-    else {
-      this.whatDoIWantList$ = this.database.list('what-do-i-want2')
-        .map(_whatDoIWants =>
-          _whatDoIWants.filter(whatDoIWant => whatDoIWant.uid == this.user.uid)) as FirebaseListObservable<WhatDoIWant2[]>;
-      //  Check if data exists
-      this.whatDoIWantList$.subscribe(
-        whatDoIWants => {
-          if (whatDoIWants.length > 0) {
-            this.database.list('/what-do-i-want2', {
-              preserveSnapshot: true,
-              query: {
-                orderByChild: 'uid',
-                equalTo: this.user.uid,
-              }
-            }).take(1).subscribe(snaphots => {
-              snaphots.forEach((snapshot) => {
-                this.database.object('/what-do-i-want2/' + snapshot.key).update(this.whatDoIWant);
-              })
+    
+    this.whatDoIWantList$ = this.database.list('what-do-i-want2')
+      .map(_whatDoIWants =>
+        _whatDoIWants.filter(whatDoIWant => whatDoIWant.uid == this.user.uid)) as FirebaseListObservable<WhatDoIWant2[]>;
+    //  Check if data exists
+    this.whatDoIWantList$.subscribe(
+      whatDoIWants => {
+        if (whatDoIWants.length > 0) {
+          this.database.list('/what-do-i-want2', {
+            preserveSnapshot: true,
+            query: {
+              orderByChild: 'uid',
+              equalTo: this.user.uid,
+            }
+          }).take(1).subscribe(snaphots => {
+            snaphots.forEach((snapshot) => {
+              this.database.object('/what-do-i-want2/' + snapshot.key).update(this.whatDoIWant);
             })
-            this.toast.create({
-              message: 'Actividades actualizadas con exito',
-              duration: 3000
-            }).present();
-          } else {
-            //  Push this to our Firebase database under the 'user-activity' node.
-            this.whatDoIWantRef$.push({
-              uid: this.user.uid,
-              d_suenho_descanso: this.whatDoIWant.d_suenho_descanso,
-              d_alimento: this.whatDoIWant.d_alimento,
-              d_yo_cuerpo: this.whatDoIWant.d_yo_cuerpo,
-              d_yo_mente: this.whatDoIWant.d_yo_mente,
-              d_otros: this.whatDoIWant.d_otros,
-              d_trabajo: this.whatDoIWant.d_trabajo,
-              d_humanidad: this.whatDoIWant.d_humanidad,
-              d_pareja: this.whatDoIWant.d_pareja
-            });
-            i++;
-            //  Reset our whatDoIWant
-            this.whatDoIWant = {} as WhatDoIWant2;
-            this.toast.create({
-              message: 'Actividades registradas con exito',
-              duration: 3000
-            }).present();
-          }
+          })
+          this.toast.create({
+            message: 'Actividades actualizadas con exito',
+            duration: 3000
+          }).present();
+        } else {
+          //  Push this to our Firebase database under the 'user-activity' node.
+          this.whatDoIWantRef$.push({
+            uid: this.user.uid,
+            d_suenho_descanso: this.whatDoIWant.d_suenho_descanso,
+            d_alimento: this.whatDoIWant.d_alimento,
+            d_yo_cuerpo: this.whatDoIWant.d_yo_cuerpo,
+            d_yo_mente: this.whatDoIWant.d_yo_mente,
+            d_otros: this.whatDoIWant.d_otros,
+            d_trabajo: this.whatDoIWant.d_trabajo,
+            d_humanidad: this.whatDoIWant.d_humanidad,
+            d_pareja: this.whatDoIWant.d_pareja
+          });
+          i++;
+          //  Reset our whatDoIWant
+          this.whatDoIWant = {} as WhatDoIWant2;
+          this.toast.create({
+            message: 'Actividades registradas con exito',
+            duration: 3000
+          }).present();
         }
-      );
-    }
+      }
+    );
   }
 
-}
-
-function getCurDate(fecha, dias, operando) {
-  if (operando == '+')
-    fecha.setDate(fecha.getDate() + dias);
-  else
-    fecha.setDate(fecha.getDate() - dias);
-  return fecha;
-}
-
-function sumarMinutos(whatDoIWant: WhatDoIWant2) {
-  let totalMin = 0;
-  totalMin = Number(whatDoIWant.d_suenho_descanso.slice(14, 16));
-  totalMin = totalMin + Number(whatDoIWant.d_alimento.slice(14, 16));
-  totalMin = totalMin + Number(whatDoIWant.d_yo_cuerpo.slice(14, 16));
-  totalMin = totalMin + Number(whatDoIWant.d_yo_mente.slice(14, 16));
-  totalMin = totalMin + Number(whatDoIWant.d_otros.slice(14, 16));
-  totalMin = totalMin + Number(whatDoIWant.d_trabajo.slice(14, 16));
-  totalMin = totalMin + Number(whatDoIWant.d_humanidad.slice(14, 16));
-  totalMin = totalMin + Number(whatDoIWant.d_pareja.slice(14, 16));
-
-  totalMin = totalMin / 60;
-  return totalMin;
-}
-
-function sumarHoras(whatDoIWant: WhatDoIWant2) {
-  let totalMin = sumarMinutos(whatDoIWant);
-  let totalHoras = 0;
-  totalHoras = Number(whatDoIWant.d_suenho_descanso.slice(11, 13));
-  totalHoras = totalHoras + Number(whatDoIWant.d_alimento.slice(11, 13));
-  totalHoras = totalHoras + Number(whatDoIWant.d_yo_cuerpo.slice(11, 13));
-  totalHoras = totalHoras + Number(whatDoIWant.d_yo_mente.slice(11, 13));
-  totalHoras = totalHoras + Number(whatDoIWant.d_otros.slice(11, 13));
-  totalHoras = totalHoras + Number(whatDoIWant.d_trabajo.slice(11, 13));
-  totalHoras = totalHoras + Number(whatDoIWant.d_humanidad.slice(11, 13));
-  totalHoras = totalHoras + Number(whatDoIWant.d_pareja.slice(11, 13));
-
-  return totalHoras + totalMin;
 }

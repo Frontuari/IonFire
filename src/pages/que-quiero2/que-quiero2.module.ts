@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { QueQuiero2Page } from './que-quiero2';
+import { WhatDoIWant2Page } from './que-quiero2';
 
 @NgModule({
   declarations: [
-    QueQuiero2Page,
+    WhatDoIWant2Page,
   ],
   imports: [
-    IonicPageModule.forChild(QueQuiero2Page),
+    IonicPageModule.forChild(WhatDoIWant2Page),
   ],
 })
-export class QueQuiero2PageModule {}
+export class WhatDoIWant2PageModule {}

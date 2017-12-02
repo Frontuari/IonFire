@@ -77,7 +77,7 @@ export class HomePage {
 
         /*
         //  Delete all data by user
-        this.database.list('/user-profile',{
+        this.database.list('/user-activity',{
           preserveSnapshot: true,
           query: {
             orderByChild: 'uid',
@@ -85,7 +85,7 @@ export class HomePage {
           }
         }).take(1).subscribe(snaphots=> {
           snaphots.forEach((snapshot) => {
-            this.database.object('/user-profile/' + snapshot.key).remove();
+            this.database.object('/user-activity/' + snapshot.key).remove();
           }) 
         })*/
 
