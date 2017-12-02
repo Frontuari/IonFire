@@ -269,7 +269,7 @@ export class ChartBarPage {
             chartdata.push({
               name: 'Mi equilibrio sin pareja',
               type: 'line',
-              color: '#008020',
+              color: '#212121',
               data: [
                 res1[i].descanso,res1[i].alimento,res1[i].yo_cuerpo,res1[i].yo_mente,
                 res1[i].otros,res1[i].trabajo,res1[i].humanidad,res1[i].pareja
@@ -594,7 +594,7 @@ export class ChartBarPage {
             chartdata.push({
               name: 'Mi equilibrio sin pareja',
               type: 'line',
-              color: '#008020',
+              color: '#212121',
               data: [
                 res1[i].descanso,res1[i].alimento,res1[i].yo_cuerpo,res1[i].yo_mente,
                 res1[i].otros,res1[i].trabajo,res1[i].humanidad,res1[i].pareja
