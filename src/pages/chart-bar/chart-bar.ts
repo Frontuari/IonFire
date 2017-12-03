@@ -555,13 +555,13 @@ export class ChartBarPage {
           });
           // CON PAREJA
           let res = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso, \
-          ROUND(((24-avg(activities -> 1))/6),2) AS alimento, \
-          ROUND((((24-avg(activities -> 2))/6)/2),2) AS yo_cuerpo, \
-          ROUND((((24-avg(activities -> 3))/6)/2),2) AS yo_mente, \
-          ROUND(((24-avg(activities -> 4))/6),2) AS otros, \
-          ROUND(((24-avg(activities -> 5))/6),2) AS trabajo, \
-          ROUND(((24-avg(activities -> 6))/6),2) AS humanidad, \
-          ROUND(((24-avg(activities -> 7))/6),2) AS pareja \
+          ROUND(((24-avg(activities -> 0))/6),2) AS alimento, \
+          ROUND((((24-avg(activities -> 0))/6)/2),2) AS yo_cuerpo, \
+          ROUND((((24-avg(activities -> 0))/6)/2),2) AS yo_mente, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS otros, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS trabajo, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS humanidad, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS pareja \
           FROM ? \
           GROUP BY name \
           ORDER BY name ASC',[charLineData]);
@@ -579,12 +579,12 @@ export class ChartBarPage {
           };
           // SIN PAREJA
           let res1 = alasql('SELECT name, ROUND(avg(activities -> 0),2) AS descanso, \
-          ROUND(((24-avg(activities -> 1))/6),2) AS alimento, \
-          ROUND(((24-avg(activities -> 2))/6),2) AS yo_cuerpo, \
-          ROUND(((24-avg(activities -> 3))/6),2) AS yo_mente, \
-          ROUND(((24-avg(activities -> 4))/6),2) AS otros, \
-          ROUND(((24-avg(activities -> 5))/6),2) AS trabajo, \
-          ROUND(((24-avg(activities -> 6))/6),2) AS humanidad, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS alimento, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS yo_cuerpo, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS yo_mente, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS otros, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS trabajo, \
+          ROUND(((24-avg(activities -> 0))/6),2) AS humanidad, \
           0 AS pareja \
           FROM ? \
           GROUP BY name \
