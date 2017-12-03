@@ -69,7 +69,7 @@ export class AgregarPage {
             role: 'destrictive',
             handler: () => {
               //  Delete the current UserActivity passed in via of parameter
-              this.userActivityList$.remove(userActivity.$key);
+              this.database.object('/user-activity/' + userActivity.$key).remove();
               this.toast.create({
                 message: 'Actividad borrada correctamente',
                 duration:3000
