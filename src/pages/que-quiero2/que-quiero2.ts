@@ -60,7 +60,7 @@ export class WhatDoIWant2Page {
         break;
       case 'p':
         title = "Pareja";
-        subtitle = "Actividades que realizas con quien compartes todo en tu vida. Asimismo, escuchar, intimar, resolver problemas, etc.";
+        subtitle = "Actividades que realizas con quien compartes todo en tu vida. Escuchar, intimar, resolver problemas, etc. (Si no tienes pareja puede quedar en 0)";
         break;
     }
 
