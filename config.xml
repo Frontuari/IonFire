@@ -12,11 +12,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-<<<<<<< HEAD
-    <preference name="loadUrlTimeoutValue" value="500000" />
-=======
     <preference name="loadUrlTimeoutValue" value="50000" />
->>>>>>> 4c0bb85cdb983fc28a0c85392016fa82dd216a90
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="FadeSplashScreen" value="false" />
     <preference name="android-minSdkVersion" value="19" />
@@ -102,4 +98,5 @@
     <plugin name="twitter-connect-plugin" spec="^0.6.0">
         <variable name="FABRIC_KEY" value="da23112a25419a09fc15473c140241a54241cad6" />
     </plugin>
+    <engine name="android" spec="~6.2.3" />
 </widget>
