@@ -304,10 +304,10 @@ export class ChartPiePage {
         switch(this.filter){
           case 'M':
             //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-            subtitle ='Ultimos 28 dias';
+            subtitle ='Último mes';
             break;
           case 'Y':
-            subtitle = 'Ultimo año ';
+            subtitle = 'Último año ';
             break;
           case 'T':
             subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
