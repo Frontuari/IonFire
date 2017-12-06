@@ -106,13 +106,13 @@ export class ChartLinePage {
               });
             }
           })
-          let res = alasql('SELECT top 4 name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1,\
+          let res = alasql('SELECT top 4 name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1 as t,\
           ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
           ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
           ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
           FROM ? \
           GROUP BY name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1 \
-          ORDER BY name ASC ',[charData]);
+          ORDER BY t desc, name ASC ',[charData]);
 
           //  Build array of object for chart
           let chartdata = [];
@@ -282,13 +282,13 @@ export class ChartLinePage {
             });
           }
         })
-        let res = alasql('SELECT name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1,\
+        let res = alasql('SELECT name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1 as t,\
         ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
         ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
         ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
         FROM ? \
         GROUP BY name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1 \
-        ORDER BY name ASC ',[charData]);
+        ORDER BY t desc, name ASC ',[charData]);
 
         //  Build array of object for chart
         let chartdata = [];

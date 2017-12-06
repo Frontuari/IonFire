@@ -142,7 +142,7 @@ export class AddUserActivityPage {
         this.user.uid = data.uid;
         //  Search what-do-i-want data
         //  Pointing shoppingListRef$ at Firebase -> 'what-do-i-want' node
-        this.whatDoIWantList$ = this.database.list('what-do-i-want')
+        /*this.whatDoIWantList$ = this.database.list('what-do-i-want')
           .map(_whatDoIWants => 
             _whatDoIWants.filter(whatDoIWant => whatDoIWant.uid == data.uid)) as FirebaseListObservable<WhatDoIWant[]>;
 
@@ -157,7 +157,7 @@ export class AddUserActivityPage {
               this.navCtrl.pop();
             }
           }
-        )
+        )*/
 
         //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
         this.userActivityAddList$ = this.database.list('user-activity')
