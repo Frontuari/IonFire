@@ -142,22 +142,22 @@ export class AddUserActivityPage {
         this.user.uid = data.uid;
         //  Search what-do-i-want data
         //  Pointing shoppingListRef$ at Firebase -> 'what-do-i-want' node
-        this.whatDoIWantList$ = this.database.list('what-do-i-want')
-          .map(_whatDoIWants => 
-            _whatDoIWants.filter(whatDoIWant => whatDoIWant.uid == data.uid)) as FirebaseListObservable<WhatDoIWant[]>;
+        // this.whatDoIWantList$ = this.database.list('what-do-i-want')
+        //   .map(_whatDoIWants => 
+        //     _whatDoIWants.filter(whatDoIWant => whatDoIWant.uid == data.uid)) as FirebaseListObservable<WhatDoIWant[]>;
 
-        this.whatDoIWantList$.subscribe(
-          whatDoIWants => {
-            if(whatDoIWants.length == 0){
-              this.toast.create({
-                message:'No es posible registrar la actividad porque debe registrar primero las actividades en la sección ¿Qué Quiero?',
-                duration:3000
-              }).present();
-              //  Navigate the user back to the AyerPage
-              this.navCtrl.pop();
-            }
-          }
-        )
+        // this.whatDoIWantList$.subscribe(
+        //   whatDoIWants => {
+        //     if(whatDoIWants.length == 0){
+        //       this.toast.create({
+        //         message:'No es posible registrar la actividad porque debe registrar primero las actividades en la sección ¿Qué Quiero?',
+        //         duration:3000
+        //       }).present();
+        //       //  Navigate the user back to the AyerPage
+        //       this.navCtrl.pop();
+        //     }
+        //   }
+        // )
 
         //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
         this.userActivityAddList$ = this.database.list('user-activity')
