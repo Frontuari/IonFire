@@ -10,6 +10,7 @@ import { UserModel } from '../../models/user-model';
 import "rxjs/add/operator/map";
 //  Import AlaSQL
 import * as alasql from 'alasql';
+import { DYNAMIC_TYPE } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'page-chart-line',
@@ -49,7 +50,8 @@ export class ChartLinePage {
             let endDate = null;
            
             if(this.filter == "M"){
-               //startDate = new Date(d.getFullYear(), d.getMonth(),1);
+              let name = "Semana";
+              //startDate = new Date(d.getFullYear(), d.getMonth()-1,0);
               //endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
               startDate = date_by_subtracting_days(endDate, 28);
@@ -65,15 +67,17 @@ export class ChartLinePage {
             }
             else{
               startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
-              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate());
               this.div='364';
               this.limit=3;
             }
+            //console.log('AQUI FUE '+userActivity.d_fecha);
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) ==1){  
               let name = "";
               if(this.filter =="M"){
+                
                 //name = userActivity.d_fecha
-                name = 'Semana ';
+                name = 'Semana';
                 this.div='7';
                 this.limit=4;
               }
@@ -88,7 +92,7 @@ export class ChartLinePage {
                 this.limit=3;
               }
               charData.push({
-                "name" :  name,
+                "name" : name,
                 "fecha": userActivity.d_fecha,
                 "div":this.div,
                 "l":this.limit,
@@ -106,13 +110,13 @@ export class ChartLinePage {
               });
             }
           })          
-          let res = alasql('SELECT top 4 name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1 as t,\
+          let res = alasql('SELECT  name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1 as t,\
           ROUND(avg(activities -> 0),2) AS descanso,  ROUND(avg(activities -> 1),2) AS alimento, \
           ROUND(avg(activities -> 2),2) AS yo_cuerpo, ROUND(avg(activities -> 3),2) AS yo_mente, ROUND(avg(activities -> 4),2) AS otros, \
           ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
           FROM ? \
-          GROUP BY name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1 \
-          ORDER BY t desc, name ASC ',[charData]);
+          GROUP BY name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1\
+          ORDER BY t desc, name asc ',[charData]);
 
           //  Build array of object for chart
           let chartdata = [];
@@ -133,6 +137,7 @@ export class ChartLinePage {
             chartdata.push({
               type: 'line',
               name: res[i].name.concat(i+1),
+             //
               data: [
                 res[i].descanso,res[i].alimento,res[i].yo_cuerpo,res[i].yo_mente,
                 res[i].otros,res[i].trabajo,res[i].humanidad,res[i].pareja,
@@ -407,9 +412,14 @@ function validate_fechaBetween(fecha,fechaInicial,fechaFinal)
   let valuesStart=fechaInicial.split("-");
   let valuesEnd=fechaFinal.split("-");
   // Verificamos que la fecha no sea posterior a la actual
-  var dateCompare=Number(valuesCompare[0]+(valuesCompare[1]<10 ? '0'+valuesCompare[1] : valuesCompare[1])+(valuesCompare[2]<10 ? '0'+valuesCompare[2] : valuesCompare[2]));
-  var dateStart=Number(valuesStart[0]+(valuesStart[1]<10 ? '0'+valuesStart[1] : valuesStart[1])+(valuesStart[2]<10 ? '0'+valuesStart[2] : valuesStart[2]));
-  var dateEnd=Number(valuesEnd[0]+(valuesEnd[1]<10 ? '0'+valuesEnd[1] : valuesEnd[1])+(valuesEnd[2]<10 ? '0'+valuesEnd[2] : valuesEnd[2]));
+  
+  //var dateCompare=Number(valuesCompare[0]+(valuesCompare[1]<10 ? '0'+valuesCompare[1] : valuesCompare[1])+(valuesCompare[2]<10 ? '0'+valuesCompare[2] : valuesCompare[2]));
+ // var dateStart=Number(valuesStart[0]+(valuesStart[1]<10 ? '0'+valuesStart[1] : valuesStart[1])+(valuesStart[2]<10 ? '0'+valuesStart[2] : valuesStart[2]));
+  //var dateEnd=Number(valuesEnd[0]+(valuesEnd[1]<10 ? '0'+valuesEnd[1] : valuesEnd[1])+(valuesEnd[2]<10 ? '0'+valuesEnd[2] : valuesEnd[2]));
+  var dateCompare=Number(valuesCompare[0])*10000+Number(valuesCompare[1])*100+Number(valuesCompare[2]);
+  var dateStart=Number(valuesStart[0])*10000+Number(valuesStart[1])*100+Number(valuesStart[2]);
+  var dateEnd=Number(valuesEnd[0])*10000+Number(valuesEnd[1])*100+Number(valuesEnd[2]);
+
   //console.log('DC: '+dateCompare+' FI: '+dateStart+' FF: '+dateEnd);
   if(dateCompare>=dateStart && dateCompare <=dateEnd)
   {

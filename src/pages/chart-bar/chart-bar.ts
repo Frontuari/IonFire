@@ -710,12 +710,18 @@ function validate_fechaBetween(fecha,fechaInicial,fechaFinal)
   let valuesStart=fechaInicial.split("-");
   let valuesEnd=fechaFinal.split("-");
   // Verificamos que la fecha no sea posterior a la actual
-  var dateCompare=Number(valuesCompare[0]+(valuesCompare[1]<10 ? '0'+valuesCompare[1] : valuesCompare[1])+(valuesCompare[2]<10 ? '0'+valuesCompare[2] : valuesCompare[2]));
-  var dateStart=Number(valuesStart[0]+(valuesStart[1]<10 ? '0'+valuesStart[1] : valuesStart[1])+(valuesStart[2]<10 ? '0'+valuesStart[2] : valuesStart[2]));
-  var dateEnd=Number(valuesEnd[0]+(valuesEnd[1]<10 ? '0'+valuesEnd[1] : valuesEnd[1])+(valuesEnd[2]<10 ? '0'+valuesEnd[2] : valuesEnd[2]));
+  
+  //var dateCompare=Number(valuesCompare[0]+(valuesCompare[1]<10 ? '0'+valuesCompare[1] : valuesCompare[1])+(valuesCompare[2]<10 ? '0'+valuesCompare[2] : valuesCompare[2]));
+ // var dateStart=Number(valuesStart[0]+(valuesStart[1]<10 ? '0'+valuesStart[1] : valuesStart[1])+(valuesStart[2]<10 ? '0'+valuesStart[2] : valuesStart[2]));
+  //var dateEnd=Number(valuesEnd[0]+(valuesEnd[1]<10 ? '0'+valuesEnd[1] : valuesEnd[1])+(valuesEnd[2]<10 ? '0'+valuesEnd[2] : valuesEnd[2]));
+  var dateCompare=Number(valuesCompare[0])*10000+Number(valuesCompare[1])*100+Number(valuesCompare[2]);
+  var dateStart=Number(valuesStart[0])*10000+Number(valuesStart[1])*100+Number(valuesStart[2]);
+  var dateEnd=Number(valuesEnd[0])*10000+Number(valuesEnd[1])*100+Number(valuesEnd[2]);
+
+  //console.log('DC: '+dateCompare+' FI: '+dateStart+' FF: '+dateEnd);
   if(dateCompare>=dateStart && dateCompare <=dateEnd)
   {
-      return 1;
+    return 1;
   }
   return 0;
 }
