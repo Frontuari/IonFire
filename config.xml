@@ -24,10 +24,10 @@
     <preference name="android-minSdkVersion" value="16" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
-    <preference name="FadeSplashScreenDuration" value="300" />
+    <preference name="FadeSplashScreenDuration" value="100" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="SplashScreenDelay" value="1000" />
     <preference name="TwitterConsumerKey" value="6sXb7mCrJBKI18uG16RWjxKxh" />
     <preference name="TwitterConsumerSecret" value="jLbqhTlzcgnEsNH4vj1xMYP85hX6BR1zVn5jV4mJ4iSSmwxWIR" />
     <platform name="android">
