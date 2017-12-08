@@ -61,8 +61,8 @@ export class ChartLinePage {
                 //startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-20)
               }
               else if(this.filter == "Y"){
-                startDate = new Date(d.getFullYear(), 0,1);
-                endDate = new Date(d.getFullYear(), 11, 31); 
+                endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+                startDate = date_by_subtracting_days(endDate, 364);
                 this.div='28';
                 this.limit=13;
               }
@@ -83,7 +83,8 @@ export class ChartLinePage {
                   this.limit=4;
                 }
                 else if(this.filter == "Y"){
-                  name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
+                  //name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
+                  name = 'Mes'
                   this.div='28';
                   this.limit=13;
                 }
@@ -307,8 +308,8 @@ export class ChartLinePage {
               //startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-20)
             }
             else if(this.filter == "Y"){
-              startDate = new Date(d.getFullYear(), 0,1);
-              endDate = new Date(d.getFullYear(), 11, 31); 
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = date_by_subtracting_days(endDate, 364); 
               this.div='28';
               this.limit=13;
             }
@@ -329,7 +330,7 @@ export class ChartLinePage {
                 this.limit=4;
               }
               else if(this.filter == "Y"){
-                name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
+                name = 'Mes ';
                 this.div='28';
                 this.limit=13;
               }
