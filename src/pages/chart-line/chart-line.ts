@@ -78,18 +78,18 @@ export class ChartLinePage {
                 if(this.filter =="M"){
                   
                   //name = userActivity.d_fecha
-                  name = 'Semana';
+                  name = 'Semana ';
                   this.div='7';
                   this.limit=4;
                 }
                 else if(this.filter == "Y"){
                   //name = getMonthName(Number(userActivity.d_fecha.slice(5,7))-1);
-                  name = 'Mes'
+                  name = 'Mes ';
                   this.div='28';
                   this.limit=13;
                 }
                 else{
-                  name = userActivity.d_fecha.slice(0,4);
+                  name = 'Año ';
                   this.div='364';
                   this.limit=3;
                 }
@@ -298,7 +298,7 @@ export class ChartLinePage {
             let endDate = null;
            
             if(this.filter == "M"){
-              let name = "Semana";
+              let name = "Semana ";
               //startDate = new Date(d.getFullYear(), d.getMonth()-1,0);
               //endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -325,7 +325,7 @@ export class ChartLinePage {
               if(this.filter =="M"){
                 
                 //name = userActivity.d_fecha
-                name = 'Semana';
+                name = 'Semana ';
                 this.div='7';
                 this.limit=4;
               }
@@ -335,7 +335,7 @@ export class ChartLinePage {
                 this.limit=13;
               }
               else{
-                name = userActivity.d_fecha.slice(0,4);
+                name = 'Año ';
                 this.div='364';
                 this.limit=3;
               }
