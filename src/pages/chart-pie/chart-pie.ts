@@ -43,6 +43,234 @@ export class ChartPiePage {
       //  Build data for chart Line for Current Month
       this.userActivityCharPieList$.subscribe(
         userActivities => {
+          if(userActivities.length > 0){
+            userActivities.map(userActivity => {
+              let d = new Date();
+              let startDate = null;
+              let endDate = null;
+              if(this.filter == "M"){
+                endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+                startDate = date_by_subtracting_days(endDate, 28);
+                
+              }
+              else if(this.filter == "Y"){
+                endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+                startDate = date_by_subtracting_days(endDate, 364);
+          
+              }
+              else{
+                startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+                endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+               
+              }
+              if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
+                //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
+                charData.push({
+                  "name" : 'Sueño',
+                  "y" : getHour(userActivity.d_suenho_descanso)
+                });
+                charData.push({
+                  "name" : 'Alimento',
+                  "y" : getHour(userActivity.d_alimento)
+                });
+                charData.push({
+                  "name" : 'Cuerpo',
+                  "y" : getHour(userActivity.d_yo_cuerpo)
+                });
+                charData.push({
+                  "name" : 'Mente',
+                  "y" : getHour(userActivity.d_yo_mente)
+                });
+                charData.push({
+                  "name" : 'Otros',
+                  "y" : getHour(userActivity.d_otros)
+                });
+                charData.push({
+                  "name" : 'Trabajo',
+                  "y" : getHour(userActivity.d_trabajo)
+                });
+                charData.push({
+                  "name" : 'Humanidad',
+                  "y" : getHour(userActivity.d_humanidad)
+                });
+                charData.push({
+                  "name" : 'Pareja',
+                  "y" : getHour(userActivity.d_pareja)
+                });
+              }
+            })
+
+            let res = alasql('SELECT name, sum(y) AS y \
+            FROM ? \
+            GROUP BY name \
+            ORDER BY sum(y) ASC',[charData]);
+
+            for(let i=0;i<res.length;i++){
+                res[i].data = res[i].y;
+                switch(res[i].name){
+                  case "Sueño":
+                    res[i].color = '#442662';
+                    break;
+                  case "Alimento":
+                    res[i].color = '#0CB7F2';
+                    break;
+                  case "Cuerpo":
+                    res[i].color = '#009D71';
+                    break;
+                  case "Mente":
+                    res[i].color = '#009D71';
+                    break;
+                  case "Otros":
+                    res[i].color = '#FFD700';
+                    break;
+                  case "Trabajo":
+                    res[i].color = '#CB1D11';
+                    break;
+                  case "Humanidad":
+                    res[i].color = '#C0C0C0';
+                    break;
+                  case "Pareja":
+                    res[i].color = '#E87B31';
+                    break;
+                }
+              }
+
+            let subtitle = "";
+            switch(this.filter){
+              case 'M':
+                //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+                subtitle ='Ultimos 28 dias';
+                break;
+              case 'Y':
+                subtitle = 'Ultimo Año ';
+                break;
+              case 'T':
+                subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+                break;
+            }
+
+            //  Build Chart
+            this.chartOptions = {
+              chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie',
+                events: {
+                  load: function () {
+                    var theSeries = this.series;
+                    for(let serie of theSeries){
+                      if (serie.index > 0) {
+                        serie.setVisible(false);
+                      }
+                    }
+                  }
+                }
+              },
+              title: {
+                text: 'Equilibrio'
+              },
+              subtitle: {
+                text: subtitle
+              },
+              tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+              },
+              plotOptions: {
+                pie: {
+                  allowPointSelect: true,
+                  cursor: 'pointer',
+                  showInLegend: false
+                }
+              },
+              credits: {
+                 enabled: false
+              },
+              series: [{
+                name: '% Total',
+                colorByPoint: true,
+                data: res
+              }]
+            }
+          }
+          else{
+            let subtitle = "";
+            switch(this.filter){
+              case 'M':
+                //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+                subtitle ='Ultimos 28 dias';
+                break;
+              case 'Y':
+                subtitle = 'Ultimo Año ';
+                break;
+              case 'T':
+                subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+                break;
+            }
+            //  Build Chart
+            this.chartOptions = {
+              chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie',
+                events: {
+                  load: function () {
+                    var theSeries = this.series;
+                    for(let serie of theSeries){
+                      if (serie.index > 0) {
+                        serie.setVisible(false);
+                      }
+                    }
+                  }
+                }
+              },
+              title: {
+                text: 'Equilibrio'
+              },
+              subtitle: {
+                text: subtitle
+              },
+              tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+              },
+              plotOptions: {
+                pie: {
+                  allowPointSelect: true,
+                  cursor: 'pointer',
+                  showInLegend: false
+                }
+              },
+              credits: {
+                 enabled: false
+              },
+              series: [{
+                name: '% Total',
+                colorByPoint: true,
+                data: []
+              }]
+            }
+
+          }
+        }
+      );
+      //  End chart Line for Current Month
+    });
+  }
+
+  onSelectChange(selectedValue: any) {
+    this.filter = selectedValue;
+
+    let charData = [];
+    //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
+    this.userActivityCharPieList$ = this.database.list('user-activity')
+      .map(_userActivities => 
+        _userActivities.filter(userActivity => userActivity.uid == this.user.uid)) as FirebaseListObservable<UserActivity[]>;
+
+    //  Build data for chart Line for Current Month
+    this.userActivityCharPieList$.subscribe(
+      userActivities => {
+        if(userActivities.length > 0){
           userActivities.map(userActivity => {
             let d = new Date();
             let startDate = null;
@@ -192,170 +420,63 @@ export class ChartPiePage {
             }]
           }
         }
-      );
-      //  End chart Line for Current Month
-    });
-  }
-
-  onSelectChange(selectedValue: any) {
-    this.filter = selectedValue;
-
-    let charData = [];
-    //  Pointing shoppingListRef$ at Firebase -> 'user-activity' node
-    this.userActivityCharPieList$ = this.database.list('user-activity')
-      .map(_userActivities => 
-        _userActivities.filter(userActivity => userActivity.uid == this.user.uid)) as FirebaseListObservable<UserActivity[]>;
-
-    //  Build data for chart Line for Current Month
-    this.userActivityCharPieList$.subscribe(
-      userActivities => {
-        userActivities.map(userActivity => {
-          let d = new Date();
-          let startDate = null;
-          let endDate = null;
-          if(this.filter == "M"){
-            endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-            startDate = date_by_subtracting_days(endDate, 28);
-            
+        else{
+          let subtitle = "";
+          switch(this.filter){
+            case 'M':
+              //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+              subtitle ='Ultimos 28 dias';
+              break;
+            case 'Y':
+              subtitle = 'Ultimo Año ';
+              break;
+            case 'T':
+              subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+              break;
           }
-          else if(this.filter == "Y"){
-            endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-            startDate = date_by_subtracting_days(endDate, 364);
-            
-          }
-          else{
-            startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
-            endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-            
-          }
-          if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
-            //  ['Descanso', 'Salud', 'Alimento', 'Cuerpo', 'Mente', 'Otros', 'Trabajo', 'Humanidad', 'Pareja']
-            charData.push({
-              "name" : 'Sueño',
-              "y" : getHour(userActivity.d_suenho_descanso)
-            });
-            charData.push({
-              "name" : 'Alimento',
-              "y" : getHour(userActivity.d_alimento)
-            });
-            charData.push({
-              "name" : 'Cuerpo',
-              "y" : getHour(userActivity.d_yo_cuerpo)
-            });
-            charData.push({
-              "name" : 'Mente',
-              "y" : getHour(userActivity.d_yo_mente)
-            });
-            charData.push({
-              "name" : 'Otros',
-              "y" : getHour(userActivity.d_otros)
-            });
-            charData.push({
-              "name" : 'Trabajo',
-              "y" : getHour(userActivity.d_trabajo)
-            });
-            charData.push({
-              "name" : 'Humanidad',
-              "y" : getHour(userActivity.d_humanidad)
-            });
-            charData.push({
-              "name" : 'Pareja',
-              "y" : getHour(userActivity.d_pareja)
-            });
-          }
-        })
-
-        let res = alasql('SELECT name, sum(y) AS y \
-        FROM ? \
-        GROUP BY name \
-        ORDER BY sum(y) ASC',[charData]);
-
-        for(let i=0;i<res.length;i++){
-            res[i].data = res[i].y;
-            switch(res[i].name){
-              case "Sueño":
-                res[i].color = '#442662';
-                break;
-              case "Alimento":
-                res[i].color = '#0CB7F2';
-                break;
-              case "Cuerpo":
-                res[i].color = '#009D71';
-                break;
-              case "Mente":
-                res[i].color = '#009D71';
-                break;
-              case "Otros":
-                res[i].color = '#FFD700';
-                break;
-              case "Trabajo":
-                res[i].color = '#CB1D11';
-                break;
-              case "Humanidad":
-                res[i].color = '#C0C0C0';
-                break;
-              case "Pareja":
-                res[i].color = '#E87B31';
-                break;
-            }
-          }
-
-        let subtitle = "";
-        switch(this.filter){
-          case 'M':
-            //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-            subtitle ='Último mes';
-            break;
-          case 'Y':
-            subtitle = 'Último año ';
-            break;
-          case 'T':
-            subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
-            break;
-        }
-
-        //  Build Chart
-        this.chartOptions = {
-          chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie',
-            events: {
-              load: function () {
-                var theSeries = this.series;
-                for(let serie of theSeries){
-                  if (serie.index > 0) {
-                    serie.setVisible(false);
+          //  Build Chart
+          this.chartOptions = {
+            chart: {
+              plotBackgroundColor: null,
+              plotBorderWidth: null,
+              plotShadow: false,
+              type: 'pie',
+              events: {
+                load: function () {
+                  var theSeries = this.series;
+                  for(let serie of theSeries){
+                    if (serie.index > 0) {
+                      serie.setVisible(false);
+                    }
                   }
                 }
               }
-            }
-          },
-          title: {
-            text: 'Equilibrio'
-          },
-          subtitle: {
-            text: subtitle
-          },
-          tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-          },
-          plotOptions: {
-            pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              showInLegend: false
-            }
-          },
-          credits: {
-             enabled: false
-          },
-          series: [{
-            name: '% Total',
-            colorByPoint: true,
-            data: res
-          }]
+            },
+            title: {
+              text: 'Equilibrio'
+            },
+            subtitle: {
+              text: subtitle
+            },
+            tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+              pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                showInLegend: false
+              }
+            },
+            credits: {
+               enabled: false
+            },
+            series: [{
+              name: '% Total',
+              colorByPoint: true,
+              data: []
+            }]
+          }
         }
       }
     );
