@@ -29,7 +29,6 @@
     "alasql": "^0.4.3",
     "angular2-highcharts": "^0.5.5",
     "angularfire2": "^4.0.0-rc.2",
-    "cordova-android": "6.3.0",
     "cordova-plugin-console": "^1.0.5",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-facebook4": "^1.9.1",

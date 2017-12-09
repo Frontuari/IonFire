@@ -132,20 +132,8 @@ export class HomePage {
             }
           }
         );
-        setTimeout(()=>{
-          let msg = (this.user.gender == "M" ? "Bienvenido " : "Bienvenida ")+this.user.name;
-          //  Send messages to welcome          
-          this.toast.create({
-            message: msg,
-            duration: 3000
-          }).present();
-         },2000);
-      } else {
-        this.toast.create({
-          message: 'No se pudo encontrar detalles de autenticación',
-          duration: 3000
-        }).present();
-      }
+        
+      } 
     });
   }
 
@@ -157,4 +145,13 @@ export class HomePage {
   profile(){
     this.navCtrl.push(ProfilePage, { uid: this.user.uid });
   }
+
+  ionViewWillLoad(){
+    let msg = (this.user.gender == "M" ? "Bienvenido " : "Bienvenida ")+this.user.name;
+    //  Send messages to welcome          
+    this.toast.create({
+      message: msg,
+      duration: 3000
+    }).present();
+      }
 }
