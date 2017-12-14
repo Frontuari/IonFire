@@ -125,7 +125,7 @@ export class ChartBarPage {
                   zoomType: 'xy'
               },
               title: {
-                text: '¿Que Quiero? / ¿Como Estoy?'
+                text: '¿Como Estoy?'
               },
               subtitle: {
                 text: subtitle
@@ -205,7 +205,7 @@ export class ChartBarPage {
                   zoomType: 'xy'
               },
               title: {
-                text: '¿Que Quiero? / ¿Como Estoy?'
+                text: '¿Como Estoy?'
               },
               subtitle: {
                 text: subtitle
@@ -378,7 +378,7 @@ export class ChartBarPage {
                   zoomType: 'xy'
               },
               title: {
-                text: 'Mi equilibrio / ¿Cómo Estoy? '
+                text: '¿Cómo Estoy? '
               },
               subtitle: {
                 text: subtitle2
@@ -614,7 +614,7 @@ export class ChartBarPage {
                 zoomType: 'xy'
             },
             title: {
-              text: '¿Que Quiero? / ¿Como Estoy?'
+              text: '¿Como Estoy?'
             },
             subtitle: {
               text: subtitle
@@ -694,7 +694,7 @@ export class ChartBarPage {
                 zoomType: 'xy'
             },
             title: {
-              text: '¿Que Quiero? / ¿Como Estoy?'
+              text: '¿Como Estoy?'
             },
             subtitle: {
               text: subtitle
