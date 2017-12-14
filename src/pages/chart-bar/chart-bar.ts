@@ -363,7 +363,7 @@ export class ChartBarPage {
             let subtitle2 = "";
             switch(this.filter){
               case 'M':
-                subtitle2 = 'Ultimos 4 meses';
+                subtitle2 = 'Últimos 4 meses';
                 break;
               case 'Y':
                 subtitle2 = 'Año ';
@@ -442,7 +442,7 @@ export class ChartBarPage {
             let subtitle2 = "";
             switch(this.filter){
               case 'M':
-                subtitle2 = 'Ultimos 4 meses';
+                subtitle2 = 'Últimos 4 meses';
                 break;
               case 'Y':
                 subtitle2 = 'Año ';
@@ -852,7 +852,7 @@ export class ChartBarPage {
           let subtitle2 = "";
           switch(this.filter){
             case 'M':
-              subtitle2 = 'Ultimos 4 meses';
+              subtitle2 = 'Últimos 4 meses';
               break;
             case 'Y':
               subtitle2 = 'Año ';
@@ -931,7 +931,7 @@ export class ChartBarPage {
           let subtitle2 = "";
           switch(this.filter){
             case 'M':
-              subtitle2 = 'Ultimos 4 meses';
+              subtitle2 = 'Últimos 4 meses';
               break;
             case 'Y':
               subtitle2 = 'Año ';

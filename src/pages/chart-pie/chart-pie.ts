@@ -139,10 +139,10 @@ export class ChartPiePage {
             switch(this.filter){
               case 'M':
                 //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-                subtitle ='Ultimos 28 dias';
+                subtitle ='Últimos 28 dias';
                 break;
               case 'Y':
-                subtitle = 'Ultimo Año ';
+                subtitle = 'Último Año ';
                 break;
               case 'T':
                 subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
@@ -198,10 +198,10 @@ export class ChartPiePage {
             switch(this.filter){
               case 'M':
                 //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-                subtitle ='Ultimos 28 dias';
+                subtitle ='Últimos 28 dias';
                 break;
               case 'Y':
-                subtitle = 'Ultimo Año ';
+                subtitle = 'Último Año ';
                 break;
               case 'T':
                 subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
@@ -366,10 +366,10 @@ export class ChartPiePage {
           switch(this.filter){
             case 'M':
               //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-              subtitle ='Ultimos 28 dias';
+              subtitle ='Últimos 28 dias';
               break;
             case 'Y':
-              subtitle = 'Ultimo Año ';
+              subtitle = 'Último Año ';
               break;
             case 'T':
               subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
@@ -425,10 +425,10 @@ export class ChartPiePage {
           switch(this.filter){
             case 'M':
               //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-              subtitle ='Ultimos 28 dias';
+              subtitle ='Últimos 28 dias';
               break;
             case 'Y':
-              subtitle = 'Ultimo Año ';
+              subtitle = 'Último Año ';
               break;
             case 'T':
               subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();

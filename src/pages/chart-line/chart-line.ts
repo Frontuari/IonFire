@@ -152,7 +152,7 @@ export class ChartLinePage {
 
             switch(this.filter){
               case 'M':
-                subtitle = 'Ultimas 4 Semanas ';
+                subtitle = 'Últimas 4 Semanas ';
                 break;
               case 'Y':
                 subtitle = 'Meses';
@@ -168,7 +168,7 @@ export class ChartLinePage {
                 type: 'line'
               },
               title: {
-                text: 'Grafica 1'
+                text: 'Vibra'
               },
               subtitle: {
                 text: subtitle
@@ -215,7 +215,7 @@ export class ChartLinePage {
 
             switch(this.filter){
               case 'M':
-                subtitle = 'Ultimas 4 Semanas ';
+                subtitle = 'Últimas 4 Semanas ';
                 break;
               case 'Y':
                 subtitle = 'Meses';
@@ -231,7 +231,7 @@ export class ChartLinePage {
                 type: 'line'
               },
               title: {
-                text: 'Grafica 1'
+                text: 'Vibra'
               },
               subtitle: {
                 text: subtitle
@@ -398,7 +398,7 @@ export class ChartLinePage {
 
           switch(this.filter){
             case 'M':
-              subtitle = 'Ultimas 4 Semanas ';
+              subtitle = 'Últimas 4 Semanas ';
               break;
             case 'Y':
               subtitle = 'Meses';
@@ -414,7 +414,7 @@ export class ChartLinePage {
               type: 'line'
             },
             title: {
-              text: 'Grafica 1'
+              text: 'Vibra'
             },
             subtitle: {
               text: subtitle
@@ -461,7 +461,7 @@ export class ChartLinePage {
 
           switch(this.filter){
             case 'M':
-              subtitle = 'Ultimas 4 Semanas ';
+              subtitle = 'Últimas 4 Semanas ';
               break;
             case 'Y':
               subtitle = 'Meses';
@@ -477,7 +477,7 @@ export class ChartLinePage {
               type: 'line'
             },
             title: {
-              text: 'Grafica 1'
+              text: 'Vibra'
             },
             subtitle: {
               text: subtitle
