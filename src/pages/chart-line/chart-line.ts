@@ -201,7 +201,7 @@ export class ChartLinePage {
               },
               yAxis: {
                 title: {
-                  text: 'Promedio'
+                  text: 'No. Horas'
                 }
               },
               credits: {
@@ -264,7 +264,7 @@ export class ChartLinePage {
               },
               yAxis: {
                 title: {
-                  text: 'Promedio'
+                  text: 'No. Horas'
                 }
               },
               credits: {
@@ -447,7 +447,7 @@ export class ChartLinePage {
             },
             yAxis: {
               title: {
-                text: 'Promedio'
+                text: 'No. Horas'
               }
             },
             credits: {
@@ -510,7 +510,7 @@ export class ChartLinePage {
             },
             yAxis: {
               title: {
-                text: 'Promedio'
+                text: 'No. Horas'
               }
             },
             credits: {

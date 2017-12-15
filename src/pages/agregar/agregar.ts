@@ -49,10 +49,10 @@ export class AgregarPage {
 
   selectUserActivity(userActivity: UserActivity){
   	// Validate that can edit only if data is in range date permited
-  	if((userActivity.d_fecha == getCurDate(new Date(),2,'-').toISOString().slice(0, 10))
+  	if((userActivity.d_fecha == getCurDate(new Date(),1,'-').toISOString().slice(0, 10))
   		|| (userActivity.d_fecha == getCurDate(new Date(),1,'-').toISOString().slice(0, 10))
   		|| (userActivity.d_fecha == getCurDate(new Date(),0,'+').toISOString().slice(0, 10))
-  		|| (userActivity.d_fecha == getCurDate(new Date(),1,'+').toISOString().slice(0, 10))
+  		//|| (userActivity.d_fecha == getCurDate(new Date(),1,'+').toISOString().slice(0, 10))
   		){
 	    this.actionSheetCtrl.create({
         title: `Editar ${userActivity.d_fecha}`,
@@ -64,7 +64,7 @@ export class AgregarPage {
               this.navCtrl.push(EditUserActivityPage, { userActivityId: userActivity.$key });
             }
           },
-          {
+          /* {
             text: 'Borrar',
             role: 'destrictive',
             handler: () => {
@@ -75,7 +75,7 @@ export class AgregarPage {
                 duration:3000
               }).present();
             }
-          },
+          }, */
           {
             text: 'Cancelar',
             role: 'cancel',

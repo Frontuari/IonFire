@@ -266,4 +266,14 @@ export class AddUserActivityPage {
     }
   }
 
+
+  ionViewWillLoad() {
+    let msg = "Recuerda completar las 24 horas del día para una mayor precisión en tus gráficas";
+    //  Send messages to welcome          
+    this.toast.create({
+      message: msg,
+      duration: 3000
+    }).present();
+  }
+
 }

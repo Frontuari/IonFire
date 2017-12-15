@@ -160,8 +160,8 @@ export class ChartBarPage {
               yAxis: [{
                 min: 0,
                 title: {
-                  text: 'Promedio',
-                  align: 'high'
+                  text: 'No. Horas'
+                  //align: 'high'
                 },
                 labels: {
                   overflow: 'justify'
@@ -240,7 +240,7 @@ export class ChartBarPage {
               yAxis: [{
                 min: 0,
                 title: {
-                  text: 'Promedio',
+                  text: 'No. Horas',
                   align: 'high'
                 },
                 labels: {
@@ -413,8 +413,8 @@ export class ChartBarPage {
               yAxis: [{
                 min: 0,
                 title: {
-                  text: 'Promedio',
-                  align: 'high'
+                  text: 'No. Horas'
+                  //align: 'high'
                 },
                 labels: {
                   overflow: 'justify'
@@ -492,8 +492,8 @@ export class ChartBarPage {
               yAxis: [{
                 min: 0,
                 title: {
-                  text: 'Promedio',
-                  align: 'high'
+                  text: 'No. Horas'
+                  //align: 'high'
                 },
                 labels: {
                   overflow: 'justify'
@@ -649,8 +649,8 @@ export class ChartBarPage {
             yAxis: [{
               min: 0,
               title: {
-                text: 'Promedio',
-                align: 'high'
+                text: 'No. Horas'
+                //align: 'high'
               },
               labels: {
                 overflow: 'justify'
@@ -729,8 +729,8 @@ export class ChartBarPage {
             yAxis: [{
               min: 0,
               title: {
-                text: 'Promedio',
-                align: 'high'
+                text: 'No. Horas'
+                //align: 'high'
               },
               labels: {
                 overflow: 'justify'
@@ -902,8 +902,8 @@ export class ChartBarPage {
             yAxis: [{
               min: 0,
               title: {
-                text: 'Promedio',
-                align: 'high'
+                text: 'No. Horas'
+                //align: 'high'
               },
               labels: {
                 overflow: 'justify'
@@ -981,8 +981,8 @@ export class ChartBarPage {
             yAxis: [{
               min: 0,
               title: {
-                text: 'Promedio',
-                align: 'high'
+                text: 'No. Horas'
+                //align: 'high'
               },
               labels: {
                 overflow: 'justify'
