@@ -139,7 +139,7 @@ export class ChartPiePage {
             switch(this.filter){
               case 'M':
                 //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-                subtitle ='Últimos 28 dias';
+                subtitle ='Últimos 28 días';
                 break;
               case 'Y':
                 subtitle = 'Último Año ';
@@ -198,7 +198,7 @@ export class ChartPiePage {
             switch(this.filter){
               case 'M':
                 //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-                subtitle ='Últimos 28 dias';
+                subtitle ='Últimos 28 días';
                 break;
               case 'Y':
                 subtitle = 'Último Año ';
@@ -366,7 +366,7 @@ export class ChartPiePage {
           switch(this.filter){
             case 'M':
               //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-              subtitle ='Últimos 28 dias';
+              subtitle ='Últimos 28 días';
               break;
             case 'Y':
               subtitle = 'Último Año ';
@@ -425,7 +425,7 @@ export class ChartPiePage {
           switch(this.filter){
             case 'M':
               //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
-              subtitle ='Últimos 28 dias';
+              subtitle ='Últimos 28 días';
               break;
             case 'Y':
               subtitle = 'Último Año ';
