@@ -124,13 +124,13 @@ export class ChartPiePage {
                     res[i].color = '#FFD700';
                     break;
                   case "Trabajo":
-                    res[i].color = '#CB1D11';
+                    res[i].color = '#E87B31';
                     break;
                   case "Humanidad":
                     res[i].color = '#C0C0C0';
                     break;
                   case "Pareja":
-                    res[i].color = '#E87B31';
+                    res[i].color = '#CB1D11';
                     break;
                 }
               }
@@ -351,13 +351,13 @@ export class ChartPiePage {
                   res[i].color = '#FFD700';
                   break;
                 case "Trabajo":
-                  res[i].color = '#CB1D11';
+                  res[i].color = '#E87B31';
                   break;
                 case "Humanidad":
                   res[i].color = '#C0C0C0';
                   break;
                 case "Pareja":
-                  res[i].color = '#E87B31';
+                  res[i].color = '#CB1D11';
                   break;
               }
             }

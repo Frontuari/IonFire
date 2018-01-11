@@ -26,12 +26,12 @@ export class ResetPasswordPage {
 
   ResetPassword(){
     this.authService.resetPassword(this.userModel).then(result =>{
-      this.alert('Excelente', 'Acabamos de enviarle un enlace de restablecimiento a su correo electrónico.');
+      this.alert('Excelente', 'Acabamos de enviarte un enlace de restablecimiento a tu correo electrónico.');
       this.navCtrl.setRoot(SignInPage);
     }).catch(error => {
 
       console.log(error);
-      this.alert('Error', 'Ha ocurrido un error inesperado. Por favor intente nuevamente.');
+      this.alert('Error', 'Ha ocurrido un error inesperado. Por favor intenta nuevamente.');
     });
   }
 

@@ -82,9 +82,9 @@
     </ion-item>
 
     <ion-item (press)="tooltips($event,'t')">
-      <ion-icon name="construct" item-start color="Rojo"></ion-icon>
+      <ion-icon name="construct" item-start color="Anaranjado"></ion-icon>
       <ion-label>Trabajo</ion-label>
-      <ion-datetime style="color:#CB1D11;" displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_trabajo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+      <ion-datetime style="color:#E87B31;" displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_trabajo" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
         minuteValues="0,15,30,45,60,...">
       </ion-datetime>
     </ion-item>
@@ -105,9 +105,9 @@
     </ion-list-header>
     <!-- Cabecera  Pareja   -->
     <ion-item (press)="tooltips($event,'p')">
-      <ion-icon name="heart" item-start color="Anaranjado"></ion-icon>
+      <ion-icon name="heart" item-start color="Rojo"></ion-icon>
       <ion-label>Pareja</ion-label>
-      <ion-datetime style="color:#E87B31;" displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_pareja" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
+      <ion-datetime style="color:#CB1D11;" displayFormat="H:mm" pickerFormat="H:mm" [(ngModel)]="userActivity.d_pareja" hourValues="0,1,2,3,4,5,6,7,8,9,10,11,12,..."
         minuteValues="0,15,30,45,60,...">
       </ion-datetime>
     </ion-item>

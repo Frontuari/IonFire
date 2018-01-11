@@ -56,6 +56,7 @@ export class ChartLinePage {
                 //endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
                 endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
                 startDate = date_by_subtracting_days(endDate, 28);
+                //console.log('AQUI FUE '+startDate)
                 this.div='7';
                 this.limit=4;
                 //startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-20)
@@ -152,7 +153,7 @@ export class ChartLinePage {
 
             switch(this.filter){
               case 'M':
-                subtitle = 'Últimas 4 Semanas ';
+                subtitle = 'Mes ';
                 break;
               case 'Y':
                 subtitle = 'Meses';
@@ -190,11 +191,11 @@ export class ChartLinePage {
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
                       case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 }
@@ -252,12 +253,12 @@ export class ChartLinePage {
                         return '<span style="fill: #009D71;">' + this.value + '</span>';
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                      case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        case 'Trabajo': 
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 }
@@ -435,12 +436,12 @@ export class ChartLinePage {
                       return '<span style="fill: #009D71;">' + this.value + '</span>';
                     case 'Otros': 
                       return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                    case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                      case 'Trabajo': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                     case 'Humanidad': 
                       return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                     case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                   }
                 }
               }
@@ -499,11 +500,11 @@ export class ChartLinePage {
                     case 'Otros': 
                       return '<span style="fill: #FFD700;">' + this.value + '</span>';
                     case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                     case 'Humanidad': 
                       return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                     case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                   }
                 }
               }

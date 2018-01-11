@@ -147,11 +147,11 @@ export class ChartBarPage {
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
                       case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 },
@@ -226,12 +226,12 @@ export class ChartBarPage {
                         return '<span style="fill: #009D71;">' + this.value + '</span>';
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                      case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        case 'Trabajo': 
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 },
@@ -363,7 +363,7 @@ export class ChartBarPage {
             let subtitle2 = "";
             switch(this.filter){
               case 'M':
-                subtitle2 = 'Últimos 4 meses';
+                subtitle2 = 'Últimas 4 semanas';
                 break;
               case 'Y':
                 subtitle2 = 'Año ';
@@ -399,12 +399,12 @@ export class ChartBarPage {
                         return '<span style="fill: #009D71;">' + this.value + '</span>';
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                      case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        case 'Trabajo': 
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 },
@@ -442,7 +442,7 @@ export class ChartBarPage {
             let subtitle2 = "";
             switch(this.filter){
               case 'M':
-                subtitle2 = 'Últimos 4 meses';
+                subtitle2 = 'Últimas 4 semanas';
                 break;
               case 'Y':
                 subtitle2 = 'Año ';
@@ -478,12 +478,12 @@ export class ChartBarPage {
                         return '<span style="fill: #009D71;">' + this.value + '</span>';
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                      case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        case 'Trabajo': 
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 },
@@ -635,12 +635,12 @@ export class ChartBarPage {
                       return '<span style="fill: #009D71;">' + this.value + '</span>';
                     case 'Otros': 
                       return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                    case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                      case 'Trabajo': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                     case 'Humanidad': 
                       return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                     case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                   }
                 }
               },
@@ -715,12 +715,12 @@ export class ChartBarPage {
                       return '<span style="fill: #009D71;">' + this.value + '</span>';
                     case 'Otros': 
                       return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                    case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                      case 'Trabajo': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                     case 'Humanidad': 
                       return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                     case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                   }
                 }
               },
@@ -852,7 +852,7 @@ export class ChartBarPage {
           let subtitle2 = "";
           switch(this.filter){
             case 'M':
-              subtitle2 = 'Últimos 4 meses';
+              subtitle2 = 'Últimas 4 semanas';
               break;
             case 'Y':
               subtitle2 = 'Año ';
@@ -888,12 +888,12 @@ export class ChartBarPage {
                       return '<span style="fill: #009D71;">' + this.value + '</span>';
                     case 'Otros': 
                       return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                    case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                      case 'Trabajo': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                     case 'Humanidad': 
                       return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                     case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                   }
                 }
               },
@@ -931,7 +931,7 @@ export class ChartBarPage {
           let subtitle2 = "";
           switch(this.filter){
             case 'M':
-              subtitle2 = 'Últimos 4 meses';
+              subtitle2 = 'Últimas 4 semanas';
               break;
             case 'Y':
               subtitle2 = 'Año ';
