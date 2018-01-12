@@ -70,7 +70,7 @@ export class ProfilePage {
           })
       }else{
         this.toast.create({
-          message:'No se pudo encontrar detalles de autenticación',
+          message:'Hasta pronto',
           duration:3000
         }).present();
       }

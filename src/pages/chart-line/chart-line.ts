@@ -193,11 +193,11 @@ export class ChartLinePage {
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
                       case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 }
@@ -255,12 +255,12 @@ export class ChartLinePage {
                         return '<span style="fill: #009D71;">' + this.value + '</span>';
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                      case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        case 'Trabajo': 
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 }
@@ -439,12 +439,12 @@ export class ChartLinePage {
                       return '<span style="fill: #009D71;">' + this.value + '</span>';
                     case 'Otros': 
                       return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                    case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                      case 'Trabajo': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                     case 'Humanidad': 
                       return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                     case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                   }
                 }
               }
@@ -502,12 +502,12 @@ export class ChartLinePage {
                       return '<span style="fill: #009D71;">' + this.value + '</span>';
                     case 'Otros': 
                       return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                    case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                      case 'Trabajo': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                     case 'Humanidad': 
                       return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                     case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                   }
                 }
               }
