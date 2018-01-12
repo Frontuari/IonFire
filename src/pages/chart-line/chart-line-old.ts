@@ -55,26 +55,26 @@ export class ChartLinePage {
                 //startDate = new Date(d.getFullYear(), d.getMonth()-1,0);
                 //endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
                 endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-                startDate = date_by_subtracting_days(endDate, 27);
-               // console.log('AQUI FUE '+startDate)
+                startDate = date_by_subtracting_days(endDate, 28);
+               //console.log('AQUI FUE '+startDate)
                 this.div='7';
                 this.limit=4;
                 //startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-20)
               }
               else if(this.filter == "Y"){
                 endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-                startDate = date_by_subtracting_days(endDate, 83);
+                startDate = date_by_subtracting_days(endDate, 28*3);
                 this.div='28';
                 this.limit=13;
               }
               else{
-                startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+                //startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
                 endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate());
-                startDate = date_by_subtracting_days(endDate, 363);
+                startDate = date_by_subtracting_days(endDate, 28*13);
                 this.div='364';
                 this.limit=3;
               }
-              //console.log('AQUI FUE '+userActivity.d_fecha);
+              console.log('AQUI FUE '+userActivity.d_fecha);
               if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) ==1){  
                 let name = "";
                 if(this.filter =="M"){
@@ -91,11 +91,10 @@ export class ChartLinePage {
                   this.limit=3;
                 }
                 else{
-                  name = 'Trimestre ';
-                  this.div='84';
-                  this.limit=13;
+                  name = 'Año ';
+                  this.div='364';
+                  this.limit=3;
                 }
-                //console.log('AQUI FUE '+userActivity.d_fecha);
                 charData.push({
                   "name" : name,
                   "fecha": userActivity.d_fecha,
@@ -121,11 +120,11 @@ export class ChartLinePage {
             ROUND(avg(activities -> 5),2) AS trabajo, ROUND(avg(activities -> 6),2) AS humanidad, ROUND(avg(activities -> 7),2) AS pareja \
             FROM ? \
             GROUP BY name, cast((DATEDIFF(day,DATE(fecha),DATE(Date()))/div) as int)+1\
-            ORDER BY t desc, name asc ',[charData]);
+            ORDER BY t desc, name asc limit 3',[charData]);
 
             //  Build array of object for chart
             let chartdata = [];
-            //console.log('AQUI FUE '+[charData]);
+
             //  Set Number Magic
             /*chartdata.push({
               type: 'area',
@@ -155,13 +154,13 @@ export class ChartLinePage {
 
             switch(this.filter){
               case 'M':
-                subtitle = 'Últimos 28 días ';
+                subtitle = 'Mes ';
                 break;
               case 'Y':
-                subtitle = 'Últimos 3 meses';
+                subtitle = 'Meses';
                 break;
               case 'T':
-                subtitle = 'Último año';
+                subtitle = 'Triada años desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
                 break;
             }
 
@@ -193,11 +192,11 @@ export class ChartLinePage {
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
                       case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 }
@@ -218,13 +217,13 @@ export class ChartLinePage {
 
             switch(this.filter){
               case 'M':
-                subtitle = 'Últimos 28 días';
+                subtitle = 'Últimas 4 Semanas ';
                 break;
               case 'Y':
-                subtitle = 'Últimos 3 meses';
+                subtitle = 'Meses';
                 break;
               case 'T':
-                subtitle = 'Último año';
+                subtitle = 'Triada años desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
                 break;
             }
 
@@ -255,12 +254,12 @@ export class ChartLinePage {
                         return '<span style="fill: #009D71;">' + this.value + '</span>';
                       case 'Otros': 
                         return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                      case 'Trabajo': 
-                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                        case 'Trabajo': 
+                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
                       case 'Humanidad': 
                         return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                       case 'Pareja': 
-                        return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                        return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                     }
                   }
                 }
@@ -305,21 +304,20 @@ export class ChartLinePage {
               //startDate = new Date(d.getFullYear(), d.getMonth()-1,0);
               //endDate = new Date(d.getFullYear(), d.getMonth()+1,0); 
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-              startDate = date_by_subtracting_days(endDate, 27);
+              startDate = date_by_subtracting_days(endDate, 28);
               this.div='7';
               this.limit=4;
               //startDate = new Date(d.getFullYear(), d.getMonth(), d.getDate()-20)
             }
             else if(this.filter == "Y"){
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-              startDate = date_by_subtracting_days(endDate, 83); 
+              startDate = date_by_subtracting_days(endDate, 364); 
               this.div='28';
               this.limit=13;
             }
             else{
-              //startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+              startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
               endDate = new Date(d.getFullYear(), d.getMonth()+1, d.getDate());
-              startDate = date_by_subtracting_days(endDate, 363); 
               this.div='364';
               this.limit=3;
             }
@@ -339,7 +337,7 @@ export class ChartLinePage {
                 this.limit=13;
               }
               else{
-                name = 'Trimestre ';
+                name = 'Año ';
                 this.div='364';
                 this.limit=3;
               }
@@ -402,13 +400,13 @@ export class ChartLinePage {
 
           switch(this.filter){
             case 'M':
-              subtitle = 'Últimos 28 días';
+              subtitle = 'Últimas 4 Semanas ';
               break;
             case 'Y':
-              subtitle = 'Últimos 3 meses';
+              subtitle = 'Meses';
               break;
             case 'T':
-              subtitle = 'Último año';
+              subtitle = 'Triada años desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
               break;
           }
 
@@ -439,12 +437,12 @@ export class ChartLinePage {
                       return '<span style="fill: #009D71;">' + this.value + '</span>';
                     case 'Otros': 
                       return '<span style="fill: #FFD700;">' + this.value + '</span>';
-                    case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                      case 'Trabajo': 
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                     case 'Humanidad': 
                       return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                     case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                   }
                 }
               }
@@ -465,13 +463,13 @@ export class ChartLinePage {
 
           switch(this.filter){
             case 'M':
-              subtitle = 'Últimos 28 días';
+              subtitle = 'Últimas 4 Semanas ';
               break;
             case 'Y':
-              subtitle = 'Últimos 3 meses';
+              subtitle = 'Meses';
               break;
             case 'T':
-              subtitle = 'Último año';
+              subtitle = 'Triada años desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
               break;
           }
 
@@ -503,11 +501,11 @@ export class ChartLinePage {
                     case 'Otros': 
                       return '<span style="fill: #FFD700;">' + this.value + '</span>';
                     case 'Trabajo': 
-                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
+                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
                     case 'Humanidad': 
                       return '<span style="fill: #C0C0C0;">' + this.value + '</span>';
                     case 'Pareja': 
-                      return '<span style="fill: #E87B31;">' + this.value + '</span>';
+                      return '<span style="fill: #CB1D11;">' + this.value + '</span>';
                   }
                 }
               }

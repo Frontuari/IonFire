@@ -60,17 +60,25 @@ export class ChartBarPage {
                 endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
                 startDate = date_by_subtracting_days(endDate, 28);
                 this.div='1';
-              } 
-              else if(this.filter == "Y"){
-                startDate = new Date(d.getFullYear(), 0, 1);
+              }
+              if(this.filter == "Y"){
+                
+                //endDate = new Date(d.getFullYear(), d.getMonth()+1, 0); 
+                endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+                startDate = date_by_subtracting_days(endDate, 28*3);
+                this.div='1';
+              }  
+              else if(this.filter == "T"){
+                //startDate = new Date(d.getFullYear(), 0, 1);
+                startDate = date_by_subtracting_days(endDate, 28*13);
                 endDate = new Date(d.getFullYear(), 11, 31); 
                 this.div='4';
               }
-              else{
+              /*else{
                 startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
                 endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
                 this.div='52';
-              }
+              }*/
               if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
                 charData.push({
                   "name" : '¿Cómo estoy?',
@@ -110,13 +118,13 @@ export class ChartBarPage {
             let subtitle = "";
             switch(this.filter){
               case 'M':
-                subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+                subtitle = 'Últimos 28 días';
                 break;
               case 'Y':
-                subtitle = 'Año '+this.f_actual.getFullYear();
+                subtitle = 'Últimos 3 meses';
                 break;
               case 'T':
-                subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+                subtitle = 'Último año';
                 break;
             }
             //  Build Chart
@@ -190,13 +198,13 @@ export class ChartBarPage {
             let subtitle = "";
             switch(this.filter){
               case 'M':
-                subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+                subtitle = 'Últimos 28 días';
                 break;
               case 'Y':
-                subtitle = 'Año '+this.f_actual.getFullYear();
+                subtitle = 'Últimos 3 meses';
                 break;
               case 'T':
-                subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+                subtitle = 'ültimo año';
                 break;
             }
             //  Build Chart
@@ -285,13 +293,15 @@ export class ChartBarPage {
                 this.div='1';
               } 
               else if(this.filter == "Y"){
-                startDate = new Date(d.getFullYear(), 0, 1);
+                //startDate = new Date(d.getFullYear(), 0, 1);
                 endDate = new Date(d.getFullYear(), 11, 31); 
+                startDate = date_by_subtracting_days(endDate, 28*3);
                 this.div='4';
               }
               else{
-                startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+                //startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
                 endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+                startDate = date_by_subtracting_days(endDate, 28*13);
                 this.div='52';
               }
               if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
@@ -363,13 +373,13 @@ export class ChartBarPage {
             let subtitle2 = "";
             switch(this.filter){
               case 'M':
-                subtitle2 = 'Últimas 4 semanas';
+                subtitle2 = 'Últimos 28 días';
                 break;
               case 'Y':
-                subtitle2 = 'Año ';
+                subtitle2 = 'Últimos 3 meses ';
                 break;
               case 'T':
-                subtitle2 = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+                subtitle2 = 'Último año';
                 break;
             }
             //  Build Chart
@@ -442,13 +452,13 @@ export class ChartBarPage {
             let subtitle2 = "";
             switch(this.filter){
               case 'M':
-                subtitle2 = 'Últimas 4 semanas';
-                break;
-              case 'Y':
-                subtitle2 = 'Año ';
-                break;
+              subtitle2 = 'Últimos 28 días';
+               break;
+             case 'Y':
+              subtitle2 = 'Últimos 3 meses ';
+              break;
               case 'T':
-                subtitle2 = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+                subtitle2 = 'Último año';
                 break;
             }
             //  Build Chart
@@ -551,13 +561,16 @@ export class ChartBarPage {
               this.div='1';
             } 
             else if(this.filter == "Y"){
-              startDate = new Date(d.getFullYear(), 0, 1);
-              endDate = new Date(d.getFullYear(), 11, 31); 
+              //startDate = new Date(d.getFullYear(), 0, 1);
+              //endDate = new Date(d.getFullYear(), 11, 31); 
+              endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = date_by_subtracting_days(endDate, 28*3);
               this.div='4';
             }
             else{
-              startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+              //startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = date_by_subtracting_days(endDate, 28*3);
               this.div='52';
             }
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
@@ -599,13 +612,16 @@ export class ChartBarPage {
           let subtitle = "";
           switch(this.filter){
             case 'M':
-              subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+             // subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+             subtitle ='Últimos 28 días';
               break;
             case 'Y':
-              subtitle = 'Año '+this.f_actual.getFullYear();
+              //subtitle = 'Año '+this.f_actual.getFullYear();
+              subtitle = 'Últimos 3 meses';
               break;
             case 'T':
-              subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+              //subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+              subtitle = 'Último año';
               break;
           }
           //  Build Chart
@@ -679,13 +695,16 @@ export class ChartBarPage {
           let subtitle = "";
           switch(this.filter){
             case 'M':
-              subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+              //subtitle = getMonthName(this.f_actual.getMonth())+ " "+this.f_actual.getFullYear();
+              subtitle = 'Últimos 28 días';
               break;
             case 'Y':
-              subtitle = 'Año '+this.f_actual.getFullYear();
+              //subtitle = 'Año '+this.f_actual.getFullYear();
+              subtitle ='Últimos 3 meses';
               break;
             case 'T':
-              subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+              //subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+              subtitle = 'Último año';
               break;
           }
           //  Build Chart
@@ -852,13 +871,13 @@ export class ChartBarPage {
           let subtitle2 = "";
           switch(this.filter){
             case 'M':
-              subtitle2 = 'Últimas 4 semanas';
+              subtitle2 = 'Últimos 28 días';
               break;
             case 'Y':
-              subtitle2 = 'Año ';
+              subtitle2 = 'Últimos 3 meses';
               break;
             case 'T':
-              subtitle2 = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+              subtitle2 = 'Último año';
               break;
           }
           //  Build Chart
@@ -867,7 +886,7 @@ export class ChartBarPage {
                 zoomType: 'xy'
             },
             title: {
-              text: 'Mi equilibrio / ¿Cómo Estoy? '
+              text: '¿Cómo Estoy? '
             },
             subtitle: {
               text: subtitle2
@@ -931,14 +950,14 @@ export class ChartBarPage {
           let subtitle2 = "";
           switch(this.filter){
             case 'M':
-              subtitle2 = 'Últimas 4 semanas';
-              break;
-            case 'Y':
-              subtitle2 = 'Año ';
-              break;
-            case 'T':
-              subtitle2 = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
-              break;
+            subtitle2 = 'Últimos 28 días';
+            break;
+          case 'Y':
+            subtitle2 = 'Últimos 3 meses';
+            break;
+          case 'T':
+            subtitle2 = 'Último año';
+            break;
           }
           //  Build Chart
           this.chartOptions = {
@@ -946,7 +965,7 @@ export class ChartBarPage {
                 zoomType: 'xy'
             },
             title: {
-              text: 'Mi equilibrio / ¿Cómo Estoy? '
+              text: '¿Cómo Estoy? '
             },
             subtitle: {
               text: subtitle2

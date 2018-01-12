@@ -54,12 +54,15 @@ export class ChartPiePage {
                 
               }
               else if(this.filter == "Y"){
+                //endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
                 endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-                startDate = date_by_subtracting_days(endDate, 364);
+                //startDate = date_by_subtracting_days(endDate, 364);
+                startDate = date_by_subtracting_days(endDate, 28*3);
           
               }
               else{
-                startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+                //startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+                startDate = date_by_subtracting_days(endDate, 28*13);
                 endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
                
               }
@@ -142,10 +145,11 @@ export class ChartPiePage {
                 subtitle ='Últimos 28 días';
                 break;
               case 'Y':
-                subtitle = 'Último Año ';
+                subtitle = 'Últimos 3 meses ';
                 break;
               case 'T':
-                subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+                //subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+                subtitle = 'Último año';
                 break;
             }
 
@@ -201,10 +205,10 @@ export class ChartPiePage {
                 subtitle ='Últimos 28 días';
                 break;
               case 'Y':
-                subtitle = 'Último Año ';
+                subtitle = 'Últimos 3 meses';
                 break;
               case 'T':
-                subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+                subtitle = 'Último año';
                 break;
             }
             //  Build Chart
@@ -282,12 +286,13 @@ export class ChartPiePage {
             }
             else if(this.filter == "Y"){
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-              startDate = date_by_subtracting_days(endDate, 364);
+              startDate = date_by_subtracting_days(endDate, 28*3);
         
             }
             else{
-              startDate = new Date(d.getFullYear()-3, d.getMonth(), d.getDate());
+              
               endDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+              startDate = date_by_subtracting_days(endDate, 28*13);
              
             }
             if(validate_fechaBetween(userActivity.d_fecha,dateFormat(startDate),dateFormat(endDate)) == 1){
@@ -369,10 +374,10 @@ export class ChartPiePage {
               subtitle ='Últimos 28 días';
               break;
             case 'Y':
-              subtitle = 'Último Año ';
+              subtitle = 'Último 3 meses ';
               break;
             case 'T':
-              subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+              subtitle = 'Último año';
               break;
           }
 
@@ -428,10 +433,10 @@ export class ChartPiePage {
               subtitle ='Últimos 28 días';
               break;
             case 'Y':
-              subtitle = 'Último Año ';
+              subtitle = 'Últimos 3 meses ';
               break;
             case 'T':
-              subtitle = 'Triada desde '+(this.f_actual.getFullYear()-3)+' hasta '+this.f_actual.getFullYear();
+              subtitle = 'Último año';
               break;
           }
           //  Build Chart
