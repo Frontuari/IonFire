@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.Anddando.nextgensolucionesdev3" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.Anddando.nextgensolucionesdev4" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Anddando</name>
     <description>App Que permite medir el equilibrio ideal de nuestras actividades diarias</description>
     <author email="danielkheavyi@gmail.com" href="http://rafaelkonig.com.ve/">Ing. Rafael Konig</author>
@@ -12,7 +12,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <preference name="loadUrlTimeoutValue" value="10000" />
+    <preference name="loadUrlTimeoutValue" value="50000" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="FadeSplashScreen" value="false" />
     <preference name="android-minSdkVersion" value="16" />
@@ -97,5 +97,4 @@
     <plugin name="twitter-connect-plugin" spec="^0.6.0">
         <variable name="FABRIC_KEY" value="da23112a25419a09fc15473c140241a54241cad6" />
     </plugin>
-    <engine name="android" spec="~6.3.0" />
 </widget>
