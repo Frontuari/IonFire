@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.Anddando.nextgensolucionesdev4" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.Anddando.nextgensolucionesdev6" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Anddando</name>
     <description>App Que permite medir el equilibrio ideal de nuestras actividades diarias</description>
-    <author email="danielkheavyi@gmail.com" href="http://rafaelkonig.com.ve/">Ing. Rafael Konig</author>
+    <author email="danielkheavyi@gmail.com" href="http://www.rafaelkonig.com.ve/">Ing. Rafael Konig</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -97,4 +97,5 @@
     <plugin name="twitter-connect-plugin" spec="^0.6.0">
         <variable name="FABRIC_KEY" value="da23112a25419a09fc15473c140241a54241cad6" />
     </plugin>
+    <engine name="android" spec="~6.3.0" />
 </widget>
