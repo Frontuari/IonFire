@@ -196,7 +196,7 @@ export class AddUserActivityPage {
   }
 
   myDate: String = this.getCurDate(new Date(),0,'+').toISOString().slice(0, 10);
-  minDate: String = this.getCurDate(new Date(),2,'-').toISOString().slice(0, 10);
+  minDate: String = this.getCurDate(new Date(),1,'-').toISOString().slice(0, 10);
   maxDate: String = this.getCurDate(new Date(),0,'+').toISOString().slice(0, 10);
 
   UserActivity(userActivity: UserActivity){
